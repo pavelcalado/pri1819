@@ -1,0 +1,93 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{eadw2013}[2013/02/11 Pacote para as aulas de PRI]
+
+\RequirePackage{amsmath}
+\RequirePackage{fancyvrb}
+\RequirePackage[utf8]{inputenc}
+\RequirePackage[T1]{fontenc}
+\RequirePackage{lmodern}
+\RequirePackage[english,portuguese]{babel}
+\RequirePackage{graphicx}
+
+\usetheme[hideothersubsections]{PaloAlto}
+\usecolortheme{sidebartab}
+\usecolortheme{seahorse}
+
+\title{Processamento e Recuperação de Informação}
+
+%\author{Pável Calado}
+
+\date[2017/2018]{$1^{\mbox{o}}$ Semestre\\2017/2018}
+
+\institute[IST]{
+  Departamento de Engenharia Informática\\
+  Instituto Superior Técnico}
+
+\logo{\includegraphics[width=4em]{logoist}}
+
+% definicoes ------------------------------------------
+
+\graphicspath{{./}{figures/}} % as figuras podem estar no dir. 'figures'
+
+
+% estilo ----------------------------------------------
+
+\mode<presentation>
+{
+  %\setbeamercovered{transparent}
+  % \beamerdefaultoverlayspecification{<+->}
+  \setbeamercolor{alerted text}{fg=red!50!black}
+  \setbeamertemplate{frametitle continuation}{(\insertcontinuationcount)}
+}
+
+% \AtBeginSubsection[]
+% {
+%   \begin{frame}<beamer>
+%     \frametitle{Outline}
+%     \tableofcontents[currentsection,currentsubsection]
+%   \end{frame}
+% }
+
+\AtBeginSection[]
+{
+  \begin{frame}<beamer>
+    \frametitle{Outline}
+    \tableofcontents[currentsection,hideothersubsections]
+  \end{frame}
+}
+
+% comandos ---------------------------------------------
+
+\renewcommand{\maketitle}{
+  \begin{frame}
+    \titlepage
+    
+%     \begin{flushleft}
+%       \begin{minipage}{0.5\linewidth}
+%         \tiny Slides (fortemente) baseados nos slides oficiais do livro\\
+%         ``Database System Concepts'' \\ \copyright Silberschatz, Korth and
+%         Sudarshan.
+%       \end{minipage}
+%     \end{flushleft}
+  \end{frame}
+}
+
+\newcommand{\makeoutline}{
+  \begin{frame}
+    \frametitle{Outline}
+    \tableofcontents%[pausesections]
+  \end{frame}
+}
+
+\renewcommand{\emph}{\alert}
+
+\newcommand{\finalframe}[1]{
+  \begin{frame}
+    \centering
+    \vfill
+    \Large #1
+    \vfill
+  \end{frame}
+}
+
+\newcommand{\vsep}{\vspace{\baselineskip}}

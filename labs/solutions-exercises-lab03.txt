@@ -1,0 +1,23 @@
+*** LAB 03 - SOLUTION TO PEN AND PAPER EXERCISE ***
+
+
+1. Classify the instance <Yes, No, Yes>:
+
+P(subscriber) = 3/10
+P(~subscriber) = 7/10
+
+P(male | subscriber) = 1
+P(over26 | subscriber) = 0
+P(car | subscriber) = 1/3
+
+P(male | ~subscriber) = 2/7
+P(over26 | ~subscriber) = 3/7
+P(car | ~subscriber) = 3/7
+
+
+P(subscriber | instance) = P(subscriber) * P(male | subscriber) * P(over26 | subscriber) * P(car | subscriber) = 3/10 * 1 * 0 * 1/3 = 0
+
+P(~subscriber | instance) = P(~subscriber) * P(male | ~subscriber) * P(over26 | ~subscriber) * P(car | ~subscriber) = 7/10 * 2/7 * 3/7 * 3/7 = 0.04
+
+
+CLASSIFICATION: The individual is not a subscriber

@@ -1,0 +1,552 @@
+\documentclass[svgnames]{beamer}
+
+\usepackage{pri}
+
+\graphicspath{{./}{figures/}{figures/13-querying-figs/}} 
+
+\newcommand{\fdt}{\ensuremath{f_{d,t}}}
+\newcommand{\ceil}[1]{\ensuremath{\lceil #1 \rceil}}
+\newcommand{\floor}[1]{\ensuremath{\lfloor #1 \rfloor}}
+\newcommand{\att}{\ensuremath{\leftarrow}}
+\newcommand{\ang}[1]{\ensuremath{\langle #1 \rangle}}
+
+\subtitle{Querying}
+
+\begin{document}
+
+\maketitle
+\makeoutline
+
+\begin{frame}
+    \frametitle{Bibliography}
+    
+    Managing Gigabytes: Compressing and Indexing Documents and Images - 2nd
+    edition Ian H. Witten, Alistair Moffat, Timothy C. Bell Morgan Kaufmann
+    2000
+
+\end{frame}
+
+\section{The Cosine Measure}
+
+\begin{frame}
+  \frametitle{The Cosine Measure}
+  
+  \begin{block}{Similarity function}
+    \begin{displaymath}
+      sim(d_j,q) =
+         \frac{1}{W_d \times W_q}
+         \times \sum_{i=1}^{t}w_{i,j} \times w_{i,q}
+    \end{displaymath}
+    \begin{itemize}
+    \item $W_d$ is the document norm
+    \item $W_q$ is the query norm
+      \begin{itemize}
+      \item irrelevant for ranking
+      \end{itemize}
+    \item $w_{i,j} = f_{i,j} \times idf_i$
+    \end{itemize}
+  \end{block}
+
+\end{frame}
+
+% ----------------------------------------------------------------------
+
+\begin{frame}
+  \frametitle{Implementation problems}
+  
+  \begin{block}{}
+    \begin{itemize}
+    \item Processing the documents is unfeasible
+    \item Processing the index is expensive
+      \begin{itemize}
+      \item The index needs to store \fdt
+        % \begin{itemize}
+        % \item Can be stored in a compressed format
+        % \end{itemize}
+      \item The inverted lists can be huge
+      \end{itemize}
+    \item We need only the top $r$ documents from a sorted list of $N$
+      documents, where $r \ll N$
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+% ----------------------------------------------------------------------
+
+\section{Computing the Cosine Similarity}
+
+\newcounter{num}
+\setcounter{num}{0}
+\newcommand{\inum}{\addtocounter{num}{1}\thenum}
+
+\begin{frame}
+  \frametitle{An Example Inverted File}
+  
+  \small
+
+  \begin{columns}
+    \column{0.49\textwidth}
+
+    \setcounter{num}{0}
+    \begin{block}{Lexicon}
+      \centering
+      \begin{tabular}{rll}
+        Num. & Term & Add. \\\hline
+        \inum & best & 0000 \\
+        \inum & expedient & 0024 \\
+        \inum & government & 0032 \\
+        \inum & governs & 0064 \\
+        \inum & inexpedient & 0080 \\
+        \inum & least & 0088 \\
+        \inum & machines & 0096 \\
+        \inum & manufactured & 0104 \\
+        \inum & mass & 0108 \\
+        \inum & men & 0116 \\
+        \inum & purpose & 0132 \\
+        \inum & serve & 0140 \\
+        \inum & state & 0156 \\
+        \inum & wooden & 0164 \\
+      \end{tabular}
+    \end{block}
+
+    \column{0.49\textwidth}
+
+    \begin{block}{Inverted File}
+      \centering
+      \begin{tabular}{l}
+        Inverted list \\\hline
+        $(1;1),(2;1),(5;1)$ \\
+        $(5;1)$ \\
+        $(1;1),(2;1),(5;1),(6;1)$ \\
+        $(1;1),(2;1)$ \\
+        $(6;1)$ \\
+        $(1;1)$ \\
+        $(3;1)$ \\
+        $(4;1)$ \\
+        $(3;1)$ \\
+        $(3;2),(4;1)$ \\
+        $(4;1)$ \\
+        $(3;1),(4;1)$ \\
+        $(3;1)$ \\
+        $(4;1)$ \\
+      \end{tabular}
+    \end{block}
+
+  \end{columns}
+
+\end{frame}
+
+% ----------------------------------------------------------------------
+
+\begin{frame}
+  \frametitle{Computing the Cosine Value}
+  
+  \begin{enumerate}
+  \item Set $A \att \{\}$
+  \item For each query term $t \in Q$
+    \begin{enumerate}
+    \item Stem $t$
+    \item Search the lexicon
+    \item Get $f_t$ and the address of $I_t$
+    \item Set $idf_t \att \log(N/f_t)$
+    \item Read the inverted list $I_t$
+    \item For each $(d,\fdt)$ pair in $I_t$
+      \begin{enumerate}
+      \item If $A_d \not\in A$ then\\
+        \hspace{4ex}Set $A_d \att 0$\\
+        \hspace{4ex}Set $A \att A \cup \{A_d\}$
+      \item Set $A_d \att A_d + \fdt \times idf_t$
+      \end{enumerate}
+    \end{enumerate}
+  \item For each $A_d \in A$, set $A_d \att A_d/W_d$
+  \item For $1 \leq i \leq r$
+    \begin{enumerate}
+    \item Select $d$ such that $A_d = \max\{A\}$
+    \item Look up the address of $d$
+    \item Retrieve $d$
+    \item Set $A \att A - \{A_d\}$
+    \end{enumerate}
+  \end{enumerate}
+\end{frame}
+
+% ----------------------------------------------------------------------
+
+\begin{frame} \frametitle{Main Problems}
+  
+
+  \begin{block}{}
+    \begin{itemize}
+    \item How to efficiently obtain the document norms?
+    \item How to efficiently process the inverted lists?
+    \item How to efficiently select the top-$k$ documents?
+    \end{itemize}
+  \end{block}
+
+\end{frame}
+
+% ----------------------------------------------------------------------
+
+\section{Storing Document Norms}
+
+\begin{frame}
+  \frametitle{Storing the Document Norms}
+  
+  \begin{block}<+->{The problem}
+    \begin{itemize}
+    \item All in memory: too expensive
+      \begin{itemize}
+      %\item E.g. $5 \times 10^6$ docs $\Rightarrow$ 20Mb
+      \item E.g. $4 \times 10^{9}$ docs $\Rightarrow$ 484Gb
+      %\item E.g. $4 \times 10^{12}$ docs $\Rightarrow$ 473Tb
+      % 5*130*10^12/1024/1024/1024/1024
+      % https://www.quora.com/How-many-pages-are-in-Googles-web-index-in-2017
+      % na verdade, este número é tão grande que esta solução já nem faz sentido: mesmo que usásemos 1 bit por norma, dava 14Tb --- TEMOS QUE ATUALIZAR ESTES SLIDES!
+      \end{itemize}
+    \item All in disk: too slow
+      \begin{itemize}
+      \item E.g. can take several seconds to read the norms
+      \end{itemize}
+    \end{itemize}
+  \end{block}
+
+  \begin{block}<+->{The solution}
+    \begin{itemize}
+    \item Use approximations
+    \item Read only selected document weights
+    \end{itemize}
+  \end{block}
+
+\end{frame}
+
+% ----------------------------------------------------------------------
+
+\begin{frame}
+  \frametitle{Approximate Document Norms}
+  
+  \begin{block}<+->{}
+    \begin{itemize}
+    \item Document norms are real numbers
+      \begin{itemize}
+      \item Need 4 to 8 bytes of storage
+      \end{itemize}
+    \item Real numbers can approximated by $b$-bit values
+    \end{itemize}
+  \end{block}
+
+  \begin{block}<+->{Approximate Norm}
+    Using $b$ bits to approximate $x$, such that $L \leq x \leq U$:
+    \begin{displaymath}
+      c = \left\lfloor \frac{x - L}{U - L + \epsilon} 2^b \right\rfloor
+    \end{displaymath}
+    where $c$ is the code for $x$.
+  \end{block}
+
+\end{frame}
+
+% ----------------------------------------------------------------------
+
+\begin{frame} \frametitle{An Example}
+  
+  \begin{exampleblock}{}
+    Consider $10 \leq x \leq 18$, $b = 2$, $\epsilon = 0.1$:
+    \begin{itemize}
+    \item For $x = 15.3$:
+      \begin{displaymath}
+        c = \left\lfloor \frac{15.3 - 10}{18 - 10 + 0.1} \times 2^2 \right\rfloor = 
+        \left\lfloor 2.617 \right\rfloor = 2 = 10
+      \end{displaymath}
+    \item For $x = 12.4$:
+      \begin{displaymath}
+        c = \left\lfloor \frac{12.4 - 10}{8.1} \times 4 \right\rfloor =
+        \left\lfloor 1.185 \right\rfloor = 1 = 01
+      \end{displaymath}
+    \item For $x = 17.9$:
+      \begin{displaymath}
+        c = \left\lfloor \frac{17.9 - 10}{8.1} \times 4 \right\rfloor = 
+        \left\lfloor 3.901 \right\rfloor = 3 = 11
+      \end{displaymath}
+    \end{itemize}
+  \end{exampleblock}
+
+\end{frame}
+
+% ----------------------------------------------------------------------
+
+\begin{frame} \frametitle{Approximation Error}
+  
+  \begin{block}{}
+    \begin{itemize}
+    \item The previous approximation assumes we are distributing the norms over
+      equal sized-buckets
+    \item However, some norms occur more frequently than others
+      \begin{itemize}
+      \item Short documents are more frequent than long documents
+      \item Small values introduce higher error
+      \end{itemize}
+    \item Thus, we need more precision for short documents
+    \end{itemize}
+  \end{block}
+
+\end{frame}
+
+% ----------------------------------------------------------------------
+
+\begin{frame}
+  \frametitle{Reducing the Relative Error}
+  
+  \begin{block}{Geometric-sized buckets}
+    Using $b$ bits to approximate $x$, such that $L \leq x \leq U$:
+    \begin{displaymath}
+      \begin{array}{c}
+        B = \left(\frac{U + \epsilon}{L}\right)^{2^{-b}} \\
+        c = f(x) = \floor{\log_B(x/L)} = 
+        \left\lfloor\frac{\log(x/L)}{\log B}\right\rfloor \\
+      \end{array}
+    \end{displaymath}
+    Range of values for $x$:
+    \begin{displaymath}
+      g(c) \leq x < g(c+1)
+    \end{displaymath}
+    where
+    \begin{displaymath}
+      g(c) = L \cdot B^c
+    \end{displaymath}
+  \end{block}
+
+\end{frame}
+
+% ----------------------------------------------------------------------
+
+\begin{frame}
+  \frametitle{An Example}
+  
+  \begin{exampleblock}{}
+    Consider $10 \leq x \leq 18$, $b = 2$, $\epsilon = 0.1$:
+    \begin{displaymath}
+      B = \left(\frac{18.1}{10.0}\right)^{2^{-2}} = 1.160
+    \end{displaymath}
+    If $x = 15.3$:
+    \begin{displaymath}
+      c = f(15.3) = \floor{\log_{1.16}(15.3/10.0)} = 2 = 10
+    \end{displaymath}
+    Range for $c = 2$:
+    \begin{displaymath}
+      13.456 \leq x < 15.610
+    \end{displaymath}
+  \end{exampleblock}
+
+% para comparar as funcoes, fazer no gnuplot:
+%
+% plot [1:1000] floor((x-1)/(1000-1+0.1)*2**2)
+% replot floor(log(x/1)/log( ((1000+0.1)/1)**(2**-2) ))
+%
+% isto assume que L = 1, U = 1000, epslon = 0.1, b = 2
+
+\end{frame}
+
+% ----------------------------------------------------------------------
+
+\begin{frame}
+  \frametitle{Using the Approximate Weights}
+  
+  \begin{enumerate}
+    \setcounter{enumi}{2}
+  \item For $1 \leq d \leq N$\\
+    \hspace{4ex}Set $A_d \att A_d/g(c_d)$
+  \item Set $H \att \text{top $r$ values of $A_d$}$
+  \item For $d \in H$
+    \begin{enumerate}
+    \item Read $W_d$ from disk
+    \item Get the address of document $d$
+    \item Set $A_d \att A_d \cdot g(c_d) / W_d$
+    \end{enumerate}
+  \item For $1 \leq d \leq N$
+    \begin{enumerate}
+    \item If $A_d \not\in H \wedge A_d > \min\{H\}$ then
+      \begin{enumerate}
+      \item Read $W_d$ from disk
+      \item Set $A_d \att A_d \cdot g(c_d)/W_d$
+      \item If $A_d > \min\{H\}$ then\\
+        \hspace{4ex}Set $H \att H - \{\min\{H\}\} + \{A_d\}$\\
+        \hspace{4ex}Get address of document $d$
+      \end{enumerate}
+    \end{enumerate}
+  \end{enumerate}
+\end{frame}
+
+% ----------------------------------------------------------------------
+
+\section{Reducing the Inverted Lists}
+
+\begin{frame}
+  \frametitle{Storing the Accumulators}
+  
+  \begin{block}{}
+    \begin{itemize}
+    \item One accumulator per document may be too expensive
+    \item Solution: use \alert{pruning strategies}
+    \item Example:
+      \begin{itemize}
+      \item Process terms with higher weights first
+      \item Stop creating accumulators when weight is below a threshold
+      \end{itemize}
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+% --------------------------------------------------
+
+\begin{frame}
+  \frametitle{Frequency-Sorted Indexes}
+
+  \begin{block}{}
+    \begin{itemize}
+    \item Order the inverted lists by \fdt, followed by $d$
+      \begin{multline*}
+        \ang{ 5; (1,2), (2,2), (3,5), (4,1), (5,2) } \\
+        \Downarrow \\
+        \ang{ 5; (3,5), (1,2), (2,2), (5,2), (4,1) }
+      \end{multline*}
+    \item Advantage: \alert{allows easy access to the most important terms}
+    \end{itemize}
+  \end{block}
+
+\end{frame}
+
+% ----------------------------------------------------------------------
+
+\begin{frame}
+  \frametitle{Storing Frequency-Sorted Lists}
+
+  \begin{block}<+->{}
+    Documents are grouped by frequencies
+    \begin{multline*}
+      \ang{ 5; (3,5), (1,2), (2,2), (5,2), (4,1) } \\
+      \Downarrow \\
+      \ang{ (5,1: 3), (2,3: 1,2,5), (1,1: 4) }
+      \end{multline*}
+    \begin{itemize}
+    \item $d$-gap coding can be used within each block
+    \item frequency gaps can also be coded
+    \end{itemize}
+  \end{block}
+
+  \begin{block}<+->{Processing the Lists}
+    \begin{enumerate}
+    \item Lists are processed in parallel, one block at a time
+    \item The block with the highest $TF \times IDF$ value is always processed
+      first
+    \end{enumerate}
+  \end{block}
+
+\end{frame}
+
+% ----------------------------------------------------------------------
+
+\begin{frame}
+  \frametitle{Processing Frequency-Sorted Indexes}
+  
+  \begin{block}{Advantages}
+    \begin{itemize}
+    \item More accuracy: if a cut threshold is used, the lost documents will
+      have small importance
+    \item Less processing: the larger blocks (which are those with low
+      frequencies) have a smaller chance of being processed
+    \item Less disk transfer: lists can be read one block at a time
+    \item No loss in retrieval effectiveness: experiments show that it does not
+      loose and sometimes improves the results
+    \end{itemize}
+  \end{block}
+
+  \begin{block}{Drawback}
+    May not appropriate for Boolean queries (why?)
+  \end{block}
+\end{frame}
+
+% ----------------------------------------------------------------------
+
+\section{Sorting the Ranked Documents}
+
+\begin{frame}
+  \frametitle{Sorting the Ranked Documents}
+  
+  \begin{block}<+->{The problem}
+    \begin{itemize}
+    \item Sorting all documents requires $N \log N$ operations
+      \begin{itemize}
+      \item For large collections this implies several seconds
+      \end{itemize}
+    \item However: we are only interested in the $k$ top documents, where $k
+      \ll N$
+    \end{itemize}
+  \end{block}
+
+  \begin{block}<+->{The solution}
+    Use a heap data structure
+  \end{block}
+\end{frame}
+
+% ----------------------------------------------------------------------
+
+\begin{frame}
+  \frametitle{Selecting the Top $r$ documents}
+  
+  \begin{enumerate}
+  \item Set $H \att \{\}$
+  \item For $1 \leq d \leq r$
+    \begin{enumerate}
+    \item Set $A_d \att A_d/W_d$
+    \item Get the address of document $d$
+    \item Set $H \att H + \{A_d\}$
+    \end{enumerate}
+  \item Build $H$ into a heap
+  \item For $r + 1 \leq d \leq N$
+    \begin{enumerate}
+    \item Set $A_d \att A_d/W_d$
+    \item If $A_d > \min\{H\}$ then
+      \begin{enumerate}
+      \item Set $H \att H - \min\{H\} + \{A_d\}$
+      \item Sift $H$
+      \item Get the address of document $d$
+      \end{enumerate}
+    \end{enumerate}
+  \item For $1 \leq i \leq r$
+    \begin{enumerate}
+    \item Select $d$ such that $A_d = \max\{H\}$
+    \item Retrieve $d$
+    \item Set $H \att H - \{A_d\}$
+    \end{enumerate}
+  \end{enumerate}
+\end{frame}
+
+% ----------------------------------------------------------------------
+
+\begin{frame}
+  \frametitle{Algorithm Complexity}
+  
+  \begin{block}<+->{Worst case}
+    \begin{displaymath}
+      2r + (N - r) + 2(N - r)\log r + r\log r
+    \end{displaymath}
+  \end{block}
+
+  \begin{block}<.->{Expected value}
+    \begin{displaymath}
+      2r + N + 1.4r \log r\log(N/r) + r\log r
+    \end{displaymath}
+  \end{block}
+
+  \begin{example}<+->
+    For $N = 1\,000\,000$ and $r = 100$:
+    \begin{itemize}
+    \item Full sort: $20\,000\,000$ comparisons
+    \item Heap: $1\,013\,000$ comparisons
+    \end{itemize}
+  \end{example}
+\end{frame}
+
+% ------------------------------------------------------------
+
+\finalframe{Questions?}
+
+\end{document}

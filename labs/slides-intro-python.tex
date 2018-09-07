@@ -1,0 +1,347 @@
+\documentclass{beamer}
+
+\usepackage{pri}
+% \usepackage{breakurl}
+% \usepackage[T1]{fontenc}
+\usepackage{lmodern}
+
+\let\textquotedbl="
+
+\newenvironment{code}{%
+  \begin{exampleblock}{}
+      \ttfamily
+    }{%      
+  \end{exampleblock}
+}
+
+\newcommand{\triple}{\textquotedbl\textquotedbl\textquotedbl}
+
+
+\begin{document}
+
+\subtitle{Introduction to Python}
+
+\maketitle
+
+\begin{frame}
+    \frametitle{The Python Language}
+    \begin{itemize}
+    \item Interpreted language
+    \item Dynamic typing
+    \item Many native high-level data structures (lists, dictionaries, ...)
+    \item Many available modules (standard and 3rd party)
+    \item (Not strictly) object-oriented 
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{The Interpreter}
+    \begin{itemize}
+    \item The standard interpreter is invoked by:
+        \begin{code}
+            > python
+        \end{code}
+    \item For interactive sessions, we recommend using the \emph{ipython}
+        toolkit
+    \item The ipython shell is invoked by:
+        \begin{code}
+            > ipython
+        \end{code}
+    \item Scripts can be run using:
+        \begin{code}
+            > python scriptname.py
+        \end{code}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Hello world}
+    \begin{code}
+        > print "Hello world!"
+    \end{code}
+\end{frame}
+
+\begin{frame}[allowframebreaks]
+    \frametitle{Data types}
+    \begin{itemize}
+    \item Integers (int)
+        \begin{code}
+            > x = 1\\
+            > x = z = 3
+        \end{code}
+    \item Floating point numbers (float)
+        \begin{code}
+            > x = 0.45
+        \end{code}
+    \item Strings (str)
+        \begin{code}
+            > x = "you can use double quotes"\\
+            > x = 'or single quotes: it means the same'\\
+            > x = \triple this is a\\
+              string with many lines\triple
+        \end{code}
+    \item Unicode strings (unicode)
+        \begin{code}
+            > x = u"this is unicode"
+        \end{code}
+    % \item Complex numbers (complex)
+    %     \begin{code}
+    %         > x = (1+2j)
+    %     \end{code}
+    \item To retrieve the type of a variable:
+        \begin{code}
+            > type(x)
+        \end{code}
+    \item Conversion between types:
+        \begin{code}
+            > int('123') \\
+            123\\
+            > str(345)\\
+            '345'
+        \end{code}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[allowframebreaks]
+    \frametitle{String operations}
+    \begin{itemize}
+    \item Concatenation:
+        \begin{code}
+            > x = 'abc' + 'def'
+        \end{code}
+    \item Slicing:
+        \begin{code}
+            > x = 'abcdef'\\
+            > x[3]\\
+            'd'\\
+            > x[2:4]\\
+            'cd'\\
+            > x[2:]\\
+            'cdef'\\
+            > x[-1]\\
+            'f'
+        \end{code}
+    \item String length:
+        \begin{code}
+            > len(x)
+        \end{code}
+    \item More string methods:
+        \begin{block}{}
+            \url{http://docs.python.org/2/library/stdtypes.html\#string-methods}
+        \end{block}
+    \item More on \emph{unicode strings}:
+        \begin{block}{}
+            \url{http://farmdev.com/talks/unicode/}
+        \end{block}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Arithmetic operations and comparisons}
+    \begin{code}
+        > 1 + 2\\
+        3\\
+        > 4 * 8\\
+        32\\
+        > 8 / 3\\
+        2\\
+        > 8 / 3.0\\
+        2.6666666666666665\\
+        > 3>4\\
+        False\\
+        > 'ab' != 'ac'\\
+        True\\
+        > 'yes' if 1>2 else 'no'\\
+        'no'
+    \end{code}
+\end{frame}
+
+\begin{frame}[allowframebreaks]
+    \frametitle{Lists}
+    \begin{itemize}
+    \item A list:
+        \begin{code}
+            > x = ['abc', 123, 0.5]
+        \end{code}
+    \item Slicing:
+        \begin{code}
+            > x[2]\\
+            0.5\\
+            > x[:2]\\
+            x = ['abc', 123]
+        \end{code}
+    \item Concatenation:
+        \begin{code}
+            > x = ['abc', 123] + [0.5, 5]
+        \end{code}
+    \item Deletion:
+        \begin{code}
+            > del x[1:2]
+        \end{code}
+    \item Nesting:
+        \begin{code}
+            > x = ['abc', [3, 5, 6], 123, 0.5]
+        \end{code}
+    \item List comprehensions:
+        \begin{code}
+            > values = [2, 5, 8, 13]\\
+            > squares = [x**2 for x in values]
+        \end{code}
+    \item Other \emph{sequence types}:
+        \begin{block}{}
+            \url{http://docs.python.org/2/library/stdtypes.html\#typesseq}
+        \end{block}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Dictionaries}
+    \begin{itemize}
+    \item A dictionary:
+        \begin{code}
+            > x = \{'abc':2, 'efg':3\}
+        \end{code}
+    \item Access:
+        \begin{code}
+            > x['abc']
+        \end{code}
+    \item Keys and values:
+        \begin{code}
+            > x.keys()\\
+            \,['abc', 'efg']\\
+            > x.values()\\
+            \,[2, 3]
+        \end{code}
+    \item See also \emph{sets}:
+        \begin{block}{}
+            \url{http://docs.python.org/2/tutorial/datastructures.html\#sets}
+        \end{block}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[allowframebreaks]
+    \frametitle{Control flow}
+    \begin{itemize}
+    \item While...
+        \begin{code}
+            x = 0\\
+            while x < 10:\\
+            ~~~~print~x\\
+            ~~~~x += 1\\
+            print 'done'
+        \end{code}
+        \textbf{Notice the \emph{indentation}!}
+    \item If...
+        \begin{code}
+            if x < 0:\\
+            ~~~~print 'neg'\\
+            elif x > 0:\\
+            ~~~~print 'pos'\\
+            else:\\
+            ~~~~print 'zero'
+        \end{code}
+    \item For...
+        \begin{code}
+            x = ['a', 'b', 'c']\\
+            for i in x:\\
+            ~~~~print i
+        \end{code}
+        See also the functions \emph{range} and \emph{xrange} and the
+        statements \emph{break}, \emph{continue}, and \emph{else}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Functions}
+    \begin{itemize}
+    \item Defining functions:
+        \begin{code}
+            def add\_one(x):\\
+            ~~~~return x + 1
+        \end{code}
+        Note: functions do not need to return a value
+    \item Default argument values:
+        \begin{code}
+            def add\_value(x, v = 1):\\
+            ~~~~return x + v
+        \end{code}
+    \item Lambda forms:
+        \begin{code}
+            > f = lambda x: x + 1\\
+            > f(3)\\
+            4
+        \end{code}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Input and Output}
+    \begin{itemize}
+    \item Reading and writing files:
+        \begin{code}
+            f = open(filename, 'r')\\
+            for line in f:\\
+            ~~~~print line\\
+            f.close()
+        \end{code}
+        \begin{code}
+            f = open(filename, 'w')\\
+            f.write('abcdef')\\
+            f.close()
+        \end{code}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{String formatting}
+    \begin{code}
+        '\{0\}, \{1\}, \{2\}'.format('a', 'b', 'c')
+    \end{code}
+    \begin{code}
+        '\{:<30\}'.format('left aligned')
+    \end{code}
+    \begin{code}
+        "int: \{0:d\};  hex: \{0:x\};  oct: \{0:o\};  bin: \{0:b\}".format(42)
+    \end{code}
+    \begin{code}
+        '\{:+f\}; \{:+f\}'.format(3.14, -3.14)
+    \end{code}
+    \vfill
+    See also:
+    \begin{block}{}
+        \url{https://docs.python.org/2/library/string.html\#string-formatting}
+    \end{block}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Other stuff}
+    \begin{itemize}
+    \item Comments (\#) and documentation
+    \item Regular expressions
+    \item Modules
+    \item Classes
+    \item Exceptions
+    \item The Standard Library
+    \end{itemize}
+    Look it up...
+\end{frame}
+
+\begin{frame}
+    \frametitle{Useful Links}    
+    \begin{description}
+    \item[Python Programming Language] \url{http://www.python.org/}
+    \item[The Python Standard Library] \url{http://docs.python.org/2/library/}
+    \item[The Python Tutorial] \url{http://docs.python.org/2/tutorial/}
+    \item[learnpython.org] \url{http://www.learnpython.org/}
+    % acho que este est� velho: \item[Dive Into Python] \url{http://www.diveintopython.net/}
+    \item[Google Python Style Guide] \url{http://google-styleguide.googlecode.com/svn/trunk/pyguide.html}
+    \item[Python Cheat Sheet] \url{http://www.cheatography.com/davechild/cheat-sheets/python/}
+    \end{description}
+\end{frame}
+
+\end{document}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: t
+%%% End: 

@@ -1,0 +1,132 @@
+\documentclass[12pt]{article}
+
+\usepackage{prilab}
+\usepackage{url}
+\usepackage{amsmath}
+
+\begin{document}
+
+\maketitle{Lab 03: Text Classification and Clustering}
+
+In the following exercises, we will use the \emph{20 Newsgroup} dataset. This is a well known document collection, frequently used to evaluate text classifiers. You can find more
+information at \url{http://qwone.com/~jason/20Newsgroups/}.
+
+To solve the proposed problems, we will use the \emph{scikit-learn} machine learning library for Python\footnote{\url{http://scikit-learn.org/stable/}. All present code excerpts are adapted from the documentation.}. The goal is to experiment with simple approaches for text classification and clustering, reusing the implementations from \emph{scikit-learn}.
+
+Whereas in previous lab classes you implemented mechanisms for reading textual documents and representing them according to the vector space model, in this case you will re-use existing methods for performing these operations. However, keep in mind that you should also be able to implement by yourself all the involved algorithms.
+
+\subsection*{Background}
+
+The scikit-learn library already provides access to the 20 Newsgroups dataset. You can use the following code to obtain it:
+
+\begin{verbatim}
+from sklearn.datasets import fetch_20newsgroups
+train = fetch_20newsgroups(subset='train')
+test = fetch_20newsgroups(subset='test')
+\end{verbatim}
+
+This already provides a standard split into training and test sets.
+
+You can see the first 10 documents in the dataset through
+\verb+train.data[:10]+ and the classes of those documents through \verb+train.target[:10]+. You will notice that the classes are represented as numbers. To see the class names you can use: \verb+train.target_names+.
+
+The actual data is in text format. You need to transform it into numeric weight vectors (i.e., according to the vector space model, and using binary, term frequency, or TF-IDF weights). The scikit-learn library provides methods for this:
+\begin{verbatim}
+from sklearn.feature_extraction.text import TfidfVectorizer
+vectorizer = TfidfVectorizer( use_idf=False )
+trainvec = vectorizer.fit_transform(train.data)
+testvec = vectorizer.transform(test.data)
+\end{verbatim}
+
+Once you do this to all data, you can fit a classifier on the training data and test it on the testing data.
+
+\begin{verbatim}
+from sklearn.naive_bayes import MultinomialNB
+classifier = MultinomialNB()
+classifier.fit(trainvec, train.target)
+classes = classifier.predict(testvec)
+\end{verbatim}
+
+The scikit-learn library also provides classes to evaluate classification results. The standard evaluation metrics, used in information retrieval and in text classification settings, will be detailed later in the course. The simplest of these metrics is perhaps the classification accuracy, which corresponds to the percentage of test instances that were assigned to the correct class:
+
+\begin{verbatim}
+from sklearn import metrics
+print metrics.accuracy_score(test.target, classes)
+print metrics.classification_report(test.target, classes)
+\end{verbatim}
+
+Document clustering can be achieved similarly with the scikit-learn library, for instance by using the K-Means algorithm:
+
+\begin{verbatim}
+from sklearn.cluster import MiniBatchKMeans
+cluster = MiniBatchKMeans(20)
+cluster.fit(trainvec)
+\end{verbatim}
+
+To check the clusters in which each document was placed, you can use \verb+cluster.labels_+.
+
+\section{}
+
+Implement a classifier for the 20 Newsgroups collection and measure its performance. Use the implementation of Multinomial Na{\"i}ve Bayes classifiers, available from scikit-learn.
+
+\section{}
+
+Try to improve the classification by:
+\begin{enumerate}
+\item Removing stopwords;
+% \item Removing the message headers;
+\item Removing very rare words (e.g. words that occur less than 3 times)
+\item Removing very frequent words (e.g. words that occur in more than 90\% of the documents)
+\item Use different classification algorithms, such as:
+\begin{itemize}
+\item A nearest neighbour classifier (i.e., \verb+sklearn.neighbors.KNeighborsClassifier+)
+\item The Perceptron algorithm (i.e., \verb+sklearn.linear_model.Perceptron+)
+\item Support Vector Machines (i.e., \verb+sklearn.svm.LinearSVC+)
+\end{itemize}
+\end{enumerate}
+
+Measure the performance of each of these variations.
+
+\section{}
+
+Implement a clustering of the full 20 Newsgroup collection, using the implementation of K-Means clustering available from scikit-learn.
+
+\section{Implementation Exercise}
+
+Implement, in Python, (i) a nearest neighbour classifier, and (ii) a multinomial  na\"ive  Bayes  classifier. You can re-use the mechanisms in scikit-learn to represent documents as feature vectors, but you should program yourself the training  procedures for inferring the model parameters, and the test procedures for inferring the most likely class, given a test instance.
+
+\section{Pen and Paper Exercise}
+
+Consider the following table where each record describes the characteristics of an individual, indicating also if the individual is a subscriber of a given news feed. The considered features are: gender, age ($<$ 26 years old) and if the individual owns a car.
+
+\begin{center}
+\scriptsize
+\tt
+\begin{tabular}{ l c c c }
+gender\_is\_male & ~~~~age < 26~~~~ & ~~~~has car~~~~ & ~~~~{\bf subscriber}~~~ \\
+\hline
+\hline
+Yes    & Yes                & No                & Yes \\ \hline
+Yes    & Yes                & Yes               & Yes \\ \hline
+Yes    & Yes                & No                & Yes \\ \hline
+Yes    & No                 & No                & No  \\ \hline
+Yes    & Yes                & Yes               & No  \\ \hline
+No     & No                 & No                & No  \\ \hline
+No     & Yes                & No                & No  \\ \hline
+No     & No                 & Yes               & No  \\ \hline
+No     & Yes                & Yes               & No  \\ \hline
+No     & Yes                & No                & No  \\ \hline
+\end{tabular}
+\end{center}
+
+Use the provided data to infer the parameters of a multinomial naïve Bayes classifier, capable of predicting if a given individual is a subscriber. After inferring the parameters, use them to classify the instance {\tt <Yes, No, Yes>}.
+
+Remember that a multinomial naïve Bayes classifier chooses a class $c$ according to the following rule, where $\mathbf{x}=<x_1,\ldots,x_n>$ is the instance (i.e., the feature vector) to classify:
+
+\begin{equation*}
+\underset{c}{\operatorname{argmax}} \text{~} \mathrm{P}(c) \times  \displaystyle\prod_{i=1}^n \mathrm{P}(x_i \vert c)
+\end{equation*}
+
+{\bf Note:} You can choose to only present the values for the parameters that are required to classify the given instance. It is not necessary to smooth the probability estimates. 
+
+\end{document}

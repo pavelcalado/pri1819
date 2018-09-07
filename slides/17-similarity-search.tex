@@ -1,0 +1,50 @@
+\documentclass[svgnames]{beamer}
+
+\usepackage{pri}
+
+\graphicspath{{./}{figures/}{figures/17-similarity-search-figs/}} 
+
+\newcommand{\fdt}{\ensuremath{f_{d,t}}}
+\newcommand{\ceil}[1]{\ensuremath{\lceil #1 \rceil}}
+\newcommand{\floor}[1]{\ensuremath{\lfloor #1 \rfloor}}
+\newcommand{\att}{\ensuremath{\leftarrow}}
+\newcommand{\ang}[1]{\ensuremath{\langle #1 \rangle}}
+
+\subtitle{Similarity Search}
+
+\begin{document}
+
+\maketitle
+\makeoutline
+
+\begin{frame}
+    \frametitle{Bibliography}
+    \href{http://www.mmds.org}{Jure Leskovec, Anand Rajaraman, and Jeff Ullman, Mining of Massive Datasets,} Chapter 3
+\end{frame}
+
+\section{The Cosine Measure}
+
+\begin{frame}
+  \frametitle{The Cosine Measure}
+  
+  \begin{block}{Similarity function}
+    \begin{displaymath}
+      sim(d_j,q) =
+         \frac{1}{W_d \times W_q}
+         \times \sum_{i=1}^{t}w_{i,j} \times w_{i,q}
+    \end{displaymath}
+    \begin{itemize}
+    \item $W_d$ is the document norm
+    \item $W_q$ is the query norm
+      \begin{itemize}
+      \item irrelevant for ranking
+      \end{itemize}
+    \item $w_{i,j} = f_{i,j} \times idf_i$
+    \end{itemize}
+  \end{block}
+
+\end{frame}
+
+\finalframe{Questions?}
+
+\end{document}

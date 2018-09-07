@@ -1,0 +1,88 @@
+\documentclass[12pt]{article}
+
+\usepackage{prilab}
+\usepackage{url}
+\usepackage{amsmath}
+
+\begin{document}
+
+\maketitle{Lab 04: Information Extraction}
+
+The Python extension package named \verb+nltk+\footnote{\url{http://www.nltk.org}} provides a set of tools that are useful for addressing information extraction problems such as Named Entity Recognition (NER). More specifically, you can use the following methods:
+
+\begin{itemize}
+\item \verb+nltk.sent_tokenize(d)+, which splits a document d into a list of sentences;
+
+\item \verb+nltk.word_tokenize(s)+, which splits a sentence s into a list of words;
+
+\item \verb+nltk.pos_tag(w)+, which leverages a sequence classification model to tag the words in list $w$ according to their part-of-speech (i.e., tag words according to morphosyntactic classes such as noun, verb, adjective, $\ldots$);
+
+\item \verb+nltk.ne_chunk(p, binary=True)+, which tags the words in list $p$ as named entities or not (where each word in $p$ was previously tagged with a part-of-speech tag).
+\end{itemize}
+
+Note that the output of each of these tools can be used as input to the next tool.
+
+\section{}
+
+Test the tools with a few sentences of your own, or extracted from Web sites. Try text from different contexts (e.g. news, blogs, etc.).
+
+~\\
+{\bf Notes:}
+
+\begin{itemize}
+\item These tools are trained for the English language, and thus they do not perform well on other languages.
+\item Take a look at the output format of each tool, so that you can use it on the next exercise.
+\end{itemize}
+
+\section{}
+
+Using the above tools, print all named entities found in the documents of the 20 newsgroups collection\footnote{ \url{http://qwone.com/~jason/20Newsgroups/}}. This document collection can be conveniently accessed through the scikit-learn library, as shown in the previous lab class.
+
+\section{Regular Expressions Exercise}
+
+Write a regular expression for each of the following tasks:
+
+\begin{enumerate}
+\item Match dates according to the pattern {\tt DD-MM-YYYY}. Assume that the year should refer to a value between 1980 and 2017.
+
+\item Match e-mail addresses. Recall that all e-mails addresses must obey the pattern {\tt local-part@domain}, and assume that both the local and the domain parts can only contain alphanumeric characters or dot symbols, provided that the dot is not the first or last character, and that dots do not appear consecutively.
+\end{enumerate}
+
+Use Python's {\tt re}\footnote{\url{https://docs.python.org/2/library/re.html}} module (i.e., a Python standard library module that provides operations for regular expression matching) to check if a given input string matches a date or an e-mail address.
+
+\section{Pen and Paper Exercise}
+
+Consider the Hidden Markov Model represented by the following probabilities. Remember that $\pi$ corresponds to the initial probabilities of each state, $B$ corresponds to the state emission probabilities, and $A$ corresponds to the transition probabilities. 
+
+The symbols corresponding to each line in matrix B are $a$, $b$, and $c$.
+
+\begin{center}
+$
+\pi$ = 
+ \begin{pmatrix}
+  0.8 & 0.2
+ \end{pmatrix}
+~\\~\\~\\
+B = 
+ \begin{pmatrix}
+  0.1 & 0.6 \\
+  0.7 & 0.2 \\
+  0.2 & 0.2 
+ \end{pmatrix}
+~\\~\\~\\
+A = 
+ \begin{pmatrix}
+  0.1 & 0.5 \\
+  0.9 & 0.5
+ \end{pmatrix}
+\end{center}
+
+\begin{enumerate}
+\item Compute the total probability of occurrence for the sequence {\bf acbc}.
+
+\item What would be the probability for the sequence {\bf acbc} occurring, if the sequence of states was known as being {\bf 1212}.
+
+\item What is the most likely sequence of states for the sequence of symbols {\bf acbc}? 
+\end{enumerate}
+
+\end{document}

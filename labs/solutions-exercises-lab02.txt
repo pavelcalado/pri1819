@@ -1,0 +1,52 @@
+*** LAB 02 - SOLUTION TO PEN AND PAPER EXERCISE ***
+
+Começamos por calcular o IDF para os dez diferentes termos no vocabulário que é usado nos documentos. A cada termo do vocabulário atribuímos também um identificador, o qual irá corresponder a uma dada dimensão nos vectores resultantes da representação vectorial dos documentos:
+
+~\\
+01: IDF(01) = IDF(shipment) = $\log(4/2)$ = 0.3 \\
+02: IDF(02) = IDF(of) = $\log(4/3)$ = 0.1 \\
+03: IDF(03) = IDF(gold) = $\log(4/1)$ = 0.6 \\
+04: IDF(04) = IDF(damaged) = $\log(4/2)$ = 0.3 \\
+05: IDF(05) = IDF(in) = $\log(4/4)$ = 0.0 \\
+06: IDF(06) = IDF(fire) = $\log(4/2)$ = 0.3 \\
+07: IDF(07) = IDF(delivery) = $\log(4/1)$ = 0.6 \\
+08: IDF(08) = IDF(silver) = $\log(4/2)$ = 0.3 \\
+09: IDF(09) = IDF(arrived) = $\log(4/2)$ = 0.3 \\
+10: IDF(10) = IDF(truck) = $\log(4/3)$ = 0.1
+~\\
+
+De seguida, cada um dos documentos é representado por um vector com dez dimensões, resultante de multiplicar o TF de cada um dos dez termos no documento, pelo respectivo IDF.
+~\\
+
+1: $<$ 1 $\times$ IDF(01) , 1 $\times$ IDF(02) , 1 $\times$ IDF(03) , 1 $\times$ IDF(04) , 1 $\times$ IDF(05) , 1 $\times$ IDF(06) , 0 $\times$ IDF(07) , 0 $\times$ IDF(08) , 0 $\times$ IDF(09) , 0 $\times$ IDF(10) $>$
+~\\
+
+2: $<$ 0 $\times$ IDF(01) , 1 $\times$ IDF(02) , 0 $\times$ IDF(03) , 0 $\times$ IDF(04) , 1 $\times$ IDF(05) , 0 $\times$ IDF(06) , 1 $\times$ IDF(07) , 2 $\times$ IDF(08) , 1 $\times$ IDF(09) , 1 $\times$ IDF(10) $>$
+~\\
+
+3: $<$ 1 $\times$ IDF(01) , 1 $\times$ IDF(02) , 0 $\times$ IDF(03) , 0 $\times$ IDF(04) , 1 $\times$ IDF(05) , 0 $\times$ IDF(06) , 0 $\times$ IDF(07) , 1 $\times$ IDF(08) , 1 $\times$ IDF(09) , 1 $\times$ IDF(10) $>$
+~\\
+
+4: $<$ 0 $\times$ IDF(01) , 0 $\times$ IDF(02) , 0 $\times$ IDF(03) , 1 $\times$ IDF(04) , 1 $\times$ IDF(05) , 1 $\times$ IDF(06) , 0 $\times$ IDF(07) , 0 $\times$ IDF(08) , 0 $\times$ IDF(09) , 1 $\times$ IDF(10) $>$
+~\\
+
+Após os cálculos, ficaríamos com as seguintes representações para os documentos
+~\\
+
+1: $<$ 0.3 , 0.1 , 0.6 , 0.3 , 0.0 , 0.3 , 0.0 , 0.0 , 0.0 , 0.0 $>$ ~~~~~~~~~~~~ 2: $<$ 0.0 , 0.1 , 0.0 , 0.0 , 0.0 , 0.0 , 0.6 , 0.6 , 0.3 , 0.1 $>$
+
+3: $<$ 0.3 , 0.1 , 0.0 , 0.0 , 0.0 , 0.0 , 0.0 , 0.3 , 0.3 , 0.1 $>$ ~~~~~~~~~~~~ 4: $<$ 0.0 , 0.0 , 0.0 , 0.3 , 0.0 , 0.3 , 0.0 , 0.0 , 0.0 , 0.1 $>$
+
+
+A representação vectorial para a consulta seria $<$ 0.0 , 0.0 , 0.0 , 0.0 , 0.0 , 0.0 , 0.0 , 1.0 , 0.0 , 1.0 $>$
+~\\
+
+O documento mais relevante para a consulta seria assim o número 2, pois seria este o que obteria o maior valor para a semelhança do cosseno entre uma representação para um documento, e a representação para a consulta. 
+~\\
+
+Note-se que apenas as dimensões 8 e 10 dos vectores iriam contribuir para o valor da semelhança do cosseno, e note-se que o documento 2 é aquele que apresenta um valor mais alto na dimensão 8. A semelhança do cosseno entre dois vectores $\mathbf{A}$ e $\mathbf{B}$ é calculada de acordo com a seguinte equação:
+
+$\text{similarity} = \cos(\theta) = {\mathbf{A} \cdot \mathbf{B} \over \|\mathbf{A}\| \|\mathbf{B}\|} = \frac{ \sum\limits_{i=1}^{n}{A_i  B_i} }{ \sqrt{\sum\limits_{i=1}^{n}{A_i^2}}  \sqrt{\sum\limits_{i=1}^{n}{B_i^2}} }$
+
+================================
+================================

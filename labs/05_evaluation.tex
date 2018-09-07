@@ -1,0 +1,169 @@
+\documentclass[12pt]{article}
+
+\usepackage{prilab}
+
+
+\begin{document}
+
+\maketitle{Lab 05: Evaluation in Information Extraction and Retrieval}
+
+To solve the following problems, we will use the \emph{Whoosh} search library
+for Python\footnote{\url{https://bitbucket.org/mchaput/whoosh/wiki/Home}. All
+  code excerpts shown here are adapted from the Whoosh documentation.}. The
+goal is to implement and evaluate a simple search engine.
+
+\section{}
+
+The file \texttt{pri\_cfc.txt} is composed of several text documents from
+the CFC collection\footnote{\url{http://www.dcc.ufmg.br/irbook/cfc.html}}. It
+contains one document per line, and the first word of each line is the
+document ID.
+
+Create a Python script that indexes all the documents using the Whoosh
+library. Make sure that you also store the document ID in a separate field.
+
+The following code shows an example of how to index documents.
+\begin{verbatim}
+from whoosh.index import create_in
+from whoosh.fields import *
+schema = Schema(id = NUMERIC(stored=True), content=TEXT)
+ix = create_in("indexdir", schema)
+writer = ix.writer()
+writer.add_document(id=1,
+                    content=u"This is the first document we've added!")
+writer.add_document(id=2,
+                    content=u"The second one is even more interesting!")
+writer.commit()
+\end{verbatim}
+
+\begin{quote}
+    \textbf{Note:} The directory \texttt{indexdir} must already exist, for the
+    index to be created.
+\end{quote}
+
+\section{}
+
+Once the documents are indexed, implement a function that takes as argument a
+string and performs a search over the index, returning a list of document IDs,
+ordered by their similarity ranking.
+
+The following example code shows how to perform a query using Whoosh.
+\begin{verbatim}
+from whoosh.index import open_dir
+from whoosh.qparser import *
+ix = open_dir("indexdir")
+with ix.searcher() as searcher:
+    query = QueryParser("content", ix.schema, group=OrGroup).parse(u"first document")
+    results = searcher.search(query, limit=100)
+    for r in results:
+        print r
+    print "Number of results:", results.scored_length()
+\end{verbatim}
+
+\begin{quote}
+    \textbf{Notes:} 
+
+    All strings to be processed by Whoosh must be Unicode. You can convert any
+    string to Unicode using the
+    \texttt{decode}\footnote{\url{http://docs.python.org/2/library/stdtypes.html\#str.decode}}
+    method.
+
+    By default, Whoosh returns the results ordered using the BM25 similarity.
+\end{quote}
+
+\section{}
+
+Implement functions to measure the precision, recall and F1 of a list of search
+results. The functions should take the following inputs:
+\begin{enumerate}
+\item A list of document IDs (the result of a search);
+\item A set of IDs of the relevant documents.
+\end{enumerate}
+Each of the functions that is to be developed should return the precision, recall, and F1 values, respectively.
+
+\section{}
+
+The file \texttt{pri\_queries.txt} contains a set of queries and, for each
+query, the set of relevant documents.
+
+Implement a script that reads the file and, for each query, executes the
+corresponding search and measures the precision, recall and F1 of the
+results. The script should print out each query and its evaluation values and a
+final average value for each measure.
+
+You should limit your search results to the first 100.
+
+\section{Pen and Paper Exercises}
+
+\subsection{Evaluating an Information Retrieval System}
+
+A query $Q$ yielded as answer the ordered set
+$R = \left\{ d_1, d_2 \cdots d_{20} \right\}$. In $R$, documents $d_i$ where
+$i$ is odd where judged as \emph{relevant}, whereas documents $d_i$ where $i$
+is even where judged \emph{not relevant}. Find the following values:
+\begin{enumerate}
+\item Precision@5;
+\item R-precision;
+\item The interpolated precision and recall curve.
+\end{enumerate}
+
+\subsection{Evaluating a Classifier}
+
+Consider a binary classification problem, where each instance can be assigned to either a positive or a negative class. Consider also that you have a dataset $D$ with 10 instances, each assigned to the corresponding class by a domain expert. 
+
+A given classification model assigned a class to each of the instances in the dataset. Considering the predicted classes $C$, you want to evaluate the quality of the model.
+
+\begin{center}
+$D = < + , + , - , - , + , + , - , - , + , - >$ \\
+$C = < + , + , - , + , + , - , - , - , - , - >$
+\end{center}
+
+\begin{enumerate}
+\item Draw the confusion matrix for the aforementioned classification results.
+\item Compute the accuracy, precision, recall and F1 metrics.
+\end{enumerate}
+
+\subsection{Evaluating an Information Extraction System}
+
+Consider the following textual document, to be processed by an Information Extraction (IE) system in order to collect entity mentions (i.e., recognize entities such as names for persons, titles/positions, and organizations).
+
+{\it 
+~\\
+For years, \underline{Microsoft Corporation} \underline{CEO} \underline{Bill Gates} railed against the economic philosophy of open-source software with Orwellian fervor, denouncing its communal licensing as a "cancer" that stifled technological innovation.
+
+Today, \underline{Microsoft} claims to "love" the open-source concept, by which software code is made public to encourage improvement and development by outside programmers. \underline{Gates} himself says \underline{Microsoft} will gladly disclose its crown jewels -- the coveted code behind the Windows operating system -- to select customers.
+
+"We can be open source. We love the concept of shared source," said \underline{Bill Veghte}, a company \underline{VP}. "That's a super-important shift for us in terms of code access.“
+
+\underline{Richard Stallman}, \underline{founder} of the \underline{Free Software Foundation}, countered saying...
+~\\
+}
+
+A domain expert has manually annotated all entity mentions in each sentence:
+
+\begin{itemize}
+\item {\bf organizations:} Microsoft Corporation , Microsoft , Microsoft , Free Software Foundation
+\item {\bf positions:} CEO, VP, founder
+\item {\bf persons:} Bill Gates , Gates, Bill Veghte , Richard Stallman
+\end{itemize}
+
+The information extraction system produced the following results:
+
+\begin{itemize}
+\item {\bf organizations:} Microsoft Corporation , Free Software Foundation
+\item {\bf positions:} CEO, VP, founder
+\item {\bf persons:} Bill Gates , Orwellian, Windows , Bill Veghte, Microsoft VP, Richard Stallman
+\end{itemize}
+
+\begin{enumerate}
+\item For each class, compute the precision, recall and F1 metrics.
+\item Compute the macro-averaged and micro-averaged precision for the IE system.
+\end{enumerate}
+
+\end{document}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: t
+%%% End: 
+

@@ -1,0 +1,68 @@
+\documentclass[12pt]{article}
+
+\usepackage{prilab}
+
+
+\begin{document}
+
+\maketitle{Lab 09: Recommender Systems}
+
+To solve the following problems, you will need to download the MovieLens 100k
+dataset, available at \url{http://grouplens.org/datasets/movielens/100k/}. This
+is a dataset used for movie recommendation.
+
+From the zip file, you can use only the \emph{u1.base} and \emph{u1.test}
+files. Each line in this file contain the user id, the movie id, the rating
+assigned by the user to the movie, and a timestamp for the date in which the
+rating was given. You do not need to use the timestamp in the following
+problems.
+
+\section{}
+
+Read the files and create a \emph{user-item ratings matrix} in memory. Notice
+the this matrix is very sparse--- you should use an appropriate data structure.
+
+\section{}
+
+Implement a function that takes as input \emph{the user-item matrix} and
+\emph{two user ids}, returning the similarity between both users. The
+similarity should be computed through Pearson correlation.
+
+\section{}
+
+Implement a function that takes as input \emph{the user-item matrix}, \emph{one
+  user id}, and an integer $N$ and returns the set of $N$ users (user ids) most
+similar to the given user.
+
+\section{}
+
+Finally, implement a function that takes as input \emph{the user-item matrix},
+\emph{one user id} and \emph{one movie id} and return the predicted rating for
+the given user and movie.
+
+\section{Pen and Paper Exercise}
+
+Given the following user-item ratings matrix, compute the similarity between
+every user and between every item. Use Pearson correlation for the similarity
+between users and the Cosine for the similarity between items.
+
+\begin{center}
+    \begin{tabular}{|c|c|c|c|c|}\hline
+      & i1 & i2 & i3  & i4\\\hline  
+      u1  & 2 & 4 & 3 & 3 \\\hline  
+      u1  & 1 & 5 & 5 & 3 \\\hline  
+      u2  & 1 & 3 & 3 & ? \\\hline  
+      u3  & 3 & 2 & 1 & ? \\\hline  
+    \end{tabular}
+\end{center}
+
+Fill in the blanks in the matrix with ratings predictions. Use all similar
+users to make the prediction.
+
+\end{document}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: t
+%%% End: 
+
