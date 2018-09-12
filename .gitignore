@@ -1,3 +1,5 @@
+*.snm
+*.nav
 *.aux
 *.glo
 *.idx
@@ -26,4 +28,3 @@ auto/
 \#*
 .#*
 .~lock.*
-
