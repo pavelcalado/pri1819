@@ -4,11 +4,16 @@
 
 \begin{document}
 
-\maketitle{Lab 01: Introduction to Python}
+\maketitle{Lab 01: Python for Text Processing}
 
 \section{}
 
+Let us start with some some warm up exercises.
+
+\subsection{}
+
 Implement the \emph{quicksort} algorithm\footnote{\url{https://en.wikipedia.org/wiki/Quicksort}} in Python. Define a function that receives a list of objects and sorts the list in place. If needed, use the following pseudocode as a guide.
+
 \footnotesize
 \begin{verbatim}
 Quicksort(A as array, low as int, high as int)
@@ -29,16 +34,57 @@ Partition(A as array, low as int, high as int)
 \end{verbatim}
 \normalsize
 
-\section{}
+\subsection{}
 
-Implement a script that reads a list of numeric values from a file (containing one value per line) and prints the same values in ascending order. Use the quicksort function previously defined.
+ Implement a script that reads a list of numeric values from a file (containing one value per line) and prints the same values in ascending order. Use the quicksort function previously defined.
 
-\section{}
+\subsection{}
 
 Implement a script that reads a text file, containing natural language text, and prints each word it contains and the number of times the word occurs.
 
-\section{}
+\subsection{}
 
 Implement a script that reads two text files and counts the number of words in common.
+
+
+% ----------------------------------------------------------------------
+
+\section{}
+
+Now to try out some useful libraries.
+
+\subsection{}
+
+The Python extension package named \texttt{nltk}\footnote{\url{http://www.nltk.org}} provides a set of tools that are useful for processing natural language text. For example, you can use the following methods:
+
+\begin{itemize}
+\item \verb+nltk.sent_tokenize(d)+, which splits a document d into a list of sentences;
+
+\item \verb+nltk.word_tokenize(s)+, which splits a sentence s into a list of words;
+
+\item \verb+nltk.pos_tag(w)+, which tags the words in list $w$ according to their part-of-speech (i.e., tag words according to morphosyntactic classes such as noun, verb, adjective, $\ldots$);
+\end{itemize}
+Use the \emph{nltk} package to solve word-counting problems 1.3 and 1.4.
+
+\subsection{}
+
+Again using the \texttt{nltk} package, count how many words of each syntactic class (noun, verb, etc.) occur in a document.
+
+\subsection{}
+
+\emph{Scikit-learn} is a machine learning library for Python\footnote{\url{http://scikit-learn.org/stable/}}, which also contains many useful functions to deal with textual information. For example, you can use the following classes: 
+\begin{itemize}
+\item \verb+sklearn.feature_extraction.text.CountVectorizer+, which transforms a list of texts into a vector of word counts;
+\item \verb+sklearn.feature_extraction.text.TfidfVectorizer+, which transforms a list of texts into a vector of TF-IDF values;
+\end{itemize}
+Using these classes, solve the word-counting problems 1.3 and 1.4.
+
+Notice that these vectorizers work by first learning the vocabulary (using method \verb+fit+) and then transforming the documents into vectors (using method \verb+transform+).
+
+Also notice that the method \verb+transform+ returns a \emph{sparse matrix}, defined in the \texttt{numpy}\footnote{\url{http://www.numpy.org/}} package. These can be accessed using the notation \verb+m[line,column]+.
+
+\subsection{}
+
+Again using \emph{Scikit-learn} transform two documents into TF-IDF vectors. Use those vectors to compute the cosine similarity between the documents.
 
 \end{document}
