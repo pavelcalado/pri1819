@@ -388,7 +388,7 @@
   \begin{definition}
     The \alert{inverse document frequency} of a term $k_i$ is given by:
     \begin{displaymath}
-      idf_i = \log\frac{N}{n_i}
+      idf_i = \log \left( \frac{N}{n_i} \right)
     \end{displaymath}
   \end{definition}
 
@@ -403,7 +403,7 @@
     The weight of a term $k_i$ in document $d_j$ for the vector space model is
     given by the \alert{tf-idf} formula:
     \begin{displaymath}
-      w_{i,j} = f_{i,j} \times \log\frac{N}{n_i}
+      w_{i,j} = f_{i,j} \times \log \left( \frac{N}{n_i} \right)
     \end{displaymath}
   \end{definition}
 
@@ -524,6 +524,8 @@
           sim(d_j,q) =
           \sum_{i \in q} IDF_i \times TF_{i,j} 
     \end{displaymath}
+
+    To be detailed in the next lecture
 \end{block}
     
 \end{frame}
