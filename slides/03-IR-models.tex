@@ -564,8 +564,27 @@
 \section{Probabilistic Models}
 \label{sec:probabilistic}
 
-\begin{frame}  \frametitle{Probabilistic Models}
+\begin{frame}  \frametitle{Probabilistic Models for IR}
+\begin{block}{}
+TF-IDF and VSM produce sufficiently good results in practice but often criticized for being \emp{too ad-hoc} or \emp{not principled}.
+\end{block}
+\begin{itemize}
+\item Typically outperformed by probabilistic retrieval models and statistical language models in IR benchmarks (e.g., TREC)
+\item Probabilistic retrieval models
+   \begin{itemize}
+   \item use generative models of documents as bags-of-words 
+   \item explicitly model probability of relevance P[R |d, q]
+   \item provide a probabilistic justification for TF-IDF-like approaches
+   \end{itemize}
+\item Statistical language models
+   \begin{itemize}
+   \item use generative models of documents and queries as sequences-of-words
+   \item consider likelihood of generating query from document model or divergence of document model and query model (e.g., Kullback-Leibler)
+   \end{itemize}
+\end{itemize}
+\end{frame}
 
+\begin{frame}  \frametitle{Probabilistic Retrieval Models}
   \begin{block}{}
     \begin{itemize}
     \item Model the IR problem in a probabilistic framework
@@ -582,7 +601,6 @@
   \end{block}
 \end{frame}
 
-
 \begin{frame}  \frametitle{Binary Independence Model (BIM)}
   \begin{block}{}
     \begin{itemize}
@@ -592,6 +610,7 @@
       \item the probability depends only on the query and the document
       \item there is a subset $R$ of relevant documents
       \item index terms are independent
+      \item non-query terms are equally likely to appear in relevant and non-relevant documents
       \end{enumerate}
     \item A simple probabilistic model can use binary term weights
       \begin{itemize}
@@ -687,7 +706,6 @@
 % ------------------------------------------------------------
 
 \begin{frame} \frametitle{Problems of this Simple Probabilistic Model}
-  
   \begin{block}{}
     \begin{itemize}
     \item There is no accurate estimate for the first run probabilities
@@ -695,7 +713,6 @@
     \item Terms are assumed mutually independent
     \end{itemize}
   \end{block}
-
   \begin{block}{}
     \begin{itemize}
     \item In fact, \emph{many different probabilistic retrieval models} have been proposed!
@@ -703,8 +720,40 @@
   \end{block}
 \end{frame}
 
+\begin{frame} \frametitle{The Okapi BM25 Model (1)}
+\begin{itemize}
+\item Inspired by the BIM probabilistic formulation
+\item Considering an alternative for term weighting
+\item Captures various aspects in a simple formula, tuning each component
+    \begin{itemize}
+    \item Inverse Document Frequency (IDF)
+    \item Term Frequncy (TF)
+    \item Document length 
+    \item Query term fequency
+    \end{itemize}
+\item Effective and widely used model
+\end{itemize}
+\end{frame}
+
+\begin{frame} \frametitle{The Okapi BM25 Model (2)}
+\begin{block}{The BM25 Model}
+    \begin{displaymath}
+          TF_{i,j} = \frac{f_{i,j} \times (k_1 + 1)}
+                                  {f_{i,j} + k_1 \times \left( 1-b+b\frac{|d_j|}{avgdl} \right)}
+    \end{displaymath}
+    \begin{displaymath}
+        IDF_i = \log\frac{N - n_i + 0.5}{n_i + 0.5}
+    \end{displaymath}
+    \begin{displaymath}
+          sim(d_j,q) =
+          \sum_{i \in q} IDF_i \times TF_{i,j} 
+    \end{displaymath}
+\end{block}
+\end{frame}
+
+% ------------------------------------------------------------
+
 \begin{frame} \frametitle{Probabilistic Language Models}
-  
   \begin{block}{}
     \begin{itemize}
 \item Another simple probabilistic retrieval model
