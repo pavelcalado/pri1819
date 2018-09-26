@@ -570,6 +570,23 @@
     \begin{itemize}
     \item Model the IR problem in a probabilistic framework
     \item Estimate the probability of document $d_j$ being relevant to the user
+    \item Bayes optimal decision rule for set retrieval
+      \begin{displaymath}
+        %psframebox not supported in pdflatex
+        %\psframebox[linestyle=dashed,linecolor=Blue]{
+          d_j \text{is relevant iff} P(R|\vec{d_j},\vec{q}) > P(\overline{R}|\vec{d_j},\vec{q})
+        %}        
+      \end{displaymath}    
+    \item When considering ranked retrieval, present documents in decreasing order of their estimated probability of relevance
+    \end{itemize}
+  \end{block}
+\end{frame}
+
+
+\begin{frame}  \frametitle{Binary Independence Model (BIM)}
+  \begin{block}{}
+    \begin{itemize}
+    \item Simplifying assumptions to make modeling $P(R|\vec{d_j},\vec{q})$ feasible
     \item A simple probabilistic model can assume that:
       \begin{enumerate}
       \item the probability depends only on the query and the document
@@ -577,6 +594,10 @@
       \item index terms are independent
       \end{enumerate}
     \item A simple probabilistic model can use binary term weights
+      \begin{itemize}
+      \item documents and queries as binary term incidence vectors
+      \item terms not appearing in the query do not affect the ranking
+      \end{itemize}
     \end{itemize}
   \end{block}
 
@@ -594,7 +615,7 @@
       \begin{displaymath}
         %psframebox not supported in pdflatex
         %\psframebox[linestyle=dashed,linecolor=Blue]{
-          sim(d_j,q) = \frac{P(R|\vec{d_j})}{P(\overline{R}|\vec{d_j})}
+          sim(d_j,q) = \frac{P(R|\vec{d_j},\vec{q})}{P(\overline{R}|\vec{d_j},\vec{q})}
         %}        
       \end{displaymath}
     \end{itemize}
