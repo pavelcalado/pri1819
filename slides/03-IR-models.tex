@@ -775,7 +775,7 @@ TF-IDF and VSM produces sufficiently good results in practice, but often critici
     \end{displaymath}
     
     \begin{displaymath}      
-       \log\frac{1 - u_i}{u_i} = \log\frac{N - n_i}{n_i} \approx \log \left( \frac{N}{n_i} \right)
+       \log\frac{1 - u_i}{u_i} = \log\frac{N - n_i}{n_i} \approx \mathbf{\log \left( \frac{N}{n_i} \right)}
     \end{displaymath}
   \end{block}
   
@@ -787,7 +787,13 @@ TF-IDF and VSM produces sufficiently good results in practice, but often critici
 	\begin{displaymath}  
 	sim(d_j,q) = \sum_{i=1}^t w_{i,q} \times w_{i,j} \times \log \left( \frac{N}{n_i} \right)
 	\end{displaymath}
-  \end{block}
+    \begin{itemize}
+    \item Alternative formulation using smoothing
+    \end{itemize}
+	\begin{displaymath}  
+	sim(d_j,q) = \sum_{i=1}^t w_{i,q} \times w_{i,j} \times \log \left( \frac{N - n_i + 0.5}{n_i + 0.5} \right)
+	\end{displaymath}
+   \end{block}
 \end{frame}
 
 \begin{frame} \frametitle{The Okapi BM25 Model (1)}
@@ -894,7 +900,7 @@ P(d|q) = \frac{P(d) \times P(q|d)}{P(q)}
 
 % ------------------------------------------------------------
 
-\section{Comparison of the Classic Models}
+\section{Comparison of the Different Models}
 \label{sec:comparison}
 
 \begin{frame}  \frametitle{What makes these Models Work?}
@@ -908,14 +914,17 @@ P(d|q) = \frac{P(d) \times P(q|d)}{P(q)}
 \end{block}
 \end{frame}
 
-\begin{frame}   \frametitle{Comparison of the Classic Models}
+\begin{frame}   \frametitle{Comparison of the Different Models}
 
   \begin{block}{}
     \begin{itemize}
     \item Boolean model is considered the weakest
-    \item There is some controversy over which shows better performance: vector
-      space or probabilistic
-    \item However, nowadays, the vector space model is the most widely used
+    \item There is some controversy over which shows better performance: vector space or probabilistic
+     \begin{itemize}
+     \item Simple BIM is just IDF weighting of the query terms in the document
+     \item BM25 or language models offer a better performance
+     \end{itemize}
+    \item Nowadays, the BM25 is perhaps the most widely used
     \end{itemize}
   \end{block}
 \end{frame}
