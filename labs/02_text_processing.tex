@@ -134,12 +134,19 @@ According to the vector space model and using the document representations (i.e.
     \textbf{Note 1:} For simplification, the TF-IDF formula above is not considering the normalization of the TF component with basis on the occurrence frequency of the most frequent term in the document, as shown in the corresponding lecture.
     
     \textbf{Note 2:} After completing the exercise, considering the same user query, you can also experiment with the application of other retrieval models. These include:
-    
     \begin{itemize}
     \item The simple Binary Independence Model (BIM) considering the blind assumptions for $P(k_i|R)$ and $P(k_i|R)$.
-    \item The Okapi BM25 model, considering $b=0.75$ and $k_1=1.2$.
-    \item A simple unigram language modeling approach, without considering smoothing.
+    \item The Okapi BM25 model, considering a simple estimate for the IDF component and with $b=0.75$ and $k_1=1.2$.
+    \item A simple unigram language modeling approach, without considering parameter smoothing.
     \end{itemize}
+    The corresponding equations are given below.
+    
+    \begin{center}
+    \begin{equation*}
+{ {\text{BM25}}(q,d)=\sum _{i=1}^{|q|}{\text{IDF}}(q_{i})\cdot {\frac {f(q_{i},d)\cdot (k_{1}+1)}{f(q_{i},d)+k_{1}\cdot \left(1-b+b\cdot {\frac {|d|}{\text{avgdl}}}\right)}},}
+    \end{equation*}
+    \end{center}
+    
 \end{quote}
 
 \end{document}
