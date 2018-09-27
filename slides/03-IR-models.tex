@@ -685,7 +685,7 @@ TF-IDF and VSM produces sufficiently good results in practice, but often critici
     \end{displaymath}
     \begin{itemize}
     \item $P(k_i|R)$ reflects that we have no information about relevant documents (i.e., each query term is equally likely to occur in a relevant document)
-    \item $P(k_i|\overline{R})$ under the assumption that # relevant documents <<< # documents
+    \item $P(k_i|\overline{R})$ under the assumption that \# relevant documents $<$ \# documents
     \end{itemize}
   \end{block}
 
@@ -874,7 +874,7 @@ P(d|q) = \frac{P(d) \times P(q|d)}{P(q)}
     \begin{itemize}
     \item Conditional independence assumption
 	\begin{equation*}
-	P(q|d) = P(\{t_1,\ldots,t_{|q|}\}|d) = \prod_{1<=i<=|q|} P(t_k|d)
+	P(q|d) = P(\{t_1,\ldots,t_{|q|}\}|d) = \prod_{1<=k<=|q|} P(t_k|d)
 	\end{equation*}
     \item $|q|$ is length of $q$
     \item $t_k$ is the token occurring at position $k$ in $q$
@@ -896,6 +896,27 @@ P(d|q) = \frac{P(d) \times P(q|d)}{P(q)}
 		\end{equation*}
   \end{block}
 
+\end{frame}
+
+% MLE of multinomial: https://math.stackexchange.com/questions/421105/maximum-likelihood-estimator-of-parameters-of-multinomial-distribution
+
+\begin{frame}
+    \frametitle{Types of Language Models}
+
+    \begin{itemize}
+    \item The unigram language model (show before)
+        \begin{displaymath}
+            P(d) = P(t_1t_2t_3\ldots) = P(t_1)P(t_2)P(t_3)\cdots
+        \end{displaymath}
+    \item $n$-gram language models (e.g. \textit{bigram} language models)
+        \begin{displaymath}
+            P(d) = P(t_1t_2t_3\ldots) = P(t_1)P(t_2|t_1)P(t_3|t_2)\cdots
+        \end{displaymath}
+    \item More complex langue models, e.g. using \textit{probabilistic context-free grammars}
+        \begin{itemize}
+        \item Used for tasks like speech recognition , spelling correction , and machine translation
+        \end{itemize}
+    \end{itemize}
 \end{frame}
 
 \begin{frame} \frametitle{LM Retrieval and Na{\"i}ve Bayes}
