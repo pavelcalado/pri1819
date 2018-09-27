@@ -659,9 +659,9 @@ TF-IDF and VSM produces sufficiently good results in practice, but often critici
     \small
     \begin{displaymath}
       sim(d_j,q) \sim \frac{
-        (\Pi_{g_i(\vec{d_j})=g_i(\vec{q})=1}P(k_i|R))\times(\Pi_{g_i(\vec{d_j})=0  g_i(\vec{q})=1}P(\overline{k_i}|R))
+        (\Pi_{g_i(\vec{d_j})=g_i(\vec{q})=1}P(k_i|R))\times(\Pi_{g_i(\vec{d_j})=0 \wedge g_i(\vec{q})=1}P(\overline{k_i}|R))
       }{
-        (\Pi_{g_i(\vec{d_j})=g_i(\vec{q})=1}P(k_i|\overline{R}))\times(\Pi_{g_i(\vec{d_j})=0 g_i(\vec{q})=1}P(\overline{k_i}|\overline{R}))}
+        (\Pi_{g_i(\vec{d_j})=g_i(\vec{q})=1}P(k_i|\overline{R}))\times(\Pi_{g_i(\vec{d_j})=0 \wedge g_i(\vec{q})=1}P(\overline{k_i}|\overline{R}))}
     \end{displaymath}
   \end{block}
 
