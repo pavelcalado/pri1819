@@ -973,6 +973,38 @@ P(d|q) = \frac{P(d) \times P(q|d)}{P(q)}
 
 \end{frame}
 
+% ------------------------------------------------------------
+
+\begin{frame} \frametitle{More on computing $P(q|d)$}
+  \begin{block}{Problems with the aforementioned unigram model}
+  \begin{equation*}
+	P(q|d) = P(\{t_1,\ldots,t_{|q|}\}|d) = \prod_{1<=i<=|q|} P(t_i|d)
+  \end{equation*}
+  \begin{itemize}
+  \item A document with a single missing query-term will receive a score of zero (similar to Boolean AND)
+  \item Where is the equivalent of the IDF?
+  \end{itemize}
+  \end{block}
+  
+  \begin{block}{Linear interpolation smoothing}
+	\begin{equation*}
+	P(q|d) = P(\{t_1,\ldots,t_{|q|}\}|d) = \prod_{1<=i<=|q|} \left( \alpha \times P(t_i|d) \right) \times \left( (1-\alpha) \times P(t_i|c) \right)
+	\end{equation*}
+  \end{block}
+\end{frame}
+
+\begin{frame} \frametitle{Query Likelihood Retrieval with Linear Interpolation Smoothing}
+\begin{block}
+  \begin{itemize}
+\item Helps us avoid zero-probabilities
+\item Another added benefit...
+  \begin{itemize}
+  \item Without smoothing, the query-likelihood model ignores how frequently the term occurs in general
+  \item Linear interpolation smoothing also introduces an IDF-like scoring of documents
+  \end{itemize}
+  \end{itemize}
+  \end{block}
+\end{frame}
 
 % ------------------------------------------------------------
 
