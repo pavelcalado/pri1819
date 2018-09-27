@@ -646,7 +646,7 @@ TF-IDF and VSM produces sufficiently good results in practice, but often critici
   \frametitle{Similarity Probabilities}
 
   \begin{block}{Initial Equation}
-    We can simplify the expression leveraging Bayes’ theorem and rank equivalence (i.e., remove constants not depending on query)
+    We can simplify the expression leveraging Bayes’ theorem and rank equivalence (i.e., remove query-independent constants)
     \small
     \begin{displaymath}
         sim(d_j,q) = \frac{P(R|\vec{d_j},\vec{q})}{P(\overline{R}|\vec{d_j},\vec{q})}
