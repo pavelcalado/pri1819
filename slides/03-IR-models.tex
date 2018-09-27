@@ -685,8 +685,10 @@ TF-IDF and VSM produces sufficiently good results in practice, but often critici
   \end{block}
 
   \begin{block}{After document retrieval or leveraging training data...}
-    Let $V$ be the number of returned documents (i.e., estimated to be relevant); let $V_i$ be the number of
-    returned documents containing term $k_i$.
+    \begin{itemize}
+    \item Let $V$ be the number of returned documents (i.e., number of documents estimated to be relevant)
+    \item Let $V_i$ be the number of returned documents containing term $k_i$
+    \end{itemize}
     \begin{displaymath}
       \begin{array}{rcl}
         P(k_i|R) &=& \frac{V_i}{V}\\
@@ -697,8 +699,8 @@ TF-IDF and VSM produces sufficiently good results in practice, but often critici
   
   \begin{block}{Avoiding zeroes and small values when considering blind assumptions...}
     \begin{itemize}
-    \item If any of the counts is a zero, then the probability is not well-defined.
-    \item Maximum likelihood estimates do not work for rare events.
+    \item With zero counts probability is not well-defined
+    \item Maximum likelihood estimates do not work for rare events
     \item To avoid zeros add 0.5 to each count (expected likelihood estimation) or use a different type of smoothing
     \end{itemize}
     \begin{displaymath}
@@ -737,7 +739,7 @@ TF-IDF and VSM produces sufficiently good results in practice, but often critici
 % ------------------------------------------------------------
 
 \begin{frame}[allowframebreaks]
-\frametitle{Another Look at the Binary Independence Model}
+\frametitle{Another Look at the BIM}
 
   \begin{block}{Recall the log odds ratio for computing RSV}
     \small
@@ -759,7 +761,7 @@ TF-IDF and VSM produces sufficiently good results in practice, but often critici
     \end{displaymath}
   \end{block}
 		
-  \begin{block}{With the blind estimates $\ldots$}
+  \begin{block}{With the blind estimates, does the equation look familiar?}
     \begin{displaymath}  
     P(k_i|R) = p_i = 0.5
     \end{displaymath}
@@ -768,16 +770,19 @@ TF-IDF and VSM produces sufficiently good results in practice, but often critici
     P(k_i|\overline{R}) = u_i = \frac{n_i}{N}
     \end{displaymath}
     
+     \begin{displaymath}      
+       \log\frac{p_i}{1 - p_i} = 0
+    \end{displaymath}
+    
     \begin{displaymath}      
        \log\frac{1 - u_i}{u_i} = \log\frac{N - n_i}{n_i} \approx \log \left( \frac{N}{n_i} \right)
     \end{displaymath}
-    Does this look familiar?
   \end{block}
   
   \begin{block}{}
     \begin{itemize}
     \item The BIM can be seen as TF-IDF with binary term frequencies and logarithmically dampened inverse document frequencies
-    \item The score for document $d$ is just IDF weighting of the query terms present in the document
+    \item The score for document $d$ is just \emph{IDF weighting of the query terms present in the document}
     \end{itemize}
 	\begin{displaymath}  
 	sim(d_j,q) = \sum_{i=1}^t w_{i,q} \times w_{i,j} \times \log \left( \frac{N}{n_i} \right)
