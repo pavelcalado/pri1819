@@ -585,13 +585,6 @@ TF-IDF and VSM produces sufficiently good results in practice, but often critici
 \end{frame}
 
 \begin{frame}  \frametitle{Probabilistic Retrieval Models}
-
-    \begin{itemize}
-    \item Model the IR problem in a probabilistic framework
-    \item Estimate the probability of document $d_j$ being relevant to the user that that submited the query $q$
-    \item When considering ranked retrieval, present documents in decreasing order of their estimated probability of relevance
-    \end{itemize}
-    
     \begin{block}{Bayes optimal decision rule for set retrieval}
       \begin{displaymath}
         %psframebox not supported in pdflatex
@@ -600,6 +593,11 @@ TF-IDF and VSM produces sufficiently good results in practice, but often critici
         %}        
       \end{displaymath}
     \end{block}
+    \begin{itemize}
+    \item Model the IR problem in a probabilistic framework
+    \item Estimate the probability of document $d_j$ being relevant to the user that that submited the query $q$
+    \item When considering ranked retrieval, present documents in decreasing order of their estimated probability of relevance
+    \end{itemize}
 \end{frame}
 
 \begin{frame}  \frametitle{Binary Independence Model (BIM)}
@@ -648,6 +646,7 @@ TF-IDF and VSM produces sufficiently good results in practice, but often critici
   \frametitle{Similarity Probabilities}
 
   \begin{block}{Initial Equation}
+    \small
     \begin{displaymath}
         sim(d_j,q) = \frac{P(R|\vec{d_j},\vec{q})}{P(\overline{R}|\vec{d_j},\vec{q})}
         = \frac{P(\vec{d_j},\vec{q}|R) \times P(R)}{P(\vec{d_j},\vec{q}|\overline{R}) \times
@@ -657,6 +656,7 @@ TF-IDF and VSM produces sufficiently good results in practice, but often critici
   \end{block}
 
   \begin{block}{Assuming term independence...}
+    \small
     \begin{displaymath}
       sim(d_j,q) \sim \frac{
         (\Pi_{g_i(\vec{d_j})=g_i(\vec{q})=1}P(k_i|R))\times(\Pi_{g_i(\vec{d_j})=0}P(\overline{k_i}|R))
@@ -695,7 +695,21 @@ TF-IDF and VSM produces sufficiently good results in practice, but often critici
     \end{displaymath}    
   \end{block}
   
-  \begin{block}{Avoiding small values (after retrieval)...}
+  \begin{block}{Avoiding zeroes and small values when considering blind assumptions...}
+  \begin{itemize}
+  \item If any of the counts is a zero, then the probability is not well-defined.
+  \item Maximum likelihood estimates do not work for rare events.
+  \item To avoid zeros add 0.5 to each count (expected likelihood estimation) or use a different type of smoothing
+  \end{itemize}
+    \begin{displaymath}
+      \begin{array}{rcl}
+        P(k_i|R) &=& 0.5\\
+        P(k_i|\overline{R}) &=& \frac{n_i + 0.5}{N + 0.5}\\
+      \end{array}
+    \end{displaymath}   
+  \end{block}
+  
+  \begin{block}{Avoiding small values with estimates after retrieval...}
     \begin{displaymath}
       \begin{array}{rcl}
         P(k_i|R) &=& \frac{V_i + \frac{n_i}{N}}{V + 1}\\
@@ -719,6 +733,52 @@ TF-IDF and VSM produces sufficiently good results in practice, but often critici
     \begin{itemize}
     \item In fact, \emph{many different probabilistic retrieval models} have been proposed, some addressing the aforementioned limitations!
     \end{itemize}
+  \end{block}
+\end{frame}
+
+% ------------------------------------------------------------
+
+\begin{frame}[allowframebreaks]
+\frametitle{Another Look at the Binary Independence Model}
+
+  \begin{block}{Recall the log odds ratio for computing RSV}
+    \small
+    \begin{displaymath}      
+      sim(d_j,q) = \sum_{i=1}^t w_{i,q} \times w_{i,j} \times
+      \left(
+        \log\frac{P(k_i|R)}{1-P(k_i|R)} + \log\frac{1-P(k_i|\overline{R})}{P(k_i|\overline{R})}
+      \right)
+    \end{displaymath}
+  \end{block}
+  
+  \begin{block}{Denoting $p_i = $P(k_i|R)$ and $u_i = P(k_i|\overline{R})$}
+    \small
+    \begin{displaymath}      
+      sim(d_j,q) = \sum_{i=1}^t w_{i,q} \times w_{i,j} \times
+      \left(
+        \log\frac{p_i}{1 - p_i} + \log\frac{1 - u_i}{u_i}
+      \right)
+    \end{displaymath}
+  \end{block}
+		
+  \begin{block}{With the blind estimates $\ldots$}
+    \begin{displaymath}      
+     $P(k_i|R) = p_i = 0.5$ and $P(k_i|\overline{R}) = u_i = \frac{n_i}{N}$
+	\end{displaymath}
+    \begin{displaymath}      
+       \log\frac{1 - u_i}{u_i} = \log\frac{N - n_i}{n_i} \approx \log \left( \frac{N}{n_i} \right)
+    \end{displaymath}
+	Looks familiar?
+  \end{block}
+  
+  \begin{block}{}
+    \begin{itemize}
+	The BIM can be seen as TF-IDF with binary term frequencies and logarithmically dampened inverse document frequencies
+	The score for document $d$ is just IDF weighting of the query terms present in the document
+    \end{itemize}
+	\begin{displaymath}  
+	sim(d_j,q) = \sum_{i=1}^t w_{i,q} \times w_{i,j} \times \log \left( \frac{N}{n_i} \right)
+	\end{displaymath}
   \end{block}
 \end{frame}
 
