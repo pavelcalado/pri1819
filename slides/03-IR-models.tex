@@ -591,6 +591,7 @@ TF-IDF and VSM produces sufficiently good results in practice, but often critici
     \item Estimate the probability of document $d_j$ being relevant to the user that that submited the query $q$
     \item When considering ranked retrieval, present documents in decreasing order of their estimated probability of relevance
     \end{itemize}
+    
     \begin{block}{Bayes optimal decision rule for set retrieval}
       \begin{displaymath}
         %psframebox not supported in pdflatex
@@ -598,8 +599,7 @@ TF-IDF and VSM produces sufficiently good results in practice, but often critici
           d_j \text{~~~~~is relevant iff~~~~~} P(R|\vec{d_j},\vec{q}) > P(\overline{R}|\vec{d_j},\vec{q})
         %}        
       \end{displaymath}
-    \end{itemize}
-  \end{block}
+    \end{block}
 \end{frame}
 
 \begin{frame}  \frametitle{Binary Independence Model (BIM)}
@@ -694,16 +694,6 @@ TF-IDF and VSM produces sufficiently good results in practice, but often critici
         P(k_i|\overline{R}) &=& \frac{n_i - V_i}{N - V}\\
       \end{array}
     \end{displaymath}    
-  \end{block}
-
-
-  \begin{block}{Avoiding small values}
-    \begin{displaymath}
-      \begin{array}{rcl}
-        P(k_i|R) &=& 0.5\\
-        P(k_i|\overline{R}) &=& \frac{n_i + 0.5}{N + 0.5}\\
-      \end{array}
-    \end{displaymath}
   \end{block}
   
   \begin{block}{Avoiding small values (after retrieval)...}
