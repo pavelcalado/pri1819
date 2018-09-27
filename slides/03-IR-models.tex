@@ -696,11 +696,11 @@ TF-IDF and VSM produces sufficiently good results in practice, but often critici
   \end{block}
   
   \begin{block}{Avoiding zeroes and small values when considering blind assumptions...}
-  \begin{itemize}
-  \item If any of the counts is a zero, then the probability is not well-defined.
-  \item Maximum likelihood estimates do not work for rare events.
-  \item To avoid zeros add 0.5 to each count (expected likelihood estimation) or use a different type of smoothing
-  \end{itemize}
+    \begin{itemize}
+    \item If any of the counts is a zero, then the probability is not well-defined.
+    \item Maximum likelihood estimates do not work for rare events.
+    \item To avoid zeros add 0.5 to each count (expected likelihood estimation) or use a different type of smoothing
+    \end{itemize}
     \begin{displaymath}
       \begin{array}{rcl}
         P(k_i|R) &=& 0.5\\
@@ -730,9 +730,7 @@ TF-IDF and VSM produces sufficiently good results in practice, but often critici
     \end{itemize}
   \end{block}
   \begin{block}{}
-    \begin{itemize}
-    \item In fact, \emph{many different probabilistic retrieval models} have been proposed, some addressing the aforementioned limitations!
-    \end{itemize}
+    In fact, \emph{many different probabilistic retrieval models} have been proposed, some addressing the aforementioned limitations!
   \end{block}
 \end{frame}
 
@@ -751,7 +749,7 @@ TF-IDF and VSM produces sufficiently good results in practice, but often critici
     \end{displaymath}
   \end{block}
   
-  \begin{block}{Denoting $p_i = $P(k_i|R)$ and $u_i = P(k_i|\overline{R})$}
+  \begin{block}{Denoting $p_i = P(k_i|R)$ and $u_i = P(k_i|\overline{R})$}
     \small
     \begin{displaymath}      
       sim(d_j,q) = \sum_{i=1}^t w_{i,q} \times w_{i,j} \times
@@ -764,17 +762,18 @@ TF-IDF and VSM produces sufficiently good results in practice, but often critici
   \begin{block}{With the blind estimates $\ldots$}
     \begin{displaymath}      
      $P(k_i|R) = p_i = 0.5$ and $P(k_i|\overline{R}) = u_i = \frac{n_i}{N}$
-	\end{displaymath}
+    \end{displaymath}
+    
     \begin{displaymath}      
        \log\frac{1 - u_i}{u_i} = \log\frac{N - n_i}{n_i} \approx \log \left( \frac{N}{n_i} \right)
     \end{displaymath}
-	Looks familiar?
+    Does this look familiar?
   \end{block}
   
   \begin{block}{}
     \begin{itemize}
-	The BIM can be seen as TF-IDF with binary term frequencies and logarithmically dampened inverse document frequencies
-	The score for document $d$ is just IDF weighting of the query terms present in the document
+    \item The BIM can be seen as TF-IDF with binary term frequencies and logarithmically dampened inverse document frequencies
+    \item The score for document $d$ is just IDF weighting of the query terms present in the document
     \end{itemize}
 	\begin{displaymath}  
 	sim(d_j,q) = \sum_{i=1}^t w_{i,q} \times w_{i,j} \times \log \left( \frac{N}{n_i} \right)
