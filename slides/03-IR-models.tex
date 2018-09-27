@@ -989,7 +989,7 @@ P(d|q) = \frac{P(d) \times P(q|d)}{P(q)}
   \begin{block}{Linear interpolation smoothing}
         \small
 	\begin{equation*}
-	P(q|d) = \prod_{1<=i<=|q|} \left( \alpha \times P(t_i|d) \right) \times \left( (1-\alpha) \times P(t_i|c) \right)
+	P(q|d) = \prod_{1<=i<=|q|} \left( \alpha \times P(t_i|d) \right) + \left( (1-\alpha) \times P(t_i|c) \right)
 	\end{equation*}
   \end{block}
 \end{frame}
@@ -1005,6 +1005,17 @@ P(d|q) = \frac{P(d) \times P(q|d)}{P(q)}
    \end{itemize}
   \end{itemize}
 \end{block}
+
+\scriptsize
+\begin{equation*}
+\begin{array}{lll}
+	P(q|d) &=& \prod_{1<=i<=|q|} \left( \alpha \times P(t_i|d) \right) + \left( (1-\alpha) \times P(t_i|c) \right) \\
+           &=&  \prod_{1<=i<=|q|} \left( \alpha \times P(t_i|d) \right) + \left( (1-\alpha) \times P(t_i|c) \right) \times \frac{(1-\alpha) \times P(t_i|c)}{(1-\alpha) \times P(t_i|c)} \\
+		   
+		   &=&  \prod_{1<=i<=|q|} \left( \frac{\left( \alpha \times P(t_i|d) \right)} {\left( (1-\alpha) \times P(t_i|c) \right)} + 1 \right) \times (1-\alpha) \times P(t_i|c) \\
+\end{array}
+\end{equation*}
+
 \end{frame}
 
 % ------------------------------------------------------------
