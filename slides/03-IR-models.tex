@@ -646,7 +646,7 @@ TF-IDF and VSM produces sufficiently good results in practice, but often critici
   \frametitle{Similarity Probabilities}
 
   \begin{block}{Initial Equation}
-    We can simplify the expression leveraging Bayes’ theorem and rank equivalence
+    We can simplify the expression leveraging Bayes’ theorem and rank equivalence (i.e., remove query-independent constants)
     \small
     \begin{displaymath}
         sim(d_j,q) = \frac{P(R|\vec{d_j},\vec{q})}{P(\overline{R}|\vec{d_j},\vec{q})}
@@ -680,12 +680,13 @@ TF-IDF and VSM produces sufficiently good results in practice, but often critici
     \begin{displaymath}
       \begin{array}{rcl}
         P(k_i|R) &=& 0.5\\
-        P(k_i|\overline{R}) &=& \frac{n_i}{N}\\
+	P(k_i|\overline{R}) &=& \frac{n_i}{N}\\
       \end{array}
     \end{displaymath}
+    \small
     \begin{itemize}
     \item $P(k_i|R)$ reflects that we have no information about relevant documents (i.e., each query term is equally likely to occur in a relevant document)
-    \item $P(k_i|\overline{R})$ under the assumption that \# relevant documents $<$ \# documents
+    \item $P(k_i|\overline{R})$ reflects a much smaller number of relevant documents than the collection size
     \end{itemize}
   \end{block}
 
@@ -711,7 +712,7 @@ TF-IDF and VSM produces sufficiently good results in practice, but often critici
     \begin{displaymath}
       \begin{array}{rcl}
         P(k_i|R) &=& 0.5\\
-        P(k_i|\overline{R}) &=& \frac{n_i + 0.5}{N + 0.5}\\
+        P(k_i|\overline{R}) &=& \frac{n_i + 0.5}{N + 1}\\
       \end{array}
     \end{displaymath}   
   \end{block}
@@ -791,7 +792,7 @@ TF-IDF and VSM produces sufficiently good results in practice, but often critici
   \begin{block}{}
     \begin{itemize}
     \item The BIM can be seen as TF-IDF with binary term frequencies and logarithmically dampened inverse document frequencies
-    \item The score for document $d$ is just \emph{IDF weighting of the query terms present in the document}
+    \item The score for document $d_j$ is just \emph{IDF weighting of the query terms present in the document}
     \end{itemize}
 	\begin{displaymath}  
 	sim(d_j,q) = \sum_{i=1}^t w_{i,q} \times w_{i,j} \times \log \left( \frac{N}{n_i} \right)
@@ -816,7 +817,7 @@ TF-IDF and VSM produces sufficiently good results in practice, but often critici
     \item Document length 
     \item Query term fequency {\it (in some formulations)}
     \end{itemize}
-\item BM25 (BestMatch25) is an effective and widely used model
+\item BM25 (BestMatch25) is an effective and widely used model for full-text retrieval over large collections
 \end{itemize}
 \end{frame}
 
@@ -847,10 +848,46 @@ TF-IDF and VSM produces sufficiently good results in practice, but often critici
 
 % ------------------------------------------------------------
 
+\begin{frame} \frametitle{Extending BM25 to Consider Document Fields}
+\begin{itemize}
+\item Textual data often found in some sort of structural form
+\item Retrieval effectiveness can be improved by taking the structure into account
+\item Simple solution: calculate score for each field and combine the different fields linearly
+\end{itemize}
+    \begin{displaymath}
+          sim(d_j,q) =
+          \sum_{z \in F} \alpha^z \times sim(d_j^z,q)
+    \end{displaymath}
+\begin{block}{Problems of linear combination}
+\begin{itemize}
+\item With similarities per field, IDF can vary highly in different fields (e.g. stopwords scoring highly in the title)
+\item TF usually non-linear and information gained by observing a term for the first time is greater than observing subsequent occurrences
+\end{itemize}
+\end{block}
+\end{frame}
+
+\begin{frame} \frametitle{BM25F and Combining Term Frequencies}
+\begin{block}{}
+    \begin{displaymath}
+          TF_{i,j} = \sum_{z \in F} \alpha^z \times \frac{f_{i,j}^z \times (k_1 + 1)}
+                                  {f_{i,j}^z + k_1 \times \left( 1-b^z+b^z\frac{|d_j^z|}{avgdl^z} \right)}
+    \end{displaymath}
+    \begin{displaymath}
+        IDF_i = \log\frac{N - n_i + 0.5}{n_i + 0.5}
+    \end{displaymath}
+    \begin{displaymath}
+          sim(d_j,q) =
+          \sum_{i \in q} IDF_i \times TF_{i,j} 
+    \end{displaymath}
+\end{block}
+\end{frame}
+
+% ------------------------------------------------------------
+
 \begin{frame} \frametitle{Probabilistic Language Models}
   \begin{block}{}
     \begin{itemize}
-\item Another simple probabilistic retrieval model
+\item Another simple probabilistic retrieval formulation
 \item Each document $d$ is treated as (the basis for) a \emph{probabilistic language model}
 \item Given a query $q$ rank documents based on $P(d|q)$
 \begin{equation*}
@@ -874,10 +911,10 @@ P(d|q) = \frac{P(d) \times P(q|d)}{P(q)}
     \begin{itemize}
     \item Conditional independence assumption
 	\begin{equation*}
-	P(q|d) = P(\{t_1,\ldots,t_{|q|}\}|d) = \prod_{1<=k<=|q|} P(t_k|d)
+	P(q|d) = P(\{t_1,\ldots,t_{|q|}\}|d) = \prod_{1<=i<=|q|} P(t_i|d)
 	\end{equation*}
     \item $|q|$ is length of $q$
-    \item $t_k$ is the token occurring at position $k$ in $q$
+    \item $t_i$ is the token occurring at position $i$ in $q$
     \end{itemize}
   \end{block}
 
@@ -886,13 +923,13 @@ P(d|q) = \frac{P(d) \times P(q|d)}{P(q)}
     \begin{itemize}
     \item The above multinomial model is equivalent to:
 	\begin{equation*}
-	P(q|d) = \prod_{\text{distinct term~} t \in q} P(t_k|d)^{TF_{t,q}}
+	P(q|d) = \prod_{\text{distinct term~} t \in q} P(t|d)^{TF_{t,q}}
 	\end{equation*}
 	\item Component $TF_{t,q}$ is the term frequency of $t$ in $q$
-    \item Parameters $P(t_k|d)$ computed through maximum likelihood estimates
+    \item Parameters $P(t|d)$ computed through maximum likelihood estimates
 	\end{itemize}
 		\begin{equation*}
-		P(t_k|d) = \frac{TF_{t_k,d}}{|d|}
+		P(t|d) = \frac{TF_{t,d}}{|d|}
 		\end{equation*}
   \end{block}
 
@@ -961,7 +998,7 @@ P(d|q) = \frac{P(d) \times P(q|d)}{P(q)}
     \item There is some controversy over which shows better performance: vector space or probabilistic
      \begin{itemize}
      \item Simple BIM is just IDF weighting of the terms
-     \item BIM was originally designed for short catalog records of fairly consistent length, and it works reasonably in these contexts
+     \item BIM originally designed for short catalog records of fairly consistent length, working reasonably in these contexts
      \item BM25 or language models offer a better performance (e.g., paying attention to term frequency and document length)
      \end{itemize}
     \item Nowadays, BM25 is perhaps the most widely used
