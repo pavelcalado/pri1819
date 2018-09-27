@@ -1042,6 +1042,7 @@ P(d|q) = \frac{P(d) \times P(q|d)}{P(q)}
 \begin{frame}   \frametitle{Comparison of the Different Models}
 
   \begin{block}{}
+    \small
     \begin{itemize}
     \item Boolean model is considered the weakest
     \item There is some controversy over which shows better performance: vector space or probabilistic
@@ -1050,7 +1051,12 @@ P(d|q) = \frac{P(d) \times P(q|d)}{P(q)}
      \item BIM originally designed for short catalog records of fairly consistent length, working reasonably in these contexts
      \item BM25 or language models offer a better performance (e.g., paying attention to term frequency and document length)
      \end{itemize}
-    \item Nowadays, BM25 is perhaps the most widely used
+    \item Nowadays, BM25 is perhaps the most widely used approach
+    \item Several other familes of probabilistic models
+    \begin{itemize}
+    \item Divergence from randomness
+    \item Markov random fields (e.g., accounting with term proximity)
+    \end{itemize}
     \end{itemize}
   \end{block}
 \end{frame}
