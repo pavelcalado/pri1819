@@ -659,9 +659,9 @@ TF-IDF and VSM produces sufficiently good results in practice, but often critici
     \small
     \begin{displaymath}
       sim(d_j,q) \sim \frac{
-        (\Pi_{g_i(\vec{d_j})=g_i(\vec{q})=1}P(k_i|R))\times(\Pi_{g_i(\vec{d_j})=0}P(\overline{k_i}|R))
+        (\Pi_{g_i(\vec{d_j})=g_i(\vec{q})=1}P(k_i|R))\times(\Pi_{g_i(\vec{d_j})=0 \and g_i(\vec{q})=1}P(\overline{k_i}|R))
       }{
-        (\Pi_{g_i(\vec{d_j})=g_i(\vec{q})=1}P(k_i|\overline{R}))\times(\Pi_{g_i(\vec{d_j})=0}P(\overline{k_i}|\overline{R}))}
+        (\Pi_{g_i(\vec{d_j})=g_i(\vec{q})=1}P(k_i|\overline{R}))\times(\Pi_{g_i(\vec{d_j})=0 \and g_i(\vec{q})=1}P(\overline{k_i}|\overline{R}))}
     \end{displaymath}
   \end{block}
 
@@ -770,16 +770,16 @@ TF-IDF and VSM produces sufficiently good results in practice, but often critici
     P(k_i|\overline{R}) = u_i = \frac{n_i}{N}
     \end{displaymath}
     
-    \begin{centering}
+    \begin{center}
     Replacing $p_i$ and $u_i$ in the previous equation...
-    \end{centering}
+    \end{center}
     
      \begin{displaymath}      
        \log\frac{p_i}{1 - p_i} = 0
     \end{displaymath}
     
     \begin{displaymath}      
-       \log\frac{1 - u_i}{u_i} = \log\frac{N - n_i}{n_i} \approx \mathbf{\mathrm{log} \left( \frac{N}{n_i} \right)}
+       \log\frac{1 - u_i}{u_i} = \log\frac{N - n_i}{n_i} \approx \mathbf{\log \left( \frac{N}{n_i} \right)}
     \end{displaymath}
   \end{block}
   
@@ -809,7 +809,7 @@ TF-IDF and VSM produces sufficiently good results in practice, but often critici
     \item Inverse Document Frequency (IDF)
     \item Term Frequncy (TF)
     \item Document length 
-    \item Query term fequency
+    \item Query term fequency {\it (in some formulations)}
     \end{itemize}
 \item Effective and widely used model
 \end{itemize}
@@ -829,6 +829,12 @@ TF-IDF and VSM produces sufficiently good results in practice, but often critici
           \sum_{i \in q} IDF_i \times TF_{i,j} 
     \end{displaymath}
 \end{block}
+\begin{itemize}
+\item Parameters k1 and b need to be tuned
+\begin{itemize}
+\item Setting $k_1 = 1.5$ and $b = 0.75$ are common defaults
+\end{itemize}
+\end{itemize}
 \end{frame}
 
 % ------------------------------------------------------------
