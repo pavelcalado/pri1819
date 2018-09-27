@@ -646,6 +646,7 @@ TF-IDF and VSM produces sufficiently good results in practice, but often critici
   \frametitle{Similarity Probabilities}
 
   \begin{block}{Initial Equation}
+    We can simplify the expression leveraging Bayes’ theorem and rank equivalence
     \small
     \begin{displaymath}
         sim(d_j,q) = \frac{P(R|\vec{d_j},\vec{q})}{P(\overline{R}|\vec{d_j},\vec{q})}
@@ -682,6 +683,10 @@ TF-IDF and VSM produces sufficiently good results in practice, but often critici
         P(k_i|\overline{R}) &=& \frac{n_i}{N}\\
       \end{array}
     \end{displaymath}
+    \begin{itemize}
+    \item $P(k_i|R)$ reflects that we have no information about relevant documents (i.e., each query term is equally likely to occur in a relevant document)
+    \item $P(k_i|\overline{R})$ under the assumption that # relevant documents <<< # documents
+    \end{itemize}
   \end{block}
 
   \begin{block}{After document retrieval or leveraging training data...}
@@ -811,7 +816,7 @@ TF-IDF and VSM produces sufficiently good results in practice, but often critici
     \item Document length 
     \item Query term fequency {\it (in some formulations)}
     \end{itemize}
-\item Effective and widely used model
+\item BM25 (BestMatch25) is an effective and widely used model
 \end{itemize}
 \end{frame}
 
@@ -830,8 +835,11 @@ TF-IDF and VSM produces sufficiently good results in practice, but often critici
     \end{displaymath}
 \end{block}
 \begin{itemize}
-\item Parameters k1 and b need to be tuned
+\item Postulates Poisson (or 2-Poisson-mixture) distributions for terms, instead of Binomial distributions as in BIM
+\item Parameters $k_1$ and $b$ need to be tuned
 \begin{itemize}
+\item $k_1$ controls impact of term frequency
+\item $b$ controls impact of document length
 \item Setting $k_1 = 1.5$ and $b = 0.75$ are common defaults
 \end{itemize}
 \end{itemize}
@@ -932,7 +940,8 @@ P(d|q) = \frac{P(d) \times P(q|d)}{P(q)}
     \item There is some controversy over which shows better performance: vector space or probabilistic
      \begin{itemize}
      \item Simple BIM is just IDF weighting of the terms
-     \item BM25 or language models offer a better performance
+     \item BIM was originally designed for short catalog records of fairly consistent length, and it works reasonably in these contexts
+     \item BM25 or language models offer a better performance (e.g., paying attention to term frequency and document length)
      \end{itemize}
     \item Nowadays, BM25 is perhaps the most widely used
     \end{itemize}
