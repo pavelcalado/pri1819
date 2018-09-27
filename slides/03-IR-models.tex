@@ -646,7 +646,7 @@ TF-IDF and VSM produces sufficiently good results in practice, but often critici
   \frametitle{Similarity Probabilities}
 
   \begin{block}{Initial Equation}
-    We can simplify the expression leveraging Bayes’ theorem and rank equivalence
+    We can simplify the expression leveraging Bayes’ theorem and rank equivalence (i.e., remove constants not depending on query)
     \small
     \begin{displaymath}
         sim(d_j,q) = \frac{P(R|\vec{d_j},\vec{q})}{P(\overline{R}|\vec{d_j},\vec{q})}
@@ -680,12 +680,13 @@ TF-IDF and VSM produces sufficiently good results in practice, but often critici
     \begin{displaymath}
       \begin{array}{rcl}
         P(k_i|R) &=& 0.5\\
-        P(k_i|\overline{R}) &=& \frac{n_i}{N}\\
+	P(k_i|\overline{R}) &=& \frac{n_i}{N}\\
       \end{array}
     \end{displaymath}
+    \small
     \begin{itemize}
     \item $P(k_i|R)$ reflects that we have no information about relevant documents (i.e., each query term is equally likely to occur in a relevant document)
-    \item $P(k_i|\overline{R})$ under the assumption that number of relevant documents is much smaller than the total number of documents
+    \item $P(k_i|\overline{R})$ reflects a much smaller number of relevant documents than the collection size
     \end{itemize}
   \end{block}
 
