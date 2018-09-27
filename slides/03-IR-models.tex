@@ -792,7 +792,7 @@ TF-IDF and VSM produces sufficiently good results in practice, but often critici
   \begin{block}{}
     \begin{itemize}
     \item The BIM can be seen as TF-IDF with binary term frequencies and logarithmically dampened inverse document frequencies
-    \item The score for document $d$ is just \emph{IDF weighting of the query terms present in the document}
+    \item The score for document $d_j$ is just \emph{IDF weighting of the query terms present in the document}
     \end{itemize}
 	\begin{displaymath}  
 	sim(d_j,q) = \sum_{i=1}^t w_{i,q} \times w_{i,j} \times \log \left( \frac{N}{n_i} \right)
@@ -851,7 +851,7 @@ TF-IDF and VSM produces sufficiently good results in practice, but often critici
 \begin{frame} \frametitle{Probabilistic Language Models}
   \begin{block}{}
     \begin{itemize}
-\item Another simple probabilistic retrieval model
+\item Another simple probabilistic retrieval formulation
 \item Each document $d$ is treated as (the basis for) a \emph{probabilistic language model}
 \item Given a query $q$ rank documents based on $P(d|q)$
 \begin{equation*}
@@ -875,10 +875,10 @@ P(d|q) = \frac{P(d) \times P(q|d)}{P(q)}
     \begin{itemize}
     \item Conditional independence assumption
 	\begin{equation*}
-	P(q|d) = P(\{t_1,\ldots,t_{|q|}\}|d) = \prod_{1<=i<=|q|} P(t_k|d)
+	P(q|d) = P(\{t_1,\ldots,t_{|q|}\}|d) = \prod_{1<=i<=|q|} P(t_i|d)
 	\end{equation*}
     \item $|q|$ is length of $q$
-    \item $t_k$ is the token occurring at position $k$ in $q$
+    \item $t_i$ is the token occurring at position $i$ in $q$
     \end{itemize}
   \end{block}
 
@@ -887,13 +887,13 @@ P(d|q) = \frac{P(d) \times P(q|d)}{P(q)}
     \begin{itemize}
     \item The above multinomial model is equivalent to:
 	\begin{equation*}
-	P(q|d) = \prod_{\text{distinct term~} t \in q} P(t_k|d)^{TF_{t,q}}
+	P(q|d) = \prod_{\text{distinct term~} t \in q} P(t|d)^{TF_{t,q}}
 	\end{equation*}
 	\item Component $TF_{t,q}$ is the term frequency of $t$ in $q$
-    \item Parameters $P(t_k|d)$ computed through maximum likelihood estimates
+    \item Parameters $P(t|d)$ computed through maximum likelihood estimates
 	\end{itemize}
 		\begin{equation*}
-		P(t_k|d) = \frac{TF_{t_k,d}}{|d|}
+		P(t|d) = \frac{TF_{t,d}}{|d|}
 		\end{equation*}
   \end{block}
 
