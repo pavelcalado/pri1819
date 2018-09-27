@@ -687,7 +687,7 @@ TF-IDF and VSM produces sufficiently good results in practice, but often critici
   \begin{block}{After document retrieval or leveraging training data...}
     \begin{itemize}
     \item Let $V$ be the number of returned documents (i.e., number of documents estimated to be relevant)
-    \item Let $V_i$ be the number of returned documents containing term $k_i$
+    \item Let $V_i$ be the number of returned docs with term $k_i$
     \end{itemize}
     \begin{displaymath}
       \begin{array}{rcl}
@@ -697,9 +697,9 @@ TF-IDF and VSM produces sufficiently good results in practice, but often critici
     \end{displaymath}    
   \end{block}
   
-  \begin{block}{Avoiding zeroes and small values when considering blind assumptions...}
+  \begin{block}{Avoiding small values when using blind assumptions...}
     \begin{itemize}
-    \item With zero counts probability is not well-defined
+    \item With \emph{zero counts} probability is not well-defined
     \item Maximum likelihood estimates do not work for rare events
     \item To avoid zeros add 0.5 to each count (expected likelihood estimation) or use a different type of smoothing
     \end{itemize}
@@ -770,12 +770,16 @@ TF-IDF and VSM produces sufficiently good results in practice, but often critici
     P(k_i|\overline{R}) = u_i = \frac{n_i}{N}
     \end{displaymath}
     
+    \begin{centering}
+    Replacing $p_i$ and $u_i$ in the previous equation...
+    \end{centering}
+    
      \begin{displaymath}      
        \log\frac{p_i}{1 - p_i} = 0
     \end{displaymath}
     
     \begin{displaymath}      
-       \log\frac{1 - u_i}{u_i} = \log\frac{N - n_i}{n_i} \approx \mathbf{\log \left( \frac{N}{n_i} \right)}
+       \log\frac{1 - u_i}{u_i} = \log\frac{N - n_i}{n_i} \approx \mathbf{\mathrm{log} \left( \frac{N}{n_i} \right)}
     \end{displaymath}
   \end{block}
   
@@ -921,10 +925,10 @@ P(d|q) = \frac{P(d) \times P(q|d)}{P(q)}
     \item Boolean model is considered the weakest
     \item There is some controversy over which shows better performance: vector space or probabilistic
      \begin{itemize}
-     \item Simple BIM is just IDF weighting of the query terms in the document
+     \item Simple BIM is just IDF weighting of the terms
      \item BM25 or language models offer a better performance
      \end{itemize}
-    \item Nowadays, the BM25 is perhaps the most widely used
+    \item Nowadays, BM25 is perhaps the most widely used
     \end{itemize}
   \end{block}
 \end{frame}
