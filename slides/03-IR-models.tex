@@ -817,7 +817,7 @@ TF-IDF and VSM produces sufficiently good results in practice, but often critici
     \item Document length 
     \item Query term fequency {\it (in some formulations)}
     \end{itemize}
-\item BM25 (BestMatch25) is an effective and widely used model
+\item BM25 (BestMatch25) is an effective and widely used model for full-text retrieval over large collections
 \end{itemize}
 \end{frame}
 
@@ -941,7 +941,7 @@ P(d|q) = \frac{P(d) \times P(q|d)}{P(q)}
     \item There is some controversy over which shows better performance: vector space or probabilistic
      \begin{itemize}
      \item Simple BIM is just IDF weighting of the terms
-     \item BIM was originally designed for short catalog records of fairly consistent length, and it works reasonably in these contexts
+     \item BIM originally designed for short catalog records of fairly consistent length, working reasonably in these contexts
      \item BM25 or language models offer a better performance (e.g., paying attention to term frequency and document length)
      \end{itemize}
     \item Nowadays, BM25 is perhaps the most widely used
