@@ -852,15 +852,15 @@ TF-IDF and VSM produces sufficiently good results in practice, but often critici
 \begin{itemize}
 \item Textual data often found in some sort of structural form
 \item Retrieval effectiveness can be improved by taking the structure into account
-\item Simple solution: calculate score for each field and combine them linearly
+\item Simple solution: calculate score for each field and combine the different fields linearly
 \end{itemize}
     \begin{displaymath}
           sim(d_j,q) =
-          \sum_{f \in F} \alpha^f \times sim(d_j^f,q)
+          \sum_{z \in F} \alpha^z \times sim(d_j^z,q)
     \end{displaymath}
 \begin{block}{Problems of linear combination}
 \begin{itemize}
-\item If corpus statistics are computed per field, IDF can vary highly in different fields (e.g. stopwords scoring highly in a title field)
+\item With statistics computed per field, IDF can vary highly in different fields (e.g. stopwords scoring highly in a title field)
 \item TF usually non-linear and information gained by observing a term for the first time is greater than observing subsequent occurrences
 \end{itemize}
 \end{block}
@@ -869,8 +869,8 @@ TF-IDF and VSM produces sufficiently good results in practice, but often critici
 \begin{frame} \frametitle{BM25F and Combining Term Frequencies}
 \begin{block}{}
     \begin{displaymath}
-          TF_{i,j} = \sum_{f \in F} \alpha^f \times \frac{f_{i,j} \times (k_1 + 1)}
-                                  {f_{i,j} + k_1 \times \left( 1-b^f+b^f\frac{|d_j^f|}{avgdl^f} \right)}
+          TF_{i,j} = \sum_{z \in F} \alpha^z \times \frac{f_{i,j}^z \times (k_1 + 1)}
+                                  {f_{i,j}^z + k_1 \times \left( 1-b^z+b^z\frac{|d_j^z|}{avgdl^z} \right)}
     \end{displaymath}
     \begin{displaymath}
         IDF_i = \log\frac{N - n_i + 0.5}{n_i + 0.5}
