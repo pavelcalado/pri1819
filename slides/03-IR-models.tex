@@ -1010,9 +1010,11 @@ P(d|q) = \frac{P(d) \times P(q|d)}{P(q)}
 \begin{equation*}
 \begin{array}{lll}
 	P(q|d) &=& \prod_{1<=i<=|q|} \left( \alpha \times P(t_i|d) \right) + \left( (1-\alpha) \times P(t_i|c) \right) \\
-           &=&  \prod_{1<=i<=|q|} \left( \alpha \times P(t_i|d) \right) + \left( (1-\alpha) \times P(t_i|c) \right) \times \frac{(1-\alpha) \times P(t_i|c)}{(1-\alpha) \times P(t_i|c)} \\
-		   
-		   &=&  \prod_{1<=i<=|q|} \left( \frac{\left( \alpha \times P(t_i|d) \right)} {\left( (1-\alpha) \times P(t_i|c) \right)} + 1 \right) \times (1-\alpha) \times P(t_i|c) \\
+           &=&  \prod_{1<=i<=|q|} \left( \left( \alpha \times P(t_i|d) \right) + \left( (1-\alpha) \times P(t_i|c) \right) \right) \times \left( \frac{(1-\alpha) \times P(t_i|c)}{(1-\alpha) \times P(t_i|c)} \right) \\
+	   &=&  \prod_{1<=i<=|q|} \left( \frac{\alpha \times P(t_i|d)} {(1-\alpha) \times P(t_i|c)} + 1 \right) \times (1-\alpha) \times P(t_i|c) \\
+	   
+	   &=&  \prod_{1<=i<=|q|} \left( \frac{\alpha \times P(t_i|d)} {(1-\alpha) \times P(t_i|c)} + 1 \right) \times \prod_{1<=i<=|q|} (1-\alpha) \times P(t_i|c) \\
+	   &\approx&  \prod_{1<=i<=|q|} \left( \frac{\alpha \times P(t_i|d)} {(1-\alpha) \times P(t_i|c)} + 1 \right) \\
 \end{array}
 \end{equation*}
 
