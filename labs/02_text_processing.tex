@@ -143,19 +143,19 @@ According to the vector space model and using the document representations (i.e.
     
     \begin{center}
     \begin{equation*}
-	BIM(q,d) = \sum _{i=1}^{|q|} \log \left( \frac{N}{n_i} \right)
+	\mathrm{BIM}(q,d) = \sum _{t=1}^{|q|} \mathrm{IDF}(t), \text{~~with~~} \mathrm{IDF}(t) = \log \left( \frac{|D|}{|\{d' \in D: t \in d'\}|} \right)
 	\end{equation*}
     \end{center}
     
     \begin{center}
     \begin{equation*}
-{ {\text{BM25}}(q,d)=\sum _{i=1}^{|q|}{\text{IDF}}(q_{i})\cdot {\frac {f(q_{i},d)\cdot (k_{1}+1)}{f(q_{i},d)+k_{1}\cdot \left(1-b+b\cdot {\frac {|d|}{\text{avgdl}}}\right)}},} \text{~~with~~} \mathrm{IDF}(t) = \log \left( \frac{|D|}{|\{d' \in D: t \in d'\}|} \right)
+{ {\text{BM25}}(q,d)=\sum _{i=1}^{|q|}{\text{IDF}}(q_{i})\cdot {\frac {f(q_{i},d)\cdot (k_{1}+1)}{f(q_{i},d)+k_{1}\cdot \left(1-b+b\cdot {\frac {|d|}{\text{avgdl}}}\right)}},} \text{~~with IDF as defined above}
     \end{equation*}
     \end{center}
     
     \begin{center}
     \begin{equation*}
-	LM(q,d) = P(\{t_1,\ldots,t_{|q|}\}|d) = \prod_{1<=i<=|q|} P(t_i|d) = \prod_{1<=i<=|q|} \frac{f{t,d}}{|d|}
+	\mathrm{LM}(q,d) = P(\{t_1,\ldots,t_{|q|}\}|d) = \prod_{1<=i<=|q|} P(t_i|d) = \prod_{1<=i<=|q|} \frac{f{t,d}}{|d|}
 	\end{equation*}
     \end{center}
 \end{quote}
