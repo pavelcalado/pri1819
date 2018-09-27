@@ -994,16 +994,16 @@ P(d|q) = \frac{P(d) \times P(q|d)}{P(q)}
 \end{frame}
 
 \begin{frame} \frametitle{Query Likelihood Retrieval with Linear Interpolation Smoothing}
-\begin{block}
+\begin{block}{}
   \begin{itemize}
-\item Helps us avoid zero-probabilities
-\item Another added benefit...
-  \begin{itemize}
-  \item Without smoothing, the query-likelihood model ignores how frequently the term occurs in general
-  \item Linear interpolation smoothing also introduces an IDF-like scoring of documents
+  \item Helps us avoid zero-probabilities
+  \item Another added benefit...
+   \begin{itemize}
+   \item Without smoothing, the query-likelihood model ignores how frequently the term occurs in general
+   \item Linear interpolation smoothing also introduces an IDF-like scoring of documents
+   \end{itemize}
   \end{itemize}
-  \end{itemize}
-  \end{block}
+\end{block}
 \end{frame}
 
 % ------------------------------------------------------------
