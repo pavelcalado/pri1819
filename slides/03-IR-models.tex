@@ -596,16 +596,15 @@ TF-IDF and VSM produces sufficiently good results in practice, but often critici
       \begin{displaymath}
         %psframebox not supported in pdflatex
         %\psframebox[linestyle=dashed,linecolor=Blue]{
-          d_j \text{~~~~~is relevant iff~~~~~} P(R|\vec{d_j},\vec{q}) > P(\overline{R}|\vec{d_j},\vec{q})
+          d_j \text{~~is relevant iff~~} P(R|d_j,q) > P(\overline{R}|d_j,q)
         %}        
       \end{displaymath}
     \end{block}
 \end{frame}
 
 \begin{frame}  \frametitle{Binary Independence Model (BIM)}
-  \begin{block}{}
+  \begin{block}{Simplifying assumptions for $P(R|d_j,q)$}
     \begin{itemize}
-    \item Simplifying assumptions for $P(R|\vec{d_j},\vec{q})$
     \item A simple probabilistic model can assume that:
       \begin{enumerate}
       \item probability depends only on query and document
@@ -613,7 +612,7 @@ TF-IDF and VSM produces sufficiently good results in practice, but often critici
       \item index terms are independent
       \item non-query terms are equally likely to appear in relevant and non-relevant documents
       \end{enumerate}
-    \item A simple probabilistic model can use binary term weights
+    \item Use \emph{binary term weights}
       \begin{itemize}
       \item documents and queries as binary term incidence vectors
       \item terms not appearing in the query do not affect the ranking
@@ -638,7 +637,7 @@ TF-IDF and VSM produces sufficiently good results in practice, but often critici
           sim(d_j,q) = \frac{P(R|\vec{d_j},\vec{q})}{P(\overline{R}|\vec{d_j},\vec{q})}
         %}        
       \end{displaymath}
-     \item This is often refered to as the \emph{Retrieval Status Value (RSV)}
+     \item Often refered to as the \emph{Retrieval Status Value (RSV)}
     \end{itemize}
   \end{block}
 \end{frame}
@@ -650,25 +649,25 @@ TF-IDF and VSM produces sufficiently good results in practice, but often critici
 
   \begin{block}{Initial Equation}
     \begin{displaymath}
-        sim(d_j,q) = \frac{P(R|\vec{d_j})}{P(\overline{R}|\vec{d_j})}
-        = \frac{P(\vec{d_j}|R) \times P(R)}{P(\vec{d_j}|\overline{R}) \times
+        sim(d_j,q) = \frac{P(R|\vec{d_j},\vec{q})}{P(\overline{R}|\vec{d_j},\vec{q})}
+        = \frac{P(\vec{d_j},\vec{q}|R) \times P(R)}{P(\vec{d_j},\vec{q}|\overline{R}) \times
           P(\overline{R})}
-        \sim \frac{P(\vec{d_j}|R)}{P(\vec{d_j}|\overline{R})}
+        \sim \frac{P(\vec{d_j},\vec{q}|R)}{P(\vec{d_j},\vec{q}|\overline{R})}
      \end{displaymath}
   \end{block}
 
   \begin{block}{Assuming term independence...}
     \begin{displaymath}
       sim(d_j,q) \sim \frac{
-        (\Pi_{g_i(\vec{d_j})=1}P(k_i|R))\times(\Pi_{g_i(\vec{d_j})=0}P(\overline{k_i}|R))
+        (\Pi_{g_i(\vec{d_j})=g_i(\vec{q})=1}P(k_i|R))\times(\Pi_{g_i(\vec{d_j})=0}P(\overline{k_i}|R))
       }{
-        (\Pi_{g_i(\vec{d_j})=1}P(k_i|\overline{R}))\times(\Pi_{g_i(\vec{d_j})=0}P(\overline{k_i}|\overline{R}))}
+        (\Pi_{g_i(\vec{d_j})=g_i(\vec{q})=1}P(k_i|\overline{R}))\times(\Pi_{g_i(\vec{d_j})=0}P(\overline{k_i}|\overline{R}))}
     \end{displaymath}
   \end{block}
 
   \begin{block}{Taking $\log$s and removing constant factors...}
-    \begin{displaymath}
-      \scriptsize
+    \small
+    \begin{displaymath}      
       sim(d_j,q) = \sum_{i=1}^t w_{i,q} \times w_{i,j} \times
       \left(
         \log\frac{P(k_i|R)}{1-P(k_i|R)} + \log\frac{1-P(k_i|\overline{R})}{P(k_i|\overline{R})}
@@ -686,7 +685,7 @@ TF-IDF and VSM produces sufficiently good results in practice, but often critici
   \end{block}
 
   \begin{block}{After document retrieval or leveraging training data...}
-    Let $V$ be the number of returned documents; let $V_i$ be the number of
+    Let $V$ be the number of returned documents (i.e., estimated to be relevant); let $V_i$ be the number of
     returned documents containing term $k_i$.
     \begin{displaymath}
       \begin{array}{rcl}
@@ -718,7 +717,7 @@ TF-IDF and VSM produces sufficiently good results in practice, but often critici
   \end{block}
   \begin{block}{}
     \begin{itemize}
-    \item In fact, \emph{many different probabilistic retrieval models} have been proposed!
+    \item In fact, \emph{many different probabilistic retrieval models} have been proposed, some addressing the aforementioned limitations!
     \end{itemize}
   \end{block}
 \end{frame}
