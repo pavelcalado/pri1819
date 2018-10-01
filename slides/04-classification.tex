@@ -259,7 +259,7 @@
   \frametitle{Nearest Neighbor Classifiers}
 
   \begin{itemize}
-  \item Similar documents are expected to be assigned the same class label
+  \item Intuition: similar documents are expected to be assigned the same class label
     \begin{itemize}
     \item Similarity: vector space model + cosine similarity
     \end{itemize}
@@ -305,7 +305,7 @@
   \item Advantages:
         \begin{itemize}
         \item Reuse of standard vector space model and availability of associated technology (e.g., inverted indexes)
-        \item Collection updates trivial
+        \item Collection updates are trivial
         \item Accuracy comparable to best known classifiers
         \end{itemize}
   \item<+-> Problems:
@@ -335,9 +335,9 @@
   \begin{itemize}
   \item To reduce space requirements and speed up classification
     \begin{itemize}
-    \item Find clusters in the data \emph{(clustering will be covered in the next lecture)}
+    \item Find clusters in the data and start by comparing instances against clusters \emph{(clustering will be covered in the next lecture)}
     \item Store only a few statistical parameters per cluster
-    \item Compare with documents in only the most promising clusters
+    \item In second step, compare with documents in only the most promising clusters
     \end{itemize}
   \item However...
     \begin{itemize}
@@ -379,7 +379,7 @@
   
   \begin{itemize}
   \item $P(d|c)$ is estimated based on parameters $\Theta$
-  \item $\Theta$ is estimated based on two factors:
+  \item $\Theta$ are estimated based on two factors:
     \begin{enumerate}
     \item Prior knowledge before seeing any documents
     \item Terms in the training documents
@@ -418,7 +418,7 @@
     \end{itemize}
   \item Two kinds of widely used marginals for text
     \begin{itemize}
-    \item Binary model
+    \item Binary model (Bernoulli)
     \item Multinomial model
     \end{itemize}
   \end{itemize}
