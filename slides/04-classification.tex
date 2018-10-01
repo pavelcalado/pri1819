@@ -118,9 +118,9 @@
 \begin{frame}
     \frametitle{Minimizing the Loss}
     \begin{itemize}
-    \item In the most simple case, we can easily find one (or more) solution(s)
+    \item In simple cases, we can easily find one (or more) solution(s)
         \begin{itemize}
-        \item Just take the derivatives and equal to $0$
+        \item For linear regression, take the derivatives and equal to $0$
         \end{itemize}
     \item In many cases this is not possible (or we may want to enforce some
         constraints on the parameters) % e.g. como no Lasso ou ridge regression
@@ -207,7 +207,10 @@
 
 \begin{frame}
   \frametitle{Text Classification vs. Data Mining}
-
+  \begin{block}{}
+  Leverage supervised machine learning together with a method for representing textual information (e.g., the vector space model with TF-IDF weights)
+  \end{block}
+  
   \begin{itemize}
   \item Lots of features and a lot of noise
   \item No fixed number of columns
@@ -242,6 +245,10 @@
   %   \begin{itemize}
   %   \item Induce rules for classification over diverse features
   %   \end{itemize}
+  \item Neural networks
+    \begin{itemize}
+    \item Discover a non-linear function, often resulting from a composition of many functins, that separates classes
+    \end{itemize}    
   \end{itemize}
 
 \end{frame}
