@@ -819,24 +819,26 @@
 %Thus, we see that the decision boundary is given by the plane $w_0 +_sum_i w_i \dot X_i$ (similarly to the Perceptron or SVM classifiers).
 %\end{frame}
 
+\subsection{Neural Networks}
+
+\begin{frame}
+    \frametitle{Neural Networks}
+\end{frame}
+
+
 \section{Evaluation of Classifiers}
 
-\subsection{Single-Class Classifiers}
-
 \begin{frame} \frametitle{Measures of Accuracy}
-  
   Two cases:
   \begin{enumerate}
   \item Each document is associated with exactly \emph{one class}, or
   \item Each document is associated with a \emph{subset of classes}
   \end{enumerate}
-
 \end{frame}
 
 % ------------------------------------------------------------
 
 \begin{frame} \frametitle{Single-class Scenario}
-  
   \begin{itemize}
   \item For the first case, we can use a \emph{confusion matrix} $M$
     \begin{itemize}
@@ -860,12 +862,9 @@
       \text{accuracy} = \sum_i M[i,i] / \sum_{i,j} M[i,j]
     \end{displaymath}
   \end{itemize}
-
-%\end{frame}
+\end{frame}
 
 % ------------------------------------------------------------
-
-\subsection{Multiple-Class Classifiers}
 
 \begin{frame} \frametitle{Multiple-class Scenario}
   
@@ -910,7 +909,6 @@
       \frac{\sum_{i=1}^n C'_i \cap C_i}{\sum_{i=1}^n C_i}
     \end{displaymath}
   \end{itemize}
-
   \begin{itemize}
   \item Micro-averaged precision/recall measures correctly classified
     documents, thus favoring large classes
@@ -933,7 +931,6 @@
       \frac{1}{n}\sum_{i=1}^n R_n
     \end{displaymath}
   \end{itemize}
-
   \begin{itemize}
   \item Macro-averaged precision/recall measures performance per class, giving
     all classes equal importance
@@ -942,10 +939,7 @@
 
 % ------------------------------------------------------------
 
-% \subsection{Other Measures}
-
-% \begin{frame} \frametitle{Other Measures}
-  
+% \begin{frame} \frametitle{Other Measures}  
 %   \begin{itemize}
 %   \item \emph{Precision-recall graphs}
 %     \begin{itemize}
@@ -966,14 +960,6 @@
 %   \end{itemize}
 
 % \end{frame}
-
-% ------------------------------------------------------------
-
-\subsection{Neural Networks}
-
-\begin{frame}
-    \frametitle{Neural Networks}
-\end{frame}
 
 % ------------------------------------------------------------
 
