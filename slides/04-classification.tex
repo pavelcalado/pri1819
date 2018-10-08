@@ -796,17 +796,20 @@
 \begin{frame} \frametitle{Logistic Regression as a Linear Classifier}
 Recall that for logistic regression, we have that:
 \begin{center}
-$P(y=0|x) = \frac{1}{1 + e^{-(w_0 + \sum_iw_ix_i)}}$ ~~and~~ $P(y=1|x) = 1 - P(y=0|x) = \frac{e^{-(w_0 + \sum_iw_ix_i)}}{1 + e^{-(w_0 + \sum_iw_ix_i)}}$
+$P(y=0|x) = \frac{1}{1 + e^{-(w_0 + \sum_iw_ix_i)}}$
+
+$P(y=1|x) = 1 - P(y=0|x) = \frac{e^{-(w_0 + \sum_iw_ix_i)}}{1 + e^{-(w_0 + \sum_iw_ix_i)}}$
 \end{center}
-We would predict positive if $P(y=1|x)>P(y=0|x)$ or, equivalently:
+We predict +1 if $P(y=1|x)>P(y=0|x)$, equivalent to:
 \begin{center}
 $\frac{P(y=1|x)}{P(y=0|x)} > 1$ ~or, taking logs on both sides,~ $\log \left( \frac{P(y=1|x)}{P(y=0|x)} \right) > 0$
 \end{center}
 Manipulating the expression:
 \begin{center}
+\scriptsize
 $\log(e^{-(w_0 + \sum_iw_ix_i)}) - \log(1+e^{-(w_0 + \sum_iw_ix_i)}) - \log(1) + \log(1+e^{-(w_0 + \sum_iw_ix_i)}) > 0$
 \end{center}
-Thus, we see that the decision boundary is given by the plane $w_0 + \sum_i w_i \dot x_i$ (similarly to the Perceptron or SVM classifiers).
+Thus, the decision boundary is given by the plane $w_0 + \sum_i w_i \dot x_i$ (similarly to the Perceptron or SVM classifiers).
 \end{frame}
 
 \subsection{Neural Networks}
