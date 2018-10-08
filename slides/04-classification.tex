@@ -805,7 +805,7 @@ $\frac{P(y=1|x)}{P(y=0|x)} > 1$ ~or, taking logs on both sides,~ $\log \left( \f
 \end{center}
 Simplifying the expression:
 \begin{center}
-\scriptsize
+\footnotesize
 $\log(1+e^{-(w_0 + \sum_iw_ix_i)}) - \log(1+e^{-(w_0 + \sum_iw_ix_i)}) - \log(1) +  \log(e^{-(w_0 + \sum_iw_ix_i)}) > 0$
 \end{center}
 Thus, the decision boundary is given by the plane $w_0 + \sum_i w_i \dot x_i$ (similarly to the Perceptron or SVM classifiers).
@@ -815,6 +815,7 @@ Thus, the decision boundary is given by the plane $w_0 + \sum_i w_i \dot x_i$ (s
 
 \begin{frame}
     \frametitle{Neural Networks}
+    \begin{block}{}
     \begin{itemize}
     \item Multi-Layered Perceptrons leveraging VSM representations
     \item Other approaches leveraging sequential information and different representations (e.g., word embeddings)
@@ -822,6 +823,9 @@ Thus, the decision boundary is given by the plane $w_0 + \sum_i w_i \dot x_i$ (s
     \item Convolutional neural networks
     \item Recurrent neural networks
     \end{itemize}
+    \end{itemize}
+    \end{block}
+    \begin{itemize}
     \item To be addressed latter in the course
     \end{itemize}
 \end{frame}
@@ -832,7 +836,7 @@ Thus, the decision boundary is given by the plane $w_0 + \sum_i w_i \dot x_i$ (s
 \begin{frame} \frametitle{Quality Measures}
   Two cases:
   \begin{enumerate}
-  \item Each document is associated with exactly \emph{one class} from a given set of possibilities (in either binary or multi-class scenarios), or
+  \item Each document is associated with exactly \emph{one class} from a given set (in either binary or multi-class scenarios), or
   \item Each document is associated with a \emph{subset of classes} (also refered to as multi-label classification)
   \end{enumerate}
 \end{frame}
