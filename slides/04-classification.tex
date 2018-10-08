@@ -794,26 +794,23 @@
 \end{frame}
 
 \begin{frame} \frametitle{Logistic Regression as a Linear Classifier}
+
 Recall that for logistic regression, we have that:
 
 \begin{center}
-h_{\ww}(x) = \frac{1}{1 + e^{-(w_0 + w_1x)}}
+$h_{\ww}(x) = \frac{1}{1 + e^{-(w_0 + w_1x)}}$
 \end{center}
 
 We would predict positive if $P(Y=1|X)>P(Y=0|X)$, or equivalently:
 
 \begin{center}
-\begin{equation}
-\frac{P(Y=1|X)}{P(Y=0|X)} > 1
-\end{equation}
+$\frac{P(Y=1|X)}{P(Y=0|X)} > 1$
 \end{center}
 
 Taking logs on both sides:
 
 \begin{center}
-\begin{equation}
-\log \left( \frac{P(Y=1|X)}{P(Y=0|X)} \right) > 0
-\end{equation}
+$\log \left( \frac{P(Y=1|X)}{P(Y=0|X)} \right) > 0$
 \end{center}
 
 Thus, we see that the decision boundary is given by the plane $w_0 +_sum_i w_i \dot X_i$ (similarly to the Perceptron or SVM classifiers).
