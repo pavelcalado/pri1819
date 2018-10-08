@@ -796,18 +796,17 @@
 \begin{frame} \frametitle{Logistic Regression as a Linear Classifier}
 Recall that for logistic regression, we have that:
 \begin{center}
-$P(y=0|x) = \frac{1}{1 + e^{-(w_0 + \sum_iw_ix_i)}}$
-
-$P(y=1|x) = 1 - P(y=0|x) = \frac{e^{-(w_0 + \sum_iw_ix_i)}}{1 + e^{-(w_0 + \sum_iw_ix_i)}}$
+$P(y=1|x) = \frac{1}{1 + e^{-(w_0 + \sum_iw_ix_i)}}$
+$P(y=0|x) = 1 - P(y=1|x) = \frac{e^{-(w_0 + \sum_iw_ix_i)}}{1 + e^{-(w_0 + \sum_iw_ix_i)}}$
 \end{center}
-We predict +1 if $P(y=1|x)>P(y=0|x)$, equivalent to:
+We predict $+1$ if $P(y=1|x)>P(y=0|x)$, equivalent to:
 \begin{center}
 $\frac{P(y=1|x)}{P(y=0|x)} > 1$ ~or, taking logs on both sides,~ $\log \left( \frac{P(y=1|x)}{P(y=0|x)} \right) > 0$
 \end{center}
-Manipulating the expression:
+Simplifying the expression:
 \begin{center}
 \scriptsize
-$\log(e^{-(w_0 + \sum_iw_ix_i)}) - \log(1+e^{-(w_0 + \sum_iw_ix_i)}) - \log(1) + \log(1+e^{-(w_0 + \sum_iw_ix_i)}) > 0$
+$\log(1+e^{-(w_0 + \sum_iw_ix_i)}) - \log(1+e^{-(w_0 + \sum_iw_ix_i)}) - \log(1) +  \log(e^{-(w_0 + \sum_iw_ix_i)}) > 0$
 \end{center}
 Thus, the decision boundary is given by the plane $w_0 + \sum_i w_i \dot x_i$ (similarly to the Perceptron or SVM classifiers).
 \end{frame}
@@ -823,24 +822,24 @@ Thus, the decision boundary is given by the plane $w_0 + \sum_i w_i \dot x_i$ (s
     \item Convolutional neural networks
     \item Recurrent neural networks
     \end{itemize}
-    \item Addressed latter in the course
+    \item To be addressed latter in the course
     \end{itemize}
 \end{frame}
 
 
 \section{Evaluation of Classifiers}
 
-\begin{frame} \frametitle{Measures of Accuracy}
+\begin{frame} \frametitle{Quality Measures}
   Two cases:
   \begin{enumerate}
-  \item Each document is associated with exactly \emph{one class}, or
+  \item Each document is associated with exactly \emph{one class} from a given set of possibilities (in either binary or multi-class scenarios), or
   \item Each document is associated with a \emph{subset of classes} (also refered to as multi-label classification)
   \end{enumerate}
 \end{frame}
 
 % ------------------------------------------------------------
 
-\begin{frame} \frametitle{Single-class Scenario}
+\begin{frame} \frametitle{Single-Class Scenarios (Binary or Multi-Class Classification)}
   \begin{itemize}
   \item For the first case, we can use a \emph{confusion matrix} $M$
     \begin{itemize}
@@ -868,35 +867,7 @@ Thus, the decision boundary is given by the plane $w_0 + \sum_i w_i \dot x_i$ (s
 
 % ------------------------------------------------------------
 
-\begin{frame} \frametitle{Multiple-class Scenario }
-  
-  \begin{itemize}
-  \item One-vs.-rest
-    \begin{itemize}
-    \item Create a two-class problem for every class
-      \begin{itemize}
-      \item E.g. ``sports'' and ``not-sports'', ``science'' and
-        ``not-science'', etc.
-      \end{itemize}
-    \item We have a classifier for each case
-    \end{itemize}
-  \item Quality is measured by \emph{recall} and \emph{precision}
-    \begin{itemize}
-    \item Let $C_d$ be the correct classes for document $d$ and $C'_d$ be the
-      set of classes estimated by the classifier
-      \begin{displaymath}
-        precision = \frac{C'_d \cap C_d}{C'_d}
-      \end{displaymath}
-      \begin{displaymath}
-        recall = \frac{C'_d \cap C_d}{C_d}
-      \end{displaymath}
-    \end{itemize}
-  \end{itemize}
-\end{frame}
-
-% ------------------------------------------------------------
-
-\begin{frame} \frametitle{Micro-Averaged Precision (Single Class)}
+\begin{frame} \frametitle{Micro-Averaged Precision (Multi-Class Classification)}
   
   In a problem with $n$ classes, let $C_i$ be the number of documents in class
   $i$ and let $C'_i$ be the number of documents estimated to be of class $i$ by
@@ -919,7 +890,7 @@ Thus, the decision boundary is given by the plane $w_0 + \sum_i w_i \dot x_i$ (s
 
 % ------------------------------------------------------------
 
-\begin{frame} \frametitle{Macro-Averaged Precision (Single Class)}
+\begin{frame} \frametitle{Macro-Averaged Precision (Multi-Class Classification)}
   
   In a problem with $n$ classes, let $P_i$ and $R_i$ be the precision and
   recall, respectively, achieved by a classifier for class $i$
@@ -936,6 +907,33 @@ Thus, the decision boundary is given by the plane $w_0 + \sum_i w_i \dot x_i$ (s
   \begin{itemize}
   \item Macro-averaged precision/recall measures performance per class, giving
     all classes equal importance
+  \end{itemize}
+\end{frame}
+
+% ------------------------------------------------------------
+
+\begin{frame} \frametitle{Multi-Label Scenario }
+  
+  \begin{itemize}
+  \item One-vs-rest formulation
+    \begin{itemize}
+    \item Create a two-class problem for every class
+      \begin{itemize}
+      \item E.g. ``sports'' and ``not-sports'', ``science'' and ``not-science'', etc.
+      \end{itemize}
+    \item We have a classifier for each case
+    \end{itemize}
+  \item Quality is measured by per-instance \emph{recall} and \emph{precision}
+    \begin{itemize}
+    \item Let $C_d$ be the correct classes for document $d$ and $C'_d$ be the
+      set of classes estimated by the classifier
+      \begin{displaymath}
+        precision = \frac{C'_d \cap C_d}{C'_d}
+      \end{displaymath}
+      \begin{displaymath}
+        recall = \frac{C'_d \cap C_d}{C_d}
+      \end{displaymath}
+    \end{itemize}
   \end{itemize}
 \end{frame}
 
@@ -973,7 +971,7 @@ Thus, the decision boundary is given by the plane $w_0 + \sum_i w_i \dot x_i$ (s
     \begin{itemize}
     \item Tokenization and feature extraction
         \begin{itemize}
-        \item E.g.: replacing monetary amounts and other numeric quantities by a special token, part-of-speech tagging, representations based on $n$-grams, etc.
+        \item E.g., replacing monetary amounts and other numeric quantities by a special token, part-of-speech tagging, representations based on $n$-grams, etc.
         \end{itemize}
     
     \item Evaluating text classifiers in practice
