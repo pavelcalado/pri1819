@@ -832,7 +832,7 @@
   Two cases:
   \begin{enumerate}
   \item Each document is associated with exactly \emph{one class}, or
-  \item Each document is associated with a \emph{subset of classes}
+  \item Each document is associated with a \emph{subset of classes} (also refered to as multi-label classification)
   \end{enumerate}
 \end{frame}
 
@@ -866,7 +866,7 @@
 
 % ------------------------------------------------------------
 
-\begin{frame} \frametitle{Multiple-class Scenario}
+\begin{frame} \frametitle{Multiple-class Scenario }
   
   \begin{itemize}
   \item One-vs.-rest
@@ -878,7 +878,7 @@
       \end{itemize}
     \item We have a classifier for each case
     \end{itemize}
-  \item Accuracy is measured by \emph{recall} and \emph{precision}
+  \item Quality is measured by \emph{recall} and \emph{precision}
     \begin{itemize}
     \item Let $C_d$ be the correct classes for document $d$ and $C'_d$ be the
       set of classes estimated by the classifier
@@ -894,7 +894,7 @@
 
 % ------------------------------------------------------------
 
-\begin{frame} \frametitle{Micro-Averaged Precision}
+\begin{frame} \frametitle{Micro-Averaged Precision (Single Class)}
   
   In a problem with $n$ classes, let $C_i$ be the number of documents in class
   $i$ and let $C'_i$ be the number of documents estimated to be of class $i$ by
@@ -917,7 +917,7 @@
 
 % ------------------------------------------------------------
 
-\begin{frame} \frametitle{Macro-Averaged Precision}
+\begin{frame} \frametitle{Macro-Averaged Precision (Single Class)}
   
   In a problem with $n$ classes, let $P_i$ and $R_i$ be the precision and
   recall, respectively, achieved by a classifier for class $i$
