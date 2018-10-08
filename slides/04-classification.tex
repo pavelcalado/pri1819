@@ -605,7 +605,7 @@
 
 \begin{frame} \frametitle{The Bias Term}
   \begin{itemize}
-  \item Notice that the decision hyperplane must go through the origin
+  \item Notice that, according to the previous definition, the decision hyperplane must go through the origin
   \item Could be achieved by preprocessing the input, but this is not always desirable or possible
   \item Solution : Add a bias input:
   \begin{equation*}
@@ -644,19 +644,28 @@
     \end{itemize}
 \end{frame}
 
-\begin{frame} \frametitle{Problems of Simple Perceptrons}
-\begin{block}{}
+\begin{frame} \frametitle{Problems of Simple Perceptrons (1)}
+\begin{block}{Overfitting}
 \begin{itemize}
 \item The standard Perceptron returns the most recent version of the weight vector
 \item Intuitively, this version is over-adapted to the last few instances, and may work less well for other instances
-\item The \emph{Averaged Perceptron} returns the average of all versions (or the last few versions) of the weight vector
-\item An implementation trick involves setting a learning step that takes the averaging effect into account
 \end{itemize}
 \end{block}
 \begin{block}{}
 \begin{itemize}
-\item Several problems involve multi-class classification
-\item Multi-class classification requires one weight vector for each category
+\item The \emph{Averaged Perceptron} returns the average of all versions (or the last few versions) of the weight vector
+\item An implementation trick involves setting a learning step that takes the averaging effect into account
+\end{itemize}
+\end{block}
+\end{frame}
+
+\begin{frame} \frametitle{Problems of Simple Perceptrons (2)}
+\begin{block}{Multi-class classification}
+\begin{itemize}
+\item Several problems involve \emph{multi-class classification}
+\item Multi-class classification can be made through one weight vector for each category, assigning instances to the class for which the model predicts a higher value
+\end{itemize}
+\begin{itemize}
 \item In practice, we can represent this with one giant weight vector and repeated features for each category
 \item Update rule involves changing the weights for the true class and the class that was predicted
 \item Other options for the update rule can be considered, e.g. updating all classes that have higher score from the correct one 
@@ -667,7 +676,7 @@
 \begin{frame} \frametitle{Summary of Simple/Averaged Perceptrons}
   \begin{itemize}
   \item Simple and reasonably efficient online training
-  \item Easy to extend in order to consider multi-class classification
+  \item Easy to extend in order to consider multi-class classification (and also structured prediction)
   \item Works well for document classification, and more generally for problems with many features
   \item Limited capabilities (e.g., does not try to optimize the separation ``distance'' between classes)
   \begin{itemize}
