@@ -798,19 +798,18 @@
 Recall that for logistic regression, we have that:
 
 \begin{center}
-$P(y=0|x) = \frac{1}{1 + e^{-(w_0 + w_1x)}}$ ~~~and~~~$P(y=1|x) = 1 - P(y=0|x) = \frac{e^{-(w_0 + w_1x)}{1 + e^{-(w_0 + w_1x)}}$
+$P(y=0|x) = \frac{1}{1 + e^{-(w_0 + w_1x)}}$ ~~and~~ $P(y=1|x) = 1 - P(y=0|x) = \frac{e^{-(w_0 + w_1x)}}{1 + e^{-(w_0 + w_1x)}}$
 \end{center}
 
-We would predict positive if $P(Y=1|X)>P(Y=0|X)$, or equivalently:
+We would predict positive if $P(Y=1|X)>P(Y=0|X)$ or, equivalently:
 
 \begin{center}
-$\frac{P(Y=1|X)}{P(Y=0|X)} > 1$
+$\frac{P(Y=1|X)}{P(Y=0|X)} > 1$ ~or, taking logs on both sides~ $\log \left( \frac{P(Y=1|X)}{P(Y=0|X)} \right) > 0$
 \end{center}
 
-Taking logs on both sides:
+Manipulating the expression:
 
 \begin{center}
-$\log \left( \frac{P(Y=1|X)}{P(Y=0|X)} \right) > 0$
 \end{center}
 
 Thus, we see that the decision boundary is given by the plane $w_0 +_sum_i w_i \dot X_i$ (similarly to the Perceptron or SVM classifiers).
