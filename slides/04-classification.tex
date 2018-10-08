@@ -540,7 +540,7 @@
 % \begin{frame} \frametitle{Na{\"i}ve Bayes and the LM-Based Retrieval Approach}
     
 %     \begin{block}{}
-%     The previous slides introduced a simple probabilistic model for {\it ad-hoc} document retrieval, based on language modeling
+%     The previous lectures introduced a simple probabilistic model for {\it ad-hoc} document retrieval, based on language modeling
 %     \end{block}
   
 %     \scriptsize
@@ -582,7 +582,6 @@
   \end{itemize}
   
 \end{frame}
-
 
 % ------------------------------------------------------------
 
@@ -645,11 +644,31 @@
     \end{itemize}
 \end{frame}
 
-\begin{frame} \frametitle{Summary of Simple Perceptrons}
+\begin{frame} \frametitle{Problems of Simple Perceptrons}
+\begin{block}{}
+\begin{itemize}
+\item The standard Perceptron returns the most recent version of the weight vector
+\item Intuitively, this version is over-adapted to the last few instances, and may work less well for other instances
+\item The \emph{Averaged Perceptron} returns the average of all versions (or the last few versions) of the weight vector
+\item An implementation trick involves setting a learning step that takes the averaging effect into account
+\end{itemize}
+\end{block}
+\begin{block}{}
+\begin{itemize}
+\item Several problems involve multi-class classification
+\item Multi-class classification requires one weight vector for each category
+\item In practice, we can represent this with one giant weight vector and repeated features for each category
+\item Update rule involves changing the weights for the true class and the class that was predicted
+\item Other options for the update rule can be considered, e.g. updating all classes that have higher score from the correct one 
+\end{itemize}
+\end{block}
+\end{frame}
+
+\begin{frame} \frametitle{Summary of Simple/Averaged Perceptrons}
   \begin{itemize}
   \item Simple and reasonably efficient online training
   \item Easy to extend in order to consider multi-class classification
-  \item Works well for  document classification, and more generally for problems with many features
+  \item Works well for document classification, and more generally for problems with many features
   \item Limited capabilities (e.g., does not try to optimize the separation ``distance'' between classes)
   \begin{itemize}
   \item Just looks for a hyperplane that separates the two sets 
@@ -657,7 +676,6 @@
   \end{itemize}  
   \end{itemize}
 \end{frame}
-
 
 % ------------------------------------------------------------
 
