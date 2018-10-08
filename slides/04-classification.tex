@@ -798,7 +798,7 @@
 Recall that for logistic regression, we have that:
 
 \begin{center}
-$h_{\ww}(x) = \frac{1}{1 + e^{-(w_0 + w_1x)}}$
+$P(y=0|x) = \frac{1}{1 + e^{-(w_0 + w_1x)}}$ ~~~and~~~$P(y=1|x) = 1 - P(y=0|x) = \frac{e^{-(w_0 + w_1x)}{1 + e^{-(w_0 + w_1x)}}$
 \end{center}
 
 We would predict positive if $P(Y=1|X)>P(Y=0|X)$, or equivalently:
@@ -820,7 +820,15 @@ Thus, we see that the decision boundary is given by the plane $w_0 +_sum_i w_i \
 
 \begin{frame}
     \frametitle{Neural Networks}
-    Next lecture...
+    \begin{itemize}
+    \item Multi-Layered Perceptrons leveraging VSM representations
+    \item Other approaches leveraging sequential information and different representations (e.g., word embeddings)
+    \begin{itemize}
+    \item Convolutional neural networks
+    \item Recurrent neural networks
+    \end{itemize}
+    \item Addressed latter in the course
+    \end{itemize}
 \end{frame}
 
 
