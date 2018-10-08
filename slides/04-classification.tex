@@ -794,25 +794,19 @@
 \end{frame}
 
 \begin{frame} \frametitle{Logistic Regression as a Linear Classifier}
-
 Recall that for logistic regression, we have that:
-
 \begin{center}
-$P(y=0|x) = \frac{1}{1 + e^{-(w_0 + w_1x)}}$ ~~and~~ $P(y=1|x) = 1 - P(y=0|x) = \frac{e^{-(w_0 + w_1x)}}{1 + e^{-(w_0 + w_1x)}}$
+$P(y=0|x) = \frac{1}{1 + e^{-(w_0 + \sum_iw_ix_i)}}$ ~~and~~ $P(y=1|x) = 1 - P(y=0|x) = \frac{e^{-(w_0 + \sum_iw_ix_i)}}{1 + e^{-(w_0 + \sum_iw_ix_i)}}$
 \end{center}
-
-We would predict positive if $P(Y=1|X)>P(Y=0|X)$ or, equivalently:
-
+We would predict positive if $P(y=1|x)>P(y=0|x)$ or, equivalently:
 \begin{center}
-$\frac{P(Y=1|X)}{P(Y=0|X)} > 1$ ~or, taking logs on both sides~ $\log \left( \frac{P(Y=1|X)}{P(Y=0|X)} \right) > 0$
+$\frac{P(y=1|x)}{P(y=0|x)} > 1$ ~or, taking logs on both sides,~ $\log \left( \frac{P(y=1|x)}{P(y=0|x)} \right) > 0$
 \end{center}
-
 Manipulating the expression:
-
 \begin{center}
+$\log(e^{-(w_0 + \sum_iw_ix_i)}) − \log(1+e^{-(w_0 + \sum_iw_ix_i)}) − \log(1) + \log(1+e^{-(w_0 + \sum_iw_ix_i)}) > 0$
 \end{center}
-
-Thus, we see that the decision boundary is given by the plane $w_0 +_sum_i w_i \dot X_i$ (similarly to the Perceptron or SVM classifiers).
+Thus, we see that the decision boundary is given by the plane $w_0 + \sum_i w_i \dot x_i$ (similarly to the Perceptron or SVM classifiers).
 \end{frame}
 
 \subsection{Neural Networks}
