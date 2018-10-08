@@ -793,36 +793,37 @@
 
 \end{frame}
 
-%\begin{frame} \frametitle{Logistic Regression as a Linear Classifier}
-%Recall that for logistic regression, we have that:
+\begin{frame} \frametitle{Logistic Regression as a Linear Classifier}
+Recall that for logistic regression, we have that:
 
-%\begin{center}
-%a
-%\end{center}
+\begin{center}
+h_{\ww}(x) = \frac{1}{1 + e^{-(w_0 + w_1x)}}
+\end{center}
 
-%We would predict positive if $P(Y=1|X)>P(Y=0|X)$, or equivalently:
+We would predict positive if $P(Y=1|X)>P(Y=0|X)$, or equivalently:
 
-%\begin{center}
-%\begin{equation}
-%\frac{P(Y=1|X)}{P(Y=0|X)} > 1
-%\end{equation}
-%\end{center}
+\begin{center}
+\begin{equation}
+\frac{P(Y=1|X)}{P(Y=0|X)} > 1
+\end{equation}
+\end{center}
 
-%Taking logs on both sides:
+Taking logs on both sides:
 
-%\begin{center}
-%\begin{equation}
-%\log \left( \frac{P(Y=1|X)}{P(Y=0|X)} \right) > 0
-%\end{equation}
-%\end{center}
+\begin{center}
+\begin{equation}
+\log \left( \frac{P(Y=1|X)}{P(Y=0|X)} \right) > 0
+\end{equation}
+\end{center}
 
-%Thus, we see that the decision boundary is given by the plane $w_0 +_sum_i w_i \dot X_i$ (similarly to the Perceptron or SVM classifiers).
-%\end{frame}
+Thus, we see that the decision boundary is given by the plane $w_0 +_sum_i w_i \dot X_i$ (similarly to the Perceptron or SVM classifiers).
+\end{frame}
 
 \subsection{Neural Networks}
 
 \begin{frame}
     \frametitle{Neural Networks}
+    Next lecture...
 \end{frame}
 
 
@@ -971,33 +972,15 @@
     \begin{itemize}
     \item Tokenization and feature extraction
         \begin{itemize}
-        \item E.g.: replacing monetary amounts by a special token, part-of-speech tagging, representations based on $n$-grams, etc.
+        \item E.g.: replacing monetary amounts and other numeric quantities by a special token, part-of-speech tagging, representations based on $n$-grams, etc.
         \end{itemize}
     
-    \item Handling scenarios with multiple classes, or with multiple labels per test document, with binary classifyers like SVMs
-        \begin{itemize}
-        \item E.g., one-vs.-rest heuristic
-            \begin{itemize}
-            \item {\scriptsize ~~~~ e.g. ``sports'' vs. ``not-sports'', ``science'' vs.
-                  ``not-science'', etc.}
-            \item Create a classifier for each case
-            \item Assign class(es) with the highest confidence
-            \end{itemize}
-        \end{itemize}
-    \end{itemize}
-\end{frame}
-
-\begin{frame}
-  \frametitle{Other Issues (2)}
-  
-  \begin{itemize}
-  \item Evaluating text classifiers
-    \begin{itemize}
-    \item Accuracy
-    \item Training speed and scalability
-    \item Simplicity, speed, and scalability for document modifications
-    \item Ease of diagnosis, interpretation of results, and adding human
-      judgment and feedback
+    \item Evaluating text classifiers in practice
+     \begin{itemize}
+     \item Accuracy
+     \item Training speed and scalability
+     \item Simplicity, speed, and scalability for document modifications
+     \item Ease of diagnosis, interpretation of results, and adding human judgment and feedback
     \end{itemize}
   \end{itemize}
   \begin{itemize}
