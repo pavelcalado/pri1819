@@ -76,7 +76,7 @@ Try to improve the classification by:
 \item Removing stopwords;
 % \item Removing the message headers;
 \item Removing very rare words (e.g. words that occur less than 3 times)
-\item Removing very frequent words (e.g. words that occur in more than 90\% of the documents)
+\item Removing very frequent words (e.g. words that occur in more than 90\% of the documents)\footnote{Note that these text preprocessing operations can be done using the \emph{Vectorizer} classes provided by scikit-learn.}
 \item Use different classification algorithms, such as:
 \begin{itemize}
 \item A nearest neighbour classifier (i.e., \verb+sklearn.neighbors.KNeighborsClassifier+)
@@ -91,42 +91,104 @@ Measure the performance of each of these variations.
 
 Implement a clustering of the full 20 Newsgroup collection, using the implementation of K-Means clustering available from scikit-learn.
 
-\section{Implementation Exercise}
+% \section{Implementation Exercise}
 
-Implement, in Python, (i) a nearest neighbour classifier, and (ii) a multinomial  na\"ive  Bayes  classifier. You can re-use the mechanisms in scikit-learn to represent documents as feature vectors, but you should program yourself the training  procedures for inferring the model parameters, and the test procedures for inferring the most likely class, given a test instance.
+% Implement, in Python, (i) a nearest neighbour classifier, and (ii) a multinomial  na\"ive  Bayes  classifier. You can re-use the mechanisms in scikit-learn to represent documents as feature vectors, but you should program the training  procedures for inferring the model parameters yourself, as also the procedures for inferring the most likely class, given a test instance.
 
 \section{Pen and Paper Exercise}
 
-Consider the following table where each record describes the characteristics of an individual, indicating also if the individual is a subscriber of a given news feed. The considered features are: gender, age ($<$ 26 years old) and if the individual owns a car.
+% \subsection{}
+
+% Consider the following table where each record describes the characteristics of an individual, indicating also if the individual is a subscriber of a given news feed. The considered features are: gender, age ($<$ 26 years old) and if the individual owns a car.
+
+% \begin{center}
+% \scriptsize
+% \tt
+% \begin{tabular}{ l c c c }
+% gender\_is\_male & ~~~~age < 26~~~~ & ~~~~has car~~~~ & ~~~~{\bf subscriber}~~~ \\
+% \hline
+% \hline
+% Yes    & Yes                & No                & Yes \\ \hline
+% Yes    & Yes                & Yes               & Yes \\ \hline
+% Yes    & Yes                & No                & Yes \\ \hline
+% Yes    & No                 & No                & No  \\ \hline
+% Yes    & Yes                & Yes               & No  \\ \hline
+% No     & No                 & No                & No  \\ \hline
+% No     & Yes                & No                & No  \\ \hline
+% No     & No                 & Yes               & No  \\ \hline
+% No     & Yes                & Yes               & No  \\ \hline
+% No     & Yes                & No                & No  \\ \hline
+% \end{tabular}
+% \end{center}
+
+% Use the provided data to infer the parameters of a multinomial naïve Bayes classifier, capable of predicting if a given individual is a subscriber. After inferring the parameters, use them to classify the instance {\tt <Yes, No, Yes>}.
+
+% Remember that a multinomial naïve Bayes classifier chooses a class $c$ according to the following rule, where $\mathbf{x}=<x_1,\ldots,x_n>$ is the instance (i.e., the feature vector) to classify:
+
+% \begin{equation*}
+% \underset{c}{\operatorname{argmax}} \text{~} \mathrm{P}(c) \times  \displaystyle\prod_{i=1}^n \mathrm{P}(x_i \vert c)
+% \end{equation*}
+
+% {\bf Note:} You can choose to only present the values for the parameters that are required to classify the given instance. It is not necessary to smooth the probability estimates. 
+
+\subsection{}
+
+Consider the following six textual documents, each associated to one of three possible classes.
+
+\begin{table}[h!]
+\centering
+\begin{tabular}{ | c | l | c |}
+  \hline			
+ID & Document                          & Class \\
+  \hline
+D1 & the movie is nothing but great   & Positive \\
+D2 & mixed feelings about the movie	  & Neutral \\
+D3 & not so great			          & Negative \\
+D4 & great fantastic movie			  & Positive \\
+D5 & good movie overall			      & Positive \\
+D6 & overall the movie is terrible    & Negative \\
+  \hline  
+\end{tabular}
+\end{table}
+
+\begin{itemize}
+\item Estimate the parameters of a binary na{\"i}ve Bayes model required for classifying the document
+    \begin{center}
+        \emph{great movie overall}
+    \end{center}
+State which would be the most likely class for the given document, presenting all involved calculations.
+
+    Use maximum likelihood estimation without considering any smoothing technique.
+
+\item Estimate the parameters of a Perceptron classifier based on the first 3 training instances, discriminating the positive instances from all other instances (i.e., the negative and the neutral). Start with an all-zero parameter vector, consider binary representations for the documents, and consider a single iteration over the training instances.
+\end{itemize}
+
+
+\subsection{}
+
+Consider the following collection of 4 text documents.
 
 \begin{center}
-\scriptsize
 \tt
-\begin{tabular}{ l c c c }
-gender\_is\_male & ~~~~age < 26~~~~ & ~~~~has car~~~~ & ~~~~{\bf subscriber}~~~ \\
+\begin{tabular}{ l r }
+number & text document \\
 \hline
 \hline
-Yes    & Yes                & No                & Yes \\ \hline
-Yes    & Yes                & Yes               & Yes \\ \hline
-Yes    & Yes                & No                & Yes \\ \hline
-Yes    & No                 & No                & No  \\ \hline
-Yes    & Yes                & Yes               & No  \\ \hline
-No     & No                 & No                & No  \\ \hline
-No     & Yes                & No                & No  \\ \hline
-No     & No                 & Yes               & No  \\ \hline
-No     & Yes                & Yes               & No  \\ \hline
-No     & Yes                & No                & No  \\ \hline
+1 & shipment of gold damaged in fire \\ \hline
+2 & delivery of silver arrived in silver truck \\ \hline
+3 & shipment of silver arrived in truck \\ \hline
+4 & truck damaged in fire \\ \hline
 \end{tabular}
 \end{center}
 
-Use the provided data to infer the parameters of a multinomial naïve Bayes classifier, capable of predicting if a given individual is a subscriber. After inferring the parameters, use them to classify the instance {\tt <Yes, No, Yes>}.
+Based on the \emph{binary} document representations for the documents above, state which would be the result of applying {\it one iteration of the $k$-means algorithm} over the documents. 
 
-Remember that a multinomial naïve Bayes classifier chooses a class $c$ according to the following rule, where $\mathbf{x}=<x_1,\ldots,x_n>$ is the instance (i.e., the feature vector) to classify:
+When simulating the execution of one iteration of the algorithm, consider $k=2$, and consider that the two clusters are initialized with centroids equaling the representations for documents 2 and 3.
 
+Two document representations 
+ $\mathbf{a}$ and $\mathbf{b}$ can be compared through the Manhattan distance, given by:
 \begin{equation*}
-\underset{c}{\operatorname{argmax}} \text{~} \mathrm{P}(c) \times  \displaystyle\prod_{i=1}^n \mathrm{P}(x_i \vert c)
+\mathrm{dist}(\mathbf{a}, \mathbf{b}) = \|\mathbf{a} - \mathbf{b}\|_1 = \sum_{i=1}^n |a_i-b_i|
 \end{equation*}
-
-{\bf Note:} You can choose to only present the values for the parameters that are required to classify the given instance. It is not necessary to smooth the probability estimates. 
 
 \end{document}
