@@ -873,22 +873,26 @@ Thus, the decision boundary is given by the plane $w_0 + \sum_i w_i \dot x_i$ (s
 
 \begin{frame} \frametitle{Micro-Averaged Precision (Multi-Class Classification)}
   
-  In a problem with $n$ classes, let $C_i$ be the number of documents in class
-  $i$ and let $C'_i$ be the number of documents estimated to be of class $i$ by
+  In a problem with $n$ classes, let $C_i$ be the set of documents in class
+  $i$ and let $C'_i$ be the set of documents estimated to be of class $i$ by
   the classifier
   \begin{itemize}
   \item \emph{Micro-averaged precision} is defined as
     \begin{displaymath}
-      \frac{\sum_{i=1}^n C'_i \cap C_i}{\sum_{i=1}^n C'_i}
+      \frac{\sum_{i=1}^n |C'_i \cap C_i|}{\sum_{i=1}^n |C'_i|}
     \end{displaymath}
   \item \emph{Micro-averaged recall} is defined as
     \begin{displaymath}
-      \frac{\sum_{i=1}^n C'_i \cap C_i}{\sum_{i=1}^n C_i}
+      \frac{\sum_{i=1}^n |C'_i \cap C_i|}{\sum_{i=1}^n |C_i|}
     \end{displaymath}
   \end{itemize}
   \begin{itemize}
   \item Micro-averaged precision/recall measures correctly classified
     documents, thus favoring large classes
+    \begin{itemize}
+    \item If all docs were classified micro avg Prec. $=$ micro
+        avg. Rec.
+  \end{itemize}
   \end{itemize}
 \end{frame}
 
