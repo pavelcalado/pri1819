@@ -82,6 +82,15 @@
 
 \end{frame}
 
+\begin{frame}
+  \frametitle{Another Example}
+
+  \centering
+  \includegraphics[width=\linewidth]{OKM}\\
+  \footnotesize\url{https://openknowledgemaps.org/}
+
+\end{frame}
+
 % ------------------------------------------------------------
 
 \begin{frame}
@@ -111,50 +120,50 @@
   \frametitle{Clustering Concepts}
 
   \begin{itemize}
-  \item Two important paradigms:
+  \item Clustering paradigms:
     \begin{itemize}
     \item \emph{Bottom-up} agglomerative clustering
     \item \emph{Top-down} partitioning
     \end{itemize}
-  \item Visualization techniques:
+  \item Dimensionality reduction:
     \begin{itemize}
     \item Embedding of corpus in a low-dimensional space
     \item Many different approaches, based on heuristics, linear algebra, probabilistic models, ...
     \end{itemize}
-  \item Characterizing the entities to be clustered:
-    \begin{itemize}
-    \item Internally: Vector space model, probabilistic models
-    \item Externally: Measure of similarity/dissimilarity between pairs
-    \end{itemize}
+  % \item Characterizing the entities to be clustered:
+  %   \begin{itemize}
+  %   \item Internally: Vector space model, probabilistic models
+  %   \item Externally: Measure of similarity/dissimilarity between pairs
+  %   \end{itemize}
   \end{itemize}
 
 \end{frame}
 
 % ------------------------------------------------------------
 
-\begin{frame}
-  \frametitle{Clustering Parameters}
+% \begin{frame}
+%   \frametitle{Clustering Parameters}
 
-  General parameters:
-  \begin{itemize}
-  \item \emph{Similarity measure:} $\rho(d_1,d_2)$
-    \begin{itemize}
-    \item E.g., cosine similarity
-    \end{itemize}
-  \item \emph{Distance measure:} $\delta(d_1,d_2)$
-    \begin{itemize}
-    \item E.g., Euclidean distance
-    \end{itemize}
-  \item \emph{Number of clusters:} $k$
-  \end{itemize}
+%   General parameters:
+%   \begin{itemize}
+%   \item \emph{Similarity measure:} $\rho(d_1,d_2)$
+%     \begin{itemize}
+%     \item E.g., cosine similarity
+%     \end{itemize}
+%   \item \emph{Distance measure:} $\delta(d_1,d_2)$
+%     \begin{itemize}
+%     \item E.g., Euclidean distance
+%     \end{itemize}
+%   \item \emph{Number of clusters:} $k$
+%   \end{itemize}
 
-  Problems:
-  \begin{itemize}
-  \item Large number of noisy dimensions
-  \item Notion of noise is dependent on the data and application 
-  \end{itemize}
+%   Problems:
+%   \begin{itemize}
+%   \item Large number of noisy dimensions
+%   \item Notion of noise is dependent on the data and application 
+%   \end{itemize}
 
-\end{frame}
+% \end{frame}
 
 % ------------------------------------------------------------
 
@@ -170,13 +179,13 @@
   \item \emph{Geometric Embedding Approaches}
     \begin{itemize}
     \item Self-organization map
-    \item Multidimensional scaling
+%    \item Multidimensional scaling
     \item Latent semantic indexing
     \end{itemize}
-  \item \emph{\it Generative models and probabilistic approaches}
+  \item \emph{Generative models and probabilistic approaches}
     \begin{itemize}
-    \item {\it Single topic per document}
-    \item {\it Documents correspond to mixtures of multiple topics}
+    \item Single topic per document
+    \item Documents correspond to mixtures of multiple topics
     \end{itemize}
   \end{itemize}
 
@@ -401,31 +410,34 @@
 
 % ------------------------------------------------------------
 
-\section{Geometric Embedding Approaches}
+\section{Dimensionality Reduction}
 
 \begin{frame}
-  \frametitle{Visualization Techniques}
+  \frametitle{Dimensionality Reduction}
 
   \begin{itemize}
   \item \textbf{Goal:} Embedding of corpus in a low-dimensional space
-  \item Hierarchical Agglomerative Clustering (HAC)
-    \begin{itemize}
-    \item lends itself easily to visualization
-    \end{itemize}
-  \item Self-Organization Map (SOM)
+  % \item Hierarchical Agglomerative Clustering (HAC)
+  %   \begin{itemize}
+  %   \item lends itself easily to visualization
+  %   \end{itemize}
+  \item \emph{Self-Organizing Map (SOM)}
     \begin{itemize}
     \item Technique related to $k$-means
     \end{itemize}
-  \item Multidimensional scaling (MDS)
-    \begin{itemize}
-    \item Minimize the distortion of interpoint distances in the
-      low-dimensional embedding as compared to the dissimilarity given in the
-      input data
-    \end{itemize}
-  \item Latent Semantic Indexing (LSI)
-    \begin{itemize}
-    \item Linear transformations to reduce number of dimensions
-    \end{itemize}
+  \item \emph{Latent Semantic Indexing (LSI)}
+      \begin{itemize}
+      \item Linear transformations to reduce number of dimensions
+      \end{itemize}
+  \item Other techniques:
+      \begin{itemize}
+      \item Multidimensional scaling (MDS): Minimize the distortion of interpoint distances in the
+          low-dimensional embedding as compared to the dissimilarity given in the
+          input data
+      \item NN-based word embeddings: Use neural networks to learn a mapping
+          from the high dimensional vocabulary space to a lower dimension
+          concept-based space
+      \end{itemize}
   \end{itemize}
 
 \end{frame}
@@ -480,6 +492,16 @@
     \end{block}
   \end{itemize}
     
+\end{frame}
+
+% ------------------------------------------------------------
+
+\begin{frame}
+  \frametitle{A Self Organizing Map}
+
+  \centering
+  \href{https://codesachin.wordpress.com/2015/11/28/self-organizing-maps-with-googles-tensorflow/}{\includegraphics[width=\linewidth]{kohonen1}}
+
 \end{frame}
 
 % ------------------------------------------------------------
