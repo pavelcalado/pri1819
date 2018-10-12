@@ -124,7 +124,7 @@ Calculate the representations for the documents in the collection according to t
 
 \begin{center}
 \begin{equation*}
-\mathrm{TF-IDF}(t, d) = \mathrm{frequency}(t,d) \times \log \left( \frac{|D|}{|\{d' \in D: t \in d'\}|} \right)
+\mathrm{TFIDF}(t, d) = \mathrm{frequency}(t,d) \times \log \left( \frac{|D|}{|\{d' \in D: t \in d'\}|} \right)
 \end{equation*}
 \end{center}
 
@@ -139,17 +139,17 @@ According to the vector space model and using the document representations (i.e.
     \item The Okapi BM25 model, considering a simple estimate for the IDF component, and with $b=0.75$ and $k_1=1.2$.
     \item A simple unigram language modeling approach, without considering parameter smoothing.
     \end{itemize}
-    The corresponding equations are given below.
+    The corresponding equations are given below, where $f(q_{i},d)$ denotes the frequency of query term $i$ in document $d$, and $i(q_{i},d)$ is a binary indicator for the presence of term $i$ in document $d$.
     
     \begin{center}
     \begin{equation*}
-	\mathrm{BIM}(q,d) = \sum _{i=1}^{|q|} \mathrm{IDF}(i), \text{~~with~~} \mathrm{IDF}(i) = \log \left( \frac{|D|}{|\{d' \in D: i \in d'\}|} \right)
+	\mathrm{BIM}(q,d) = \sum _{i=1}^{|q|} \mathrm{IDF}(q_i) \times i(q_{i},d), \text{~~with~~} \mathrm{IDF}(t) = \log \left( \frac{|D|}{|\{d' \in D: t \in d'\}|} \right)
 	\end{equation*}
     \end{center}
     
     \begin{center}
     \begin{equation*}
-{ {\text{BM25}}(q,d)=\sum _{i=1}^{|q|}{\text{IDF}}({i})\cdot {\frac {f(q_{i},d)\cdot (k_{1}+1)}{f(q_{i},d)+k_{1}\cdot \left(1-b+b\cdot {\frac {|d|}{\text{avgdl}}}\right)}},} \text{~~with IDF as defined above}
+{ {\text{BM25}}(q,d)=\sum _{i=1}^{|q|}{\text{IDF}}({q_i})\cdot {\frac {f(q_{i},d)\cdot (k_{1}+1)}{f(q_{i},d)+k_{1}\cdot \left(1-b+b\cdot {\frac {|d|}{\text{avgdl}}}\right)}},} \text{~~with IDF as defined above}
     \end{equation*}
     \end{center}
     
