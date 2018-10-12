@@ -1,3 +1,5 @@
+% -*- coding: utf-8 -*-
+
 \documentclass{beamer}
 
 \usepackage{pri}
@@ -36,7 +38,7 @@
     \end{block}
 \end{frame}
 
-\section{Introduction}
+\section{Information Extraction}
 
 \begin{frame}
   \frametitle{Text-based Applications}
@@ -65,8 +67,6 @@
   \item \emph{Information Extraction}
   \end{itemize}
 \end{frame}
-
-\section{Information Extraction}
 
 \newcommand{\job}[1]{\textcolor<4->{red}{#1}}
 \newcommand{\artist}[1]{\textcolor<2->{green}{#1}}
@@ -240,190 +240,190 @@ my ($file,$pattern) = @_;
   \footnotesize\url{http://nlp.stanford.edu/software/tokensregex.html} \\and\\ \url{http://nlp.stanford.edu/software/regexner.html}
 \end{frame}
 
-\begin{frame}
-\frametitle{Regular Expressions}
-Many IE systems based on rules leverage regular expressions!
+% \begin{frame}
+% \frametitle{Regular Expressions}
+% Many IE systems based on rules leverage regular expressions!
 
 
-~\\
+% ~\\
 
-Regular expressions are a simple language for searching texts:  
-\begin{itemize}
-\item Count mentions of a person
-\item Extract mentions to numeric quantities (e.g., money), temporal expressions, ISBN codes, $\ldots$ 
-\item Prepare texts for analysis: Identify where to {\it split} a document (i.e., \emph{tokenization})
-\item $\ldots$
-\end{itemize}
-Provide a quick introduction here, with some examples...
-\end{frame}
+% Regular expressions are a simple language for searching texts:  
+% \begin{itemize}
+% \item Count mentions of a person
+% \item Extract mentions to numeric quantities (e.g., money), temporal expressions, ISBN codes, $\ldots$ 
+% \item Prepare texts for analysis: Identify where to {\it split} a document (i.e., \emph{tokenization})
+% \item $\ldots$
+% \end{itemize}
+% Provide a quick introduction here, with some examples...
+% \end{frame}
 
 
-\begin{frame}
-\frametitle{Some Basics (from Jurafsky Slides) } 
-\begin{itemize}
-\item Disjunctions
-\end{itemize}
-\begin{center}
-\scriptsize
-\begin{tabular} {lll} 
-\textbf{RE} & \textbf{Match} & \textbf{Example Patterns Matched}\\
-{\tt [mM]oney } & Money or money  & ``\underline{Money}" \\
-{\tt [abc] } & `a', `b', or `c'  & ``Investing in Ir\underline{a}n" \\
-               &                              & ``is d\underline{a}ngerous \underline{b}usiness"\\
-{\tt [1234567890]} & any digit &     ``sitting on \$\underline{7}.\underline{5} billion dollars"      \\
-   &   & ``\underline{2}\underline{0}\underline{0}\underline{5} and \underline{2}\underline{0}\underline{0}\underline{6}, more than " \\
-   &  &   ``\$\underline{1}\underline{5}\underline{0} million  dollars"    \\
-{\tt [$\backslash$.] } & A period &`` `Run!', he screamed\underline{.}" 
-\end{tabular}
-\end{center}
-\end{frame}
+% \begin{frame}
+% \frametitle{Some Basics (from Jurafsky Slides) } 
+% \begin{itemize}
+% \item Disjunctions
+% \end{itemize}
+% \begin{center}
+% \scriptsize
+% \begin{tabular} {lll} 
+% \textbf{RE} & \textbf{Match} & \textbf{Example Patterns Matched}\\
+% {\tt [mM]oney } & Money or money  & ``\underline{Money}" \\
+% {\tt [abc] } & `a', `b', or `c'  & ``Investing in Ir\underline{a}n" \\
+%                &                              & ``is d\underline{a}ngerous \underline{b}usiness"\\
+% {\tt [1234567890]} & any digit &     ``sitting on \$\underline{7}.\underline{5} billion dollars"      \\
+%    &   & ``\underline{2}\underline{0}\underline{0}\underline{5} and \underline{2}\underline{0}\underline{0}\underline{6}, more than " \\
+%    &  &   ``\$\underline{1}\underline{5}\underline{0} million  dollars"    \\
+% {\tt [$\backslash$.] } & A period &`` `Run!', he screamed\underline{.}" 
+% \end{tabular}
+% \end{center}
+% \end{frame}
 
-\begin{frame} 
-\frametitle{Some Basics (from Jurafsky Slides) } 
-\begin{itemize}
-\item Ranges 
-\end{itemize}
-\begin{center}
-\scriptsize
-\begin{tabular} {lll} 
-\textbf{RE} & \textbf{Match} & \textbf{Example Patterns Matched}\\
-{\tt [A-Z]}  & an upper case letter   & ``\underline{R}ep. \underline{A}nthony \underline{W}einer\\
-  &    &   (\underline{D}-\underline{B}rooklyn \& \underline{Q}ueens)" \\
-{\tt [a-z]}  & a lower case letter &   ``ACORN'\underline{s}" \\
-{\tt [0-9]}  & a single digit  & ``(\underline{9}th CD) " 
-\end{tabular}
-\end{center}
-\end{frame}
+% \begin{frame} 
+% \frametitle{Some Basics (from Jurafsky Slides) } 
+% \begin{itemize}
+% \item Ranges 
+% \end{itemize}
+% \begin{center}
+% \scriptsize
+% \begin{tabular} {lll} 
+% \textbf{RE} & \textbf{Match} & \textbf{Example Patterns Matched}\\
+% {\tt [A-Z]}  & an upper case letter   & ``\underline{R}ep. \underline{A}nthony \underline{W}einer\\
+%   &    &   (\underline{D}-\underline{B}rooklyn \& \underline{Q}ueens)" \\
+% {\tt [a-z]}  & a lower case letter &   ``ACORN'\underline{s}" \\
+% {\tt [0-9]}  & a single digit  & ``(\underline{9}th CD) " 
+% \end{tabular}
+% \end{center}
+% \end{frame}
 
-\begin{frame}
-\frametitle{Some Basics (from Jurafsky Slides) } 
-\begin{itemize}
-\item Negations 
-\end{itemize}
-\begin{center}
-\scriptsize
-\begin{tabular}{lll}
-\textbf{RE} & \textbf{Match} & \textbf{Example Patterns Matched}\\
-{\tt [\^{}A-Z] } & not an upper case letter &  ``ACORN\alert{\underline{'}\underline{s}}" \\
-{\tt[\^{}Ss] } & neither `S' nor `s' & ``\alert{\underline{ACORN'}}s" \\
-{\tt[\^{}\textbackslash.] } & not a period & `` `\underline{Run!', he screamed}." \\
-\end{tabular}
-\end{center}
-\end{frame}
+% \begin{frame}
+% \frametitle{Some Basics (from Jurafsky Slides) } 
+% \begin{itemize}
+% \item Negations 
+% \end{itemize}
+% \begin{center}
+% \scriptsize
+% \begin{tabular}{lll}
+% \textbf{RE} & \textbf{Match} & \textbf{Example Patterns Matched}\\
+% {\tt [\^{}A-Z] } & not an upper case letter &  ``ACORN\alert{\underline{'}\underline{s}}" \\
+% {\tt[\^{}Ss] } & neither `S' nor `s' & ``\alert{\underline{ACORN'}}s" \\
+% {\tt[\^{}\textbackslash.] } & not a period & `` `\underline{Run!', he screamed}." \\
+% \end{tabular}
+% \end{center}
+% \end{frame}
 
-\begin{frame}
-\frametitle{Some Basics (from Jurafsky Slides) } 
-\begin{itemize}
-\item Optional Characters: {\tt ?}, {\tt *}, {\tt +} 
-\end{itemize}
-\begin{center}
-\scriptsize
-\begin{tabular}{lll}
-\textbf{RE} & \textbf{Match} & \textbf{Example Patterns Matched}\\
-{\tt colou?r } &  Words with {\tt u}  0 or 1 times& ``\underline{color}"  or \\
-                   &                                & ``\underline{colour} " \\
-{\tt oo*h!}     & Words with {\tt o}  0 or more times & ``\underline{oh!}" or \\
-                      &                                                   &   ``\underline{ooh!}" or \\
-                       &                                                   &   ``\underline{oooh!}" \\ 
-{\tt o+h!} &   Words with {\tt o} 1 or more times & ``\underline{oh!}" or \\
-  &                                                   &   ``\underline{ooh!}" or \\
-    &                                                   &   ``\underline{oooooh!}" or \\                       
-\end{tabular}
-\end{center}
-\end{frame}
+% \begin{frame}
+% \frametitle{Some Basics (from Jurafsky Slides) } 
+% \begin{itemize}
+% \item Optional Characters: {\tt ?}, {\tt *}, {\tt +} 
+% \end{itemize}
+% \begin{center}
+% \scriptsize
+% \begin{tabular}{lll}
+% \textbf{RE} & \textbf{Match} & \textbf{Example Patterns Matched}\\
+% {\tt colou?r } &  Words with {\tt u}  0 or 1 times& ``\underline{color}"  or \\
+%                    &                                & ``\underline{colour} " \\
+% {\tt oo*h!}     & Words with {\tt o}  0 or more times & ``\underline{oh!}" or \\
+%                       &                                                   &   ``\underline{ooh!}" or \\
+%                        &                                                   &   ``\underline{oooh!}" \\ 
+% {\tt o+h!} &   Words with {\tt o} 1 or more times & ``\underline{oh!}" or \\
+%   &                                                   &   ``\underline{ooh!}" or \\
+%     &                                                   &   ``\underline{oooooh!}" or \\                       
+% \end{tabular}
+% \end{center}
+% \end{frame}
 
-\begin{frame}
-\frametitle{Some Basics (from Jurafsky Slides) } 
-\begin{itemize}
-\item  Wild Cards \alert{{\tt .} } 
-\end{itemize}
-\begin{center}
-\scriptsize
-\begin{tabular}{lll}
-\textbf{RE} & \textbf{Match} & \textbf{Example Patterns Matched}\\
-{\tt beg\alert{.}n} & Any word with ``beg" then ``n" & ``beg\textcolor{blue}{i}n"~or \\
-                          &                                            &  ``beg\textcolor{blue}{a}n"~or \\
-                          &                                            &  ``beg\textcolor{blue}{u}n"~or \\
-                          &                                            &  ``beg\textcolor{blue}{g}n"~(Poor grammar!) 
+% \begin{frame}
+% \frametitle{Some Basics (from Jurafsky Slides) } 
+% \begin{itemize}
+% \item  Wild Cards \alert{{\tt .} } 
+% \end{itemize}
+% \begin{center}
+% \scriptsize
+% \begin{tabular}{lll}
+% \textbf{RE} & \textbf{Match} & \textbf{Example Patterns Matched}\\
+% {\tt beg\alert{.}n} & Any word with ``beg" then ``n" & ``beg\textcolor{blue}{i}n"~or \\
+%                           &                                            &  ``beg\textcolor{blue}{a}n"~or \\
+%                           &                                            &  ``beg\textcolor{blue}{u}n"~or \\
+%                           &                                            &  ``beg\textcolor{blue}{g}n"~(Poor grammar!) 
                           
- \end{tabular}
- \end{center}
+%  \end{tabular}
+%  \end{center}
  
- \end{frame}
+%  \end{frame}
 
-\begin{frame}
-\frametitle{Some Basics (from Jurafsky Slides) } 
+% \begin{frame}
+% \frametitle{Some Basics (from Jurafsky Slides) } 
 
-\begin{itemize}
-\item Start of the line anchor \alert{\^{}}, end of the line anchor \alert{\$}
-\end{itemize}
+% \begin{itemize}
+% \item Start of the line anchor \alert{\^{}}, end of the line anchor \alert{\$}
+% \end{itemize}
 
 
-\begin{center}
-\scriptsize
-\begin{tabular}{lll}
-\textbf{RE} & \textbf{Match} & \textbf{Example Patterns Matched}\\
-{\tt \alert{\^{}}[A-Z] } & Upper case start of line & ``\underline{P}alo Alto" \\
-                            &                                                        & ``the town of \textcolor{gray}{P}alo Alto" \\
-{\tt \alert{\^{}}[\^{}A-Z] } & Not upper case start of line &      ``\underline{t}he town of Palo Alto" \\
-                            &                                                        & ``\textcolor{gray}{P}alo Alto" \\
-{\tt \alert{\^{}}.} & Start of line  & ``\underline{P}alo Alto" \\
-                            &                                                        & ``\underline{t}he town of Palo Alto" \\
-{\tt .\alert{\$} }      & Identify character that ends a line &    ``Wait\alert{\underline{!}}" \\
-                              &                                                & ``This is the end\alert{\underline{.}}" \\
+% \begin{center}
+% \scriptsize
+% \begin{tabular}{lll}
+% \textbf{RE} & \textbf{Match} & \textbf{Example Patterns Matched}\\
+% {\tt \alert{\^{}}[A-Z] } & Upper case start of line & ``\underline{P}alo Alto" \\
+%                             &                                                        & ``the town of \textcolor{gray}{P}alo Alto" \\
+% {\tt \alert{\^{}}[\^{}A-Z] } & Not upper case start of line &      ``\underline{t}he town of Palo Alto" \\
+%                             &                                                        & ``\textcolor{gray}{P}alo Alto" \\
+% {\tt \alert{\^{}}.} & Start of line  & ``\underline{P}alo Alto" \\
+%                             &                                                        & ``\underline{t}he town of Palo Alto" \\
+% {\tt .\alert{\$} }      & Identify character that ends a line &    ``Wait\alert{\underline{!}}" \\
+%                               &                                                & ``This is the end\alert{\underline{.}}" \\
 
- \end{tabular}
- \end{center}                   
-\end{frame}
+%  \end{tabular}
+%  \end{center}                   
+% \end{frame}
 
-\begin{frame}
-\frametitle{Some Basics (from Jurafsky Slides) } 
-\begin{itemize}
-\item ``Or"~$|$ statements, Useful short hand 
-\end{itemize}
-\begin{center}
-\scriptsize
-\begin{tabular}{lll}
-\textbf{RE} & \textbf{Match} & \textbf{Example Patterns Matched}\\
-(yours)$|$(mine) & Matches``yours" or ``mine" & ``it's either \underline{yours} or \underline{mine}"\\
-$\backslash$d  & Any digit  & ``\underline{1}-Mississippi" \\
-$\backslash$D  & Any non-digit & ``1\underline{-Mississippi}" \\
-$\backslash$s & Any whitespace character & ``1,\underline{ }2"\\
-$\backslash$S & Any non-whitespace character & ``\underline{1,} \underline{2}" \\
-$\backslash$w & Any alpha-numeric  &  ``\underline{1}-\underline{Mississippi} " \\
-$\backslash$W & Any non-alpha numeric & ``1\underline{-}Mississippi"  \\
-\end{tabular}
-\end{center}
-\end{frame}
+% \begin{frame}
+% \frametitle{Some Basics (from Jurafsky Slides) } 
+% \begin{itemize}
+% \item ``Or"~$|$ statements, Useful short hand 
+% \end{itemize}
+% \begin{center}
+% \scriptsize
+% \begin{tabular}{lll}
+% \textbf{RE} & \textbf{Match} & \textbf{Example Patterns Matched}\\
+% (yours)$|$(mine) & Matches``yours" or ``mine" & ``it's either \underline{yours} or \underline{mine}"\\
+% $\backslash$d  & Any digit  & ``\underline{1}-Mississippi" \\
+% $\backslash$D  & Any non-digit & ``1\underline{-Mississippi}" \\
+% $\backslash$s & Any whitespace character & ``1,\underline{ }2"\\
+% $\backslash$S & Any non-whitespace character & ``\underline{1,} \underline{2}" \\
+% $\backslash$w & Any alpha-numeric  &  ``\underline{1}-\underline{Mississippi} " \\
+% $\backslash$W & Any non-alpha numeric & ``1\underline{-}Mississippi"  \\
+% \end{tabular}
+% \end{center}
+% \end{frame}
 
-\begin{frame}
-\frametitle{A Quick Example (from Jurafsky Slides) } 
-Quick Example to Illuminate Differences: 
+% \begin{frame}
+% \frametitle{A Quick Example (from Jurafsky Slides) } 
+% Quick Example to Illuminate Differences: 
 
-A ``simple" example: identify all instances of \alert{{\tt the}}. \pause 
+% A ``simple" example: identify all instances of \alert{{\tt the}}. \pause 
 
-\begin{itemize}
-\invisible<1>{\item[-] \alert{{\tt the } }} \pause 
-\invisible<1-2>{\item[] Misses capitalized examples} \pause 
-\invisible<1-3>{\item[-] \alert{{\tt [tT]he}}} \pause 
-\invisible<1-4>{\item[] Returns words that are too long ({\tt theocrat}, {\tt theme} )} \pause 
-\invisible<1-5>{\item[-] \alert{[\^{}a-zA-Z][tT]he[\^{}a-zA-Z] }} \pause 
-\invisible<1-6>{\item[] Misses the first ``the" in a sentence } \pause 
-\invisible<1-7>{\item[-] \alert{(\^{}$|$[\^{}a-zA-Z])[tT]he[\^{}a-zA-Z] } } 
-\end{itemize}
-\end{frame}
+% \begin{itemize}
+% \invisible<1>{\item[-] \alert{{\tt the } }} \pause 
+% \invisible<1-2>{\item[] Misses capitalized examples} \pause 
+% \invisible<1-3>{\item[-] \alert{{\tt [tT]he}}} \pause 
+% \invisible<1-4>{\item[] Returns words that are too long ({\tt theocrat}, {\tt theme} )} \pause 
+% \invisible<1-5>{\item[-] \alert{[\^{}a-zA-Z][tT]he[\^{}a-zA-Z] }} \pause 
+% \invisible<1-6>{\item[] Misses the first ``the" in a sentence } \pause 
+% \invisible<1-7>{\item[-] \alert{(\^{}$|$[\^{}a-zA-Z])[tT]he[\^{}a-zA-Z] } } 
+% \end{itemize}
+% \end{frame}
 
 \begin{frame}
   \frametitle{Most Common Machine Learning Techniques}
   \begin{itemize}
   \item Traditional classifiers
       \begin{itemize}
-      \item Naïve Bayes, SVM, ...
+      \item Nave Bayes, SVM, ...
       \item Often adapted to handling sequences of words (i.e., {\it sliding window approaches})
       \end{itemize}
   \item Sequence Classifiers (i.e., {\it structured predictors})
       \begin{itemize}
-      \item \emph{Hidden Markov Models}
+      \item Hidden Markov Models
       \item Structured Perceptrons
       \item Conditional Random Fields
       \item Recurrent or Convolutional Deep Neural Networks

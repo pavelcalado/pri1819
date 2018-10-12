@@ -210,14 +210,14 @@
   \item The are $N^T$ possible state sequences
   \item Thus, the complexity is $O(2TN^T)$: \emph{unfeasible}
   \item However, there is a more efficient way of computing $P(O|\lambda)$: the
-    \emph{forward-backward procedure}
+    \emph{forward/backward procedure}
   \end{itemize}
   
 \end{frame}
 
 % ------------------------------------------------------------
 
-\begin{frame} \frametitle{The Forward-Backward Procedure}
+\begin{frame} \frametitle{The Forward Procedure}
 
   \begin{itemize}
   \item Consider the \emph{forward variable} $\alpha_t(i)$, defined as:
@@ -242,7 +242,7 @@
 
 % ------------------------------------------------------------
 
-\begin{frame} \frametitle{Computing The Forward-Backward Procedure}
+\begin{frame} \frametitle{Computing The Forward Procedure}
 
   \begin{block}{}
     \begin{enumerate}[<+->]
@@ -438,7 +438,7 @@
   % http://web.mit.edu/6.047/book-2012/Lecture08_HMMSII/Lecture08_HMMSII_standalone.pdf
   % http://stellar.mit.edu/S/course/6/fa12/6.047/courseMaterial/topics/topic2/lectureNotes/Lecture07_HMMsIIb_6up/Lecture07_HMMsIIb_6up.pdf
   \begin{itemize}
-  \item Determine, independently for every symbol $O_t$, the most probable state using the forward-backward procedure
+  \item Determine, independently for every symbol $O_t$, the most probable state using the forward/backward procedure
   \item Often more effective when several concurring paths have similar probabilities
   \end{itemize}
 
@@ -660,52 +660,53 @@
   \begin{itemize}
   \item Structured Perceptron
   \item Conditional Random Fields
+  \item Recurrent or Convolutional Deep Neural Networks
   \item $\ldots$
   \end{itemize}
  
 \end{frame}
 
 
-\begin{frame} \frametitle{Structured Perceptron (just a hint)}
+% \begin{frame} \frametitle{Structured Perceptron (just a hint)}
   
-  \begin{itemize}
-  \scriptsize
-  \item Simple discriminative model that enables exploring features representing symbols (e.g., {\it capital letters denote nouns?})
-  \item Viterbi algorithm now considers feature weights for computing costs
-  \item Features represent each possible transition/emission
-  \item Update feature weights incrementally, so as to increase/decrease score of correct/incorrect labellings
-  \end{itemize}
+%   \begin{itemize}
+%   \scriptsize
+%   \item Simple discriminative model that enables exploring features representing symbols (e.g., {\it capital letters denote nouns?})
+%   \item Viterbi algorithm now considers feature weights for computing costs
+%   \item Features represent each possible transition/emission
+%   \item Update feature weights incrementally, so as to increase/decrease score of correct/incorrect labellings
+%   \end{itemize}
   
-  \begin{block}{}
-  \begin{enumerate}
-  \item Create feature map and set initial feature weights $w$
-  \item For $\epsilon$ iterations
-  \begin{enumerate}
-  \item For each labeled pair $\{O,I\}$ in the training data
-  \begin{enumerate}
-  \item Compute $\hat{I}$ for the observation sequence $O$, using the Viterbi algorithm and the feature vector $w$
-  \item If $I=\hat{I}$ do not update the model, else
-  \begin{enumerate}
-  \item Compute the feature vector $f$ for the pair $\{O,I\}$
-  \item Compute the feature vector $\hat{f}$ for the pair $\{O,\hat{I}\}$
-  \item Update the feature vector: $w = w + f - \hat{f}$
-  \end{enumerate}
-  \end{enumerate}
-  \end{enumerate}
-  \end{enumerate}
-  \end{block}
+%   \begin{block}{}
+%   \begin{enumerate}
+%   \item Create feature map and set initial feature weights $w$
+%   \item For $\epsilon$ iterations
+%   \begin{enumerate}
+%   \item For each labeled pair $\{O,I\}$ in the training data
+%   \begin{enumerate}
+%   \item Compute $\hat{I}$ for the observation sequence $O$, using the Viterbi algorithm and the feature vector $w$
+%   \item If $I=\hat{I}$ do not update the model, else
+%   \begin{enumerate}
+%   \item Compute the feature vector $f$ for the pair $\{O,I\}$
+%   \item Compute the feature vector $\hat{f}$ for the pair $\{O,\hat{I}\}$
+%   \item Update the feature vector: $w = w + f - \hat{f}$
+%   \end{enumerate}
+%   \end{enumerate}
+%   \end{enumerate}
+%   \end{enumerate}
+%   \end{block}
  
-\end{frame}
+% \end{frame}
 
-\begin{frame}
-    \frametitle{Conditional Random Fields (just a hint)}
-    \centering
-    \includegraphics[width=.9\linewidth]{crf}
-    \begin{displaymath}
-        P(y|x) = \frac{1}{Z(x)}\exp\left\{\sum_{k=1}^K\lambda_kf_k(y_t, y_{t-1},
-          x_t)\right\}
-    \end{displaymath}
-\end{frame}
+% \begin{frame}
+%     \frametitle{Conditional Random Fields (just a hint)}
+%     \centering
+%     \includegraphics[width=.9\linewidth]{crf}
+%     \begin{displaymath}
+%         P(y|x) = \frac{1}{Z(x)}\exp\left\{\sum_{k=1}^K\lambda_kf_k(y_t, y_{t-1},
+%           x_t)\right\}
+%     \end{displaymath}
+% \end{frame}
 
 % ------------------------------------------------------------
 

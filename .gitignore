@@ -22,6 +22,7 @@
 *.mtc
 *.mtc1
 *.out
+*.vrb
 *.synctex.gz
 *conflicted copy*
 auto/
