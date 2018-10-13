@@ -553,22 +553,233 @@
 
   \begin{itemize}
   \item We want to train an HMM model with a set of \emph{example observation
-      sequences} such that, when a similar sequence is discovered later the
-    model is able to identify it.
-  \item We present one method: \emph{Segmental K-means}
-  \item Segmental K-means adjusts the parameters $\lambda = (A, B, \pi)$ to
-    maximize $P(O,I|\lambda)$, where $I$ is the optimal sequence of states for
-    observation sequence $O$
-  \item Other methods also exist (e.g., the \emph{Baum-Welch} method)
+        sequences} such that, when a similar sequence is discovered later the
+      model is able to identify it.
+  \item Most well known method
+      \begin{itemize}
+      \item \emph{Baum-Welch} algorithm
+      \end{itemize}
+  \item Other methods exist
+      \begin{itemize}
+      \item E.g. \emph{Segmental K-means}
+      \end{itemize}
   \end{itemize}
   
 \end{frame}
 
 % ------------------------------------------------------------
 
+\begin{frame}
+    \frametitle{The Baum-Welch Method}
+    \begin{itemize}
+    \item Assume an initial model $\lambda$
+        \begin{itemize}
+        \item Can be constructed in any way (e.g. randomly)
+        \end{itemize}
+    \item Maximizes $P(O|\lambda)$ by adjusting $\lambda$
+        \begin{itemize}
+        \item Called the \emph{maximum likelihood criterion}
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Probability of Visiting a State}
+    \begin{itemize}
+    \item Let
+        \begin{displaymath}
+            \gamma_t(i) = P(i_t = t|O,\lambda)
+        \end{displaymath}
+        i.e. the probability of being in state $i$ at time $t$ given the
+        observation sequence $O$ and the model $\lambda$
+    \item Applying Bayes rule:
+        \begin{displaymath}
+            \gamma_t(i) = \frac{P(i_t=i,O)}{P(O|\lambda)} = \frac{\alpha_t(i)\beta_t(i)}{P(O|\lambda)}
+        \end{displaymath}
+        where $\alpha_t(i)$ is computed as in the Forward procedure and
+        $\beta_t(i)$ is computed as in the Backward procedure
+    \end{itemize}
+\end{frame}
+
+% t ( i ) accounts for O 1 ,. . . , O t and state i at time t , and t ( i ) accounts for O t +1 ,. . . , O T given state i at time t .
+
+\begin{frame}
+    \frametitle{Probability of Transitioning}
+    \begin{itemize}
+    \item Let
+        \begin{displaymath}
+            \xi_t(i) = P(i_t = i, i_{t+1} = j|O,\lambda)
+        \end{displaymath}
+        i.e. the probability of being in state $i$ at time $t$ and making a
+        transition to state $j$ at time $t + 1$, given the observation sequence
+        $O$ and the model $\lambda$
+    \item Applying Bayes rule:
+        \begin{multline*}
+            \xi_t(i) = \\
+            \frac{P(i_t = i, i_{t+1} = j,O|\lambda)}{P(O|\lambda)} = \\
+            \frac{\alpha_t(i)a_{ij}b_j(O_{t+1})\beta_{t+1}(j)}{P(O|\lambda)}
+        \end{multline*}
+    \end{itemize}
+\end{frame}
+
+% \begin{frame}
+%     \frametitle{Probability of Transitioning (cont.)}
+%     \small
+%     Since
+%     \begin{multline*}
+%         P(i_t = i, i_{t+1} = j,O|\lambda) = \\
+%         P(i_t = i, i_{t+1} = j, O_1, \ldots, O_t, O_{t+1} \ldots, O_{T}|\lambda) = \\
+%         P(i_t = i, O_1, \ldots, O_t|\lambda)P(i_{t+1} = j, O_{t+1} \ldots, O_{T}|\lambda) = 
+%     \end{multline*}
+%     and
+%     \begin{displaymath}
+%         P(i_t = i, O_1, \ldots, O_t|\lambda) = \alpha_t(i)
+%     \end{displaymath}
+%     and
+%     \begin{multline*}
+%         P(i_{t+1} = j, O_{t+1} \ldots, O_{T}|\lambda) = \\
+%         P(i_{t+1} = j, O_{t+1}|\lambda)P(O_{t+1} \ldots, O_{T}|i_{t+1} = j, \lambda) = \\
+%         a_{ij}b_j(O_{t+1})\beta_{t+1}(j)
+%     \end{multline*}
+%     we have that \normalsize
+%     \begin{displaymath}
+%         \xi_t(i,j) = \frac{\alpha_t(i)a_{ij}b_j(O_{t+1})\beta_{t+1}(j)}{P(O|\lambda)}
+%     \end{displaymath}
+% \end{frame}
+
+\begin{frame}
+    \frametitle{Expected Number of Transitions}
+    Expected number of visits to state $i$:
+    \begin{displaymath}
+        \sum_{t=1}^{T}\gamma_t(i)
+    \end{displaymath}
+     Expected number of transitions from state $i$:
+    \begin{displaymath}
+        \sum_{t=1}^{T-1}\gamma_t(i)
+    \end{displaymath}
+     Expected number of transitions from state $i$ to state $j$:
+    \begin{displaymath}
+        \sum_{t=1}^{T-1}\xi_t(i,j)
+    \end{displaymath}
+\end{frame}
+
+% If we sum up t ( i ) from t = 1 to T we get a quantity which can be viewed as
+% the expected number of times state i is visited or if we sum up only up to T
+% ? 1 then we shall get the expected number of transitions out of state i (as
+% no transition is made at t = T ). Similarly if  t ( i,j ) be summed up from
+% t = 1 to T ? 1, we shall get the expected number of transitions from state i
+% to state j .
+
+\begin{frame}
+    \frametitle{Baum-Welch Re-Estimation Formulas}
+    The new model paramters $\hat{\lambda}=(\hat{A},\hat{B},\hat{\pi})$ can be
+    computed as:
+    \begin{displaymath}
+        \hat{\pi}_i = \gamma_1(i)
+    \end{displaymath}\\
+    \begin{displaymath}
+        \hat{a}_{ij} = \sum_{t=1}^{T-1}\xi_t(i,j) \Bigg/ \sum_{t=1}^{T-1}\gamma_t(i)
+    \end{displaymath}
+    \vfill
+    \begin{displaymath}
+        \hat{b}_i(k) = \sum_{t=1 | O_t=k}^T\gamma_t(i) \Bigg/ \sum_{t=1}^T\gamma_t(i)
+    \end{displaymath}
+\end{frame}
+
+% https://en.wikipedia.org/wiki/Baum%E2%80%93Welch_algorithm#Example
+% slide 15 http://www.biostat.jhsph.edu/bstcourse/bio638/notes/HMMs_BaumWelch.pdf
+
+\begin{frame}
+    \frametitle{Multiple Observation Sequences}
+    For multiple observation sequences, sum $\xi_t(i,j)$ and $\gamma_t(i)$ and
+    over all sequences:
+    \begin{displaymath}
+        \hat{\pi}_i = \sum_{O}\gamma_1(i)
+    \end{displaymath}\\
+    \begin{displaymath}
+        \hat{a}_{ij} = \sum_{O}\sum_{t=1}^{T-1}\xi_t(i,j) \Bigg/ \sum_{O}\sum_{t=1}^{T-1}\gamma_t(i)
+    \end{displaymath}
+    \vfill
+    \begin{displaymath}
+        \hat{b}_i(k) = \sum_{O}\sum_{t=1 | O_t=k}^T\gamma_t(i) \Bigg/ \sum_{O}\sum_{t=1}^T\gamma_t(i)
+    \end{displaymath}
+    The final values will then have to be normalized.
+\end{frame}
+
+% https://stackoverflow.com/questions/17125519/how-do-i-have-to-train-a-hmm-with-baum-welch-and-multiple-observations
+% http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.335.1457&rep=rep1&type=pdf
+
+% ------------------------------------------------------------
+
+\section{Other Sequential Classification Models}
+
+\begin{frame} \frametitle{Other Models}
+  
+  \begin{itemize}
+  \item Structured Perceptron
+  \item Conditional Random Fields
+  \item Recurrent or Convolutional Deep Neural Networks
+  \item $\ldots$
+  \end{itemize}
+ 
+\end{frame}
+
+
+% \begin{frame} \frametitle{Structured Perceptron (just a hint)}
+  
+%   \begin{itemize}
+%   \scriptsize
+%   \item Simple discriminative model that enables exploring features representing symbols (e.g., {\it capital letters denote nouns?})
+%   \item Viterbi algorithm now considers feature weights for computing costs
+%   \item Features represent each possible transition/emission
+%   \item Update feature weights incrementally, so as to increase/decrease score of correct/incorrect labellings
+%   \end{itemize}
+  
+%   \begin{block}{}
+%   \begin{enumerate}
+%   \item Create feature map and set initial feature weights $w$
+%   \item For $\epsilon$ iterations
+%   \begin{enumerate}
+%   \item For each labeled pair $\{O,I\}$ in the training data
+%   \begin{enumerate}
+%   \item Compute $\hat{I}$ for the observation sequence $O$, using the Viterbi algorithm and the feature vector $w$
+%   \item If $I=\hat{I}$ do not update the model, else
+%   \begin{enumerate}
+%   \item Compute the feature vector $f$ for the pair $\{O,I\}$
+%   \item Compute the feature vector $\hat{f}$ for the pair $\{O,\hat{I}\}$
+%   \item Update the feature vector: $w = w + f - \hat{f}$
+%   \end{enumerate}
+%   \end{enumerate}
+%   \end{enumerate}
+%   \end{enumerate}
+%   \end{block}
+ 
+% \end{frame}
+
+% \begin{frame}
+%     \frametitle{Conditional Random Fields (just a hint)}
+%     \centering
+%     \includegraphics[width=.9\linewidth]{crf}
+%     \begin{displaymath}
+%         P(y|x) = \frac{1}{Z(x)}\exp\left\{\sum_{k=1}^K\lambda_kf_k(y_t, y_{t-1},
+%           x_t)\right\}
+%     \end{displaymath}
+% \end{frame}
+
+% ------------------------------------------------------------
+
+\finalframe{\Large{Questions?}}
+
+% ------------------------------------------------------------
+
+\finalframe{\Large{Extra Credits}}
+
 \begin{frame} \frametitle{The Segmental K-means Algorithm}
 
   \begin{itemize}
+  \item Segmental K-means adjusts the parameters $\lambda = (A, B, \pi)$ to
+    maximize $P(O,I|\lambda)$, where $I$ is the optimal sequence of states for
+    observation sequence $O$
   \item Idea: evolve from $\lambda^k$ to $\lambda^{k+1}$ such that
     $P(O,I^*_k|\lambda^k) \leq P(O,I^*_{k+1}|\lambda^{k+1})$
   \item $I^*_k$ is the optimal state sequence for $O = O_1, O_2, \dotsc, O_T$
@@ -650,67 +861,6 @@
   \end{itemize}
   
 \end{frame}
-
-% ------------------------------------------------------------
-
-\section{Other Sequential Classification Models}
-
-\begin{frame} \frametitle{Other Models}
-  
-  \begin{itemize}
-  \item Structured Perceptron
-  \item Conditional Random Fields
-  \item Recurrent or Convolutional Deep Neural Networks
-  \item $\ldots$
-  \end{itemize}
- 
-\end{frame}
-
-
-% \begin{frame} \frametitle{Structured Perceptron (just a hint)}
-  
-%   \begin{itemize}
-%   \scriptsize
-%   \item Simple discriminative model that enables exploring features representing symbols (e.g., {\it capital letters denote nouns?})
-%   \item Viterbi algorithm now considers feature weights for computing costs
-%   \item Features represent each possible transition/emission
-%   \item Update feature weights incrementally, so as to increase/decrease score of correct/incorrect labellings
-%   \end{itemize}
-  
-%   \begin{block}{}
-%   \begin{enumerate}
-%   \item Create feature map and set initial feature weights $w$
-%   \item For $\epsilon$ iterations
-%   \begin{enumerate}
-%   \item For each labeled pair $\{O,I\}$ in the training data
-%   \begin{enumerate}
-%   \item Compute $\hat{I}$ for the observation sequence $O$, using the Viterbi algorithm and the feature vector $w$
-%   \item If $I=\hat{I}$ do not update the model, else
-%   \begin{enumerate}
-%   \item Compute the feature vector $f$ for the pair $\{O,I\}$
-%   \item Compute the feature vector $\hat{f}$ for the pair $\{O,\hat{I}\}$
-%   \item Update the feature vector: $w = w + f - \hat{f}$
-%   \end{enumerate}
-%   \end{enumerate}
-%   \end{enumerate}
-%   \end{enumerate}
-%   \end{block}
- 
-% \end{frame}
-
-% \begin{frame}
-%     \frametitle{Conditional Random Fields (just a hint)}
-%     \centering
-%     \includegraphics[width=.9\linewidth]{crf}
-%     \begin{displaymath}
-%         P(y|x) = \frac{1}{Z(x)}\exp\left\{\sum_{k=1}^K\lambda_kf_k(y_t, y_{t-1},
-%           x_t)\right\}
-%     \end{displaymath}
-% \end{frame}
-
-% ------------------------------------------------------------
-
-\finalframe{\Large{Questions?}}
 
 \end{document}
 
