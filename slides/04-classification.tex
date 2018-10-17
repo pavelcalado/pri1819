@@ -633,10 +633,10 @@
 
 \begin{frame} \frametitle{Algorithm Pseudo-Code}
     \begin{enumerate}
-    \item Start with random $\mathbf \alpha$, set $t = 0$
+    \item Start with random $\mathbf \alpha_0$, set $t = 0$
     \item Select a vector $\mathbf d \in A \cup B$
-    \item If $\mathbf d \in A$ and $\mathbf \alpha \mathbf d \leq 0$, then $\mathbf \alpha_{t+1} = \mathbf \alpha_t + \mathbf d$
-    \item Else if $\mathbf d \in B$ and $\mathbf \alpha \mathbf d \geq 0$, then $\mathbf \alpha_{t+1} = \mathbf \alpha_t - \mathbf d$    
+    \item If $\mathbf d \in A$ and $\mathbf \alpha_t \mathbf d \leq 0$, then $\mathbf \alpha_{t+1} = \mathbf \alpha_t + \mathbf d$
+    \item Else if $\mathbf d \in B$ and $\mathbf \alpha_t \mathbf d \geq 0$, then $\mathbf \alpha_{t+1} = \mathbf \alpha_t - \mathbf d$    
     \item Conditionally go to step 2
     \end{enumerate}
     \begin{itemize}
