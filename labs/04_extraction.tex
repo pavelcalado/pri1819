@@ -38,17 +38,17 @@ Test the tools with a few sentences of your own, or extracted from Web sites. Tr
 
 Using the above tools, print all named entities found in the documents of the 20 newsgroups collection\footnote{ \url{http://qwone.com/~jason/20Newsgroups/}}. This document collection can be conveniently accessed through the scikit-learn library, as shown in the previous lab class.
 
-\section{Regular Expressions Exercise}
+% \section{Regular Expressions Exercise}
 
-Write a regular expression for each of the following tasks:
+% Write a regular expression for each of the following tasks:
 
-\begin{enumerate}
-\item Match dates according to the pattern {\tt DD-MM-YYYY}. Assume that the year should refer to a value between 1980 and 2017.
+% \begin{enumerate}
+% \item Match dates according to the pattern {\tt DD-MM-YYYY}. Assume that the year should refer to a value between 1980 and 2017.
 
-\item Match e-mail addresses. Recall that all e-mails addresses must obey the pattern {\tt local-part@domain}, and assume that both the local and the domain parts can only contain alphanumeric characters or dot symbols, provided that the dot is not the first or last character, and that dots do not appear consecutively.
-\end{enumerate}
+% \item Match e-mail addresses. Recall that all e-mails addresses must obey the pattern {\tt local-part@domain}, and assume that both the local and the domain parts can only contain alphanumeric characters or dot symbols, provided that the dot is not the first or last character, and that dots do not appear consecutively.
+% \end{enumerate}
 
-Use Python's {\tt re}\footnote{\url{https://docs.python.org/2/library/re.html}} module (i.e., a Python standard library module that provides operations for regular expression matching) to check if a given input string matches a date or an e-mail address.
+% Use Python's {\tt re}\footnote{\url{https://docs.python.org/2/library/re.html}} module (i.e., a Python standard library module that provides operations for regular expression matching) to check if a given input string matches a date or an e-mail address.
 
 \section{Pen and Paper Exercise}
 
@@ -56,26 +56,25 @@ Consider the Hidden Markov Model represented by the following probabilities. Rem
 
 The symbols corresponding to each line in matrix B are $a$, $b$, and $c$.
 
-\begin{center}
-$
-\pi$ = 
- \begin{pmatrix}
-  0.8 & 0.2
- \end{pmatrix}
-~\\~\\~\\
-B = 
- \begin{pmatrix}
-  0.1 & 0.6 \\
-  0.7 & 0.2 \\
-  0.2 & 0.2 
- \end{pmatrix}
-~\\~\\~\\
-A = 
- \begin{pmatrix}
-  0.1 & 0.5 \\
-  0.9 & 0.5
- \end{pmatrix}
-\end{center}
+\begin{displaymath}
+    \pi = 
+    \begin{pmatrix}
+        0.8 & 0.2
+    \end{pmatrix}
+%    ~\\~\\~\\
+    B = 
+    \begin{pmatrix}
+        0.1 & 0.6 \\
+        0.7 & 0.2 \\
+        0.2 & 0.2 
+    \end{pmatrix}
+%    ~\\~\\~\\
+    A = 
+    \begin{pmatrix}
+        0.1 & 0.5 \\
+        0.9 & 0.5
+    \end{pmatrix}
+\end{displaymath}
 
 \begin{enumerate}
 \item Compute the total probability of occurrence for the sequence {\bf acbc}.
@@ -83,6 +82,7 @@ A =
 \item What would be the probability for the sequence {\bf acbc} occurring, if the sequence of states was known as being {\bf 1212}.
 
 \item What is the most likely sequence of states for the sequence of symbols {\bf acbc}? 
+\item Starting from the model defined above, compute a new model $\hat\lambda = (\hat{A}, \hat{B}, \hat\pi)$ using one iteration of the Baum-Welch method, assuming that you had only one observation available: \textbf{acb}.
 \end{enumerate}
 
 \end{document}
