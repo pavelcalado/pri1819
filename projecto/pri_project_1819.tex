@@ -1,0 +1,170 @@
+\documentclass[12pt]{article}
+
+\usepackage{prilab}
+
+\begin{document}
+
+\maketitle{Course Project}
+
+\section{Description and Goal}
+\label{sec:description}
+
+The goal of this project is to implement an Information Search \& Extraction
+System for the analysis of political discourse.
+
+Your system will have access to a large set of documents containing the
+electoral manifestos of several political parties from different countries in
+the world. Using this data, the system should be able to provide the following
+functionalities.
+
+\begin{enumerate}
+\item \textit{Ad hoc} search on the collection of documents.
+
+    Given a query, represented by set of keywords, the system should
+    \textbf{return all the manifestos containing such keywords}, ordered
+    according to their relevance to the query. In addition, the system should
+    \textbf{show some statistics}, such as:
+    \begin{itemize}
+    \item For each party, how many manifestos are in the results returned;
+    \item How many times each party mentions each keyword;
+    \end{itemize} as any others you may find interesting.
+
+\item Classification of documents according to their political affiliation.
+
+    Given any natural language text, the system should be able to
+    \textbf{predict which political party is most likely to have produced such
+      text}. In addition, the system should also be able \textbf{test the
+      effectiveness of its predictions} by showing the values of precision,
+    recall, and F1 that it is able to achieve with the available data.
+
+\item Statistical analysis of the subjects mentioned.
+
+    You document should be able to \textbf{discover all named entities
+      mentioned in the manifestos} (e.g. people, companies, countries, etc.)
+    and \textbf{provide some statistics on their usage}. These statistics
+    should enable us to answer questions such as:
+    \begin{itemize}
+    \item What are the most mentioned entities for each party?
+    \item What are the most mentioned entities globally?
+    \item Which party is mentioned more times by the other parties?
+    \item How many times does any given party mention other parties?
+    \end{itemize} as any others you may find interesting.
+
+\end{enumerate}
+
+
+\section{Implementation}
+\label{sec:implementation}
+
+Your Information Search \& Extraction System should be implemented using the
+\textbf{Python programming language}, version~2.7 or version~3.
+
+\textbf{There is no need for a user interface}. You may implement one, if you
+wish, but it will not be taken into consideration for grading your work. If
+you do implement an interface, you can use any programming language
+(e.g. Javascript, etc.).
+
+If you do not implement an interface, all the required functionalities should
+be available by \textbf{executing python scripts on the command line}.
+
+Your code should be \textbf{easily readable and properly documented}.
+
+\section{Resources}
+\label{sec:resources}
+
+\subsection*{Libraries}
+\label{libraries}
+
+To implement the system, you can develop any code necessary and/or use any of
+the existing libraries or services available online. Examples of such libraries
+are:
+\begin{itemize}
+\item the \emph{scikit-learn}\footnote{\url{http://scikit-learn.org/}} machine
+    learning library;
+\item the \emph{NLTK}\footnote{\url{https://www.nltk.org/}} natural language
+    processing library;
+\item the \emph{Whoosh} search
+    engine\footnote{\url{https://whoosh.readthedocs.io/}};
+\end{itemize} among others.
+
+\subsection*{Data}
+\label{sec:data}
+
+A set of political manifestos to use as data for your project will be
+provided. This set has been extracted from the \emph{Manifesto Project}
+dataset\footnote{\url{https://manifesto-project.wzb.eu/}} and contains the
+textual content of each manifesto, together with additional information, such
+as the corresponding political party, the language, the date, etc. You are
+free to use this information in any way you see fit.
+
+You can explore the Manifesto Project website, or any other source of
+information, to improve your solution. However, \textbf{there is no need to
+  download data from the Manifesto Project website}. A pre-processed version of
+the documents will be provided on the PRI course page.
+
+
+\section{Deliverable}
+\label{sec:deliverable}
+
+Your project should be delivered in a compressed \emph{zip} file named
+\texttt{pri\_project\_group\_XX.zip}, where \texttt{XX} should be replaced by
+your group number.
+
+The \emph{zip} file should contain:
+\begin{itemize}
+\item The project code, within a directory named \texttt{code};
+\item A file named \texttt{readme.txt}, containing a succinct set of instructions
+    on how to run your code;
+\item A \emph{pdf} file named \texttt{pri\_project\_group\_XX\_report.pdf}
+    (where \texttt{XX} should be replaced by your group number), containing
+    your project report.
+\end{itemize}
+
+Your report should be formatted according to the ACM Proceedings template\footnote{Use the \texttt{sigconf} format, available at \url{https://www.acm.org/publications/proceedings-template}.}. The report should have \textbf{at most 6 pages} and should contain:
+\begin{itemize}
+\item A short abstract (1 paragraph) summarizing the report;
+\item A short introduction (1 paragraph) describing the problem\footnote{No philosophy, please --- just state what you are trying to do.};
+\item One section describing \textbf{how you implemented your search solution};
+\item One section describing \textbf{how you implemented your classification solution};
+\item One section describing \textbf{how you implemented your entity analysis solution};
+\item One section describing \textbf{your results}. This section should contain:
+    \begin{itemize}
+    \item For the search solution, examples of successful and unsuccessful
+        queries, with an explanation of why that happens;
+    \item For the classification solution, a confusion matrix and the corresponding precision, recall, and F1 results, with an explanation of the values found;
+    \item For the entity analysis solution, examples of successfully and unsuccessfully extracted entities, with an explanation of why that happens.
+    \end{itemize}
+\end{itemize}
+
+Describe your solutions \textbf{succinctly, but with enough detail} that they may be
+replicated by someone else. When describing the solutions, you should always
+\textbf{justify the decisions taken}, i.e. why you chose a certain classifier and not
+another, how and why you chose certain parameter values and not others.
+
+You should also \textbf{prepare an oral presentation of the project}, to be
+delivered on the last week of classes. The presentation should be set for 10
+minutes and include quick explanation and demo of the system
+functionalities. Strict timing will be enforced.
+
+\section{Grading}
+\label{sec:grading}
+
+The project will be graded according to the following criteria. Each item will
+be scored on a scale of [0--5]. The final grade is the sum of all scores,
+converted to a [0--20] scale.
+\begin{enumerate}
+\item \textbf{Originality} (5 = the solution is completely original vs. 0 = only existing libraries where applied, using the default parameters);
+\item \textbf{Appropriateness} (5 = each problem has an appropriate solution vs. 0 = the same hack was used everywhere);
+\item \textbf{Correctness} (5 = the solution was correctly applied, results were correctly measured, etc. vs. 0 = wrong application of the solution, erroneous results, etc.);
+\item \textbf{Exploration} (5 = sufficient effort was made to obtain the best results vs. 0 = the first result obtained was considered good enough);
+\item \textbf{Oral presentation} (5 = clear and succinct oral presentation vs. 0 = confusing or incomplete oral presentation)
+\item \textbf{Report quality} (5 = good report and code presentation vs. 0 = poorly written report and unreadable code).
+\end{enumerate}
+
+All projects must be \textbf{submitted electronically before the deadline}. Delays will
+not be accepted.
+
+A \textbf{printed version of the reported should also be delivered} during the first
+class reserved for the oral presentations.
+
+\end{document}

@@ -29,3 +29,7 @@ auto/
 \#*
 .#*
 .~lock.*
+manifesto_apikey.txt
+*~
+.Rhistory
+*.csv
