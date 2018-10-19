@@ -36,3 +36,4 @@ manifesto_apikey.txt
 .RData
 .spyproject
 pri_project_data.zip
+*.gz
