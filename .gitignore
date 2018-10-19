@@ -33,3 +33,6 @@ manifesto_apikey.txt
 *~
 .Rhistory
 *.csv
+.RData
+.spyproject
+pri_project_data.zip
