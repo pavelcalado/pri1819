@@ -791,13 +791,17 @@ S(O,I|\lambda) = \sum_{t=1}^{T} W(t,O_t)
  \end{frame}
 
  \begin{frame}
-     \frametitle{Conditional Random Fields (just a hint)}
+     \frametitle{Linear-Chain Conditional Random Fields (just a hint)}
      \centering
      \includegraphics[width=.9\linewidth]{crf}
      \begin{displaymath}
          P(I|O) = \frac{1}{Z(O)}\exp\left\{\sum_{t=1}^T \sum_{k=1}^K\lambda_kf_k(I_t, I_{t-1}, O_t)\right\}
      \end{displaymath}
- \end{frame}
+     \begin{itemize}
+     \item Inference with the Viterbi algorithm
+     \item Infering the parameters by maximum likelihood learning, e.g., through gradient descent algorithms
+     \begin{itemize}
+\end{frame}
 
 % ------------------------------------------------------------
 
