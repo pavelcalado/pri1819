@@ -725,46 +725,45 @@
 \end{frame}
 
 
-% \begin{frame} \frametitle{Structured Perceptron (just a hint)}
+\begin{frame} \frametitle{Structured Perceptron (just a hint)}
   
-%   \begin{itemize}
-%   \scriptsize
-%   \item Simple discriminative model that enables exploring features representing symbols (e.g., {\it capital letters denote nouns?})
-%   \item Viterbi algorithm now considers feature weights for computing costs
-%   \item Features represent each possible transition/emission
-%   \item Update feature weights incrementally, so as to increase/decrease score of correct/incorrect labellings
-%   \end{itemize}
+   \begin{itemize}
+   \scriptsize
+   \item Simple discriminative model that enables exploring features representing symbols (e.g., {\it capital letters denote nouns?})
+   \item Viterbi algorithm now considers feature weights for computing costs
+   \item Features represent each possible transition/emission
+   \item Update feature weights incrementally, so as to increase/decrease score of correct/incorrect labellings
+   \end{itemize}
   
-%   \begin{block}{}
-%   \begin{enumerate}
-%   \item Create feature map and set initial feature weights $w$
-%   \item For $\epsilon$ iterations
-%   \begin{enumerate}
-%   \item For each labeled pair $\{O,I\}$ in the training data
-%   \begin{enumerate}
-%   \item Compute $\hat{I}$ for the observation sequence $O$, using the Viterbi algorithm and the feature vector $w$
-%   \item If $I=\hat{I}$ do not update the model, else
-%   \begin{enumerate}
-%   \item Compute the feature vector $f$ for the pair $\{O,I\}$
-%   \item Compute the feature vector $\hat{f}$ for the pair $\{O,\hat{I}\}$
-%   \item Update the feature vector: $w = w + f - \hat{f}$
-%   \end{enumerate}
-%   \end{enumerate}
-%   \end{enumerate}
-%   \end{enumerate}
-%   \end{block}
+   \begin{block}{}
+   \begin{enumerate}
+   \item Create feature map and set initial feature weights $w$
+   \item For $\epsilon$ iterations
+   \begin{enumerate}
+   \item For each labeled pair $\{O,I\}$ in the training data
+   \begin{enumerate}
+   \item Compute $\hat{I}$ for the observation sequence $O$, using the Viterbi algorithm and the feature vector $w$
+   \item If $I=\hat{I}$ do not update the model, else
+   \begin{enumerate}
+   \item Compute the feature vector $f$ for the pair $\{O,I\}$
+   \item Compute the feature vector $\hat{f}$ for the pair $\{O,\hat{I}\}$
+   \item Update the feature vector: $w = w + f - \hat{f}$
+   \end{enumerate}
+   \end{enumerate}
+   \end{enumerate}
+   \end{enumerate}
+   \end{block}
  
-% \end{frame}
+ \end{frame}
 
-% \begin{frame}
-%     \frametitle{Conditional Random Fields (just a hint)}
-%     \centering
-%     \includegraphics[width=.9\linewidth]{crf}
-%     \begin{displaymath}
-%         P(y|x) = \frac{1}{Z(x)}\exp\left\{\sum_{k=1}^K\lambda_kf_k(y_t, y_{t-1},
-%           x_t)\right\}
-%     \end{displaymath}
-% \end{frame}
+ \begin{frame}
+     \frametitle{Conditional Random Fields (just a hint)}
+     \centering
+     \includegraphics[width=.9\linewidth]{crf}
+     \begin{displaymath}
+         P(y|x) = \frac{1}{Z(x)}\exp\left\{\sum_{k=1}^K\lambda_kf_k(y_t, y_{t-1}, x_t)\right\}
+     \end{displaymath}
+ \end{frame}
 
 % ------------------------------------------------------------
 
