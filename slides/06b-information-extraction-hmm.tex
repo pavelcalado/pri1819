@@ -768,7 +768,7 @@ S(O,I|\lambda) = \sum_{t=1}^{T} W(t,O_t)
    \scriptsize
    \item Simple discriminative model that enables exploring features representing symbols (e.g., {\it capital letters denote nouns?})
    \item Viterbi algorithm now considers feature weights for computing costs
-   \item Features represent each possible transition/emission (e.g., one feature per emission/transition in a HMM)
+   \item High dimensional feature vector represents each possible transition/emission (e.g., one feature per emission/transition in a HMM)
    \item Update feature weights incrementally, so as to increase/decrease score of correct/incorrect labellings
    \end{itemize}
   
@@ -795,7 +795,7 @@ S(O,I|\lambda) = \sum_{t=1}^{T} W(t,O_t)
      \centering
      \includegraphics[width=.9\linewidth]{crf}
      \begin{displaymath}
-         P(I|O) = \frac{1}{Z(O)}\exp\left\{\sum{t=1}^T \sum_{k=1}^K\lambda_kf_k(I_t, I_{t-1}, O_t)\right\}
+         P(I|O) = \frac{1}{Z(O)}\exp\left\{\sum_{t=1}^T \sum_{k=1}^K\lambda_kf_k(I_t, I_{t-1}, O_t)\right\}
      \end{displaymath}
  \end{frame}
 
