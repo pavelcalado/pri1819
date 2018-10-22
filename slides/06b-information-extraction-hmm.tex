@@ -724,6 +724,28 @@
  
 \end{frame}
 
+\begin{frame} \frametitle{Restructuring HMMs With Features}
+\begin{itemize}
+\item In a regular HMM, we have that:
+
+\begin{eqnarray*}
+      P(O,I|\lambda) & = & P(O|I,\lambda)P(I|\lambda) \\
+                     & = & \pi_{i_1}b_{i_1}(O_1)a_{i_1i_2}b_{i_2}(O_2) \dotsb a_{i_{T-1}i_T}b_{i_T}(O_T)
+\end{eqnarray*}
+
+\item Considering the log likelihood:
+
+\begin{displaymath}
+\log\left(P(O,I|\lambda)\right)= \log\left(\pi_{i_1}\right) + \log\left(b_{i_1}(O_1))\right) + \log\left(a_{i_1i_2})\right) + \log\left(b_{i_2}(O_2))\right) + \dotsb + \log\left(a_{i_{T-1}i_T})\right) + \log\left(b_{i_T}(O_T))\right)
+\end{displaymath}
+
+\item Considering scores, and assuming that $W((I_{i-1},I_{i},O_i) = \log(a_{i_1i_2}) + \log(b_{i_1}(O_i))
+
+\begin{displaymath}
+S(O,I|\lambda) = \sum_{i=1}^{T} W((I_{i-1},I_{i},O_i))
+\end{displaymath}
+\end{itemize}
+\end{frame}
 
 \begin{frame} \frametitle{Structured Perceptron (just a hint)}
   
