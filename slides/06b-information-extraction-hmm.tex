@@ -756,7 +756,7 @@ S(O,I|\lambda) = \sum_{t=1}^{T} W(t,O_t)
 \item In information extraction applications, we want to find the state sequence I that satisfies:
 {\scriptsize
 \begin{displaymath}
-\hat{I} = \arg \max_I S(O,I|\lambda) = \arg \max_I \sum_{t=1}^T \sum_{k=1}^K\lambda_kf_k(y_t, y_{t-1}, x_t)
+\hat{I} = \arg \max_I S(O,I|\lambda) = \arg \max_I \sum_{t=1}^T \sum_{k=1}^K\lambda_kf_k(I_t, I_{t-1}, O_t)
 \end{displaymath} }
 \end{itemize}
 
@@ -795,7 +795,7 @@ S(O,I|\lambda) = \sum_{t=1}^{T} W(t,O_t)
      \centering
      \includegraphics[width=.9\linewidth]{crf}
      \begin{displaymath}
-         P(y|x) = \frac{1}{Z(x)}\exp\left\{\sum{t=1}^T \sum_{k=1}^K\lambda_kf_k(y_t, y_{t-1}, x_t)\right\}
+         P(I|O) = \frac{1}{Z(O)}\exp\left\{\sum{t=1}^T \sum_{k=1}^K\lambda_kf_k(I_t, I_{t-1}, O_t)\right\}
      \end{displaymath}
  \end{frame}
 
