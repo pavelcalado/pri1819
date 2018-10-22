@@ -754,11 +754,13 @@ S(O,I|\lambda) = \sum_{t=1}^{T} W(t,O_t)
 \item Scoring functions can also be written as a linear combination of $K$ different features, again describing state transitions between adjacent positions in the sequence, and symbol emissions for position $t$ of the input sequence.
 
 \item In information extraction applications, we want to find the state sequence I that satisfies:
-
+{
+\scriptsize
 \begin{displaymath}
-\hat{I} = \arg \max_I S(O,I|\lambda) = \arg \max_I \sum{t=1}^T \sum_{k=1}^K\lambda_kf_k(y_t, y_{t-1}, x_t)
+\hat{I} = \arg \max_I S(O,I|\lambda) = \arg \max_I \sum_{t=1}^T \sum_{k=1}^K\lambda_kf_k(y_t, y_{t-1}, x_t)
 \end{displaymath}
 \end{itemize}
+}
 \end{frame}
 
 \begin{frame} \frametitle{Structured Perceptron (just a hint)}
