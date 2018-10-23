@@ -832,8 +832,8 @@ Reference: {\it Michael Collins, Discriminative Training Methods for Hidden Mark
      \lambda_i^{k+1} = 
       \lambda_i^k + 
       \frac{1}{C} \log\left(
-      \frac{ \sum_{t=1}^T f_k(I_t, I_{t-1}, O_t)  }
-           { \sum_I' P(I'|O,\lambda^{k}) \sum_{t=1}^T f_k(I'_t, I'_{t-1}, O_t) }  
+      \frac{ \sum_{t=1}^T f_i(I_t, I_{t-1}, O_t)  }
+           { \sum_I' P(I'|O,\lambda^{k}) \sum_{t=1}^T f_i(I'_t, I'_{t-1}, O_t) }  
 	   \right)
 	 \end{displaymath}}
      \end{itemize}
