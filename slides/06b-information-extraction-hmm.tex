@@ -817,21 +817,25 @@ Reference: {\it Michael Collins, Discriminative Training Methods for Hidden Mark
      \frametitle{Linear-Chain Conditional Random Fields (2)}
      \begin{itemize}
      \item Inference leverages the Viterbi algorithm to find the following argmax efficiently
-	 \begin{eqnarray*}
+	 {\scriptsize \begin{eqnarray*}
          \arg \max_I P(I|O) & = &  \arg \max_I \exp\left\{\sum_{t=1}^T \sum_{k=1}^K\lambda_kf_k(I_t, I_{t-1}, O_t)\right\} \frac{1}{Z(O)} \\
 		                    & = & \arg \max_I \left\{\sum_{t=1}^T \sum_{k=1}^K\lambda_kf_k(I_t, I_{t-1}, O_t)\right\} - \log \left( \frac{1}{Z(O)} \right) \\
 							& = & \arg \max_I \left\{\sum_{t=1}^T \sum_{k=1}^K\lambda_kf_k(I_t, I_{t-1}, O_t)\right\} 
-     \end{eqnarray*}
+     \end{eqnarray*}}
      \item Computing the normalisation term $Z(O)$ can be made efficiently with the forward procedure
-	 \item Training is a convex optimization problem, e.g. solved through generalized iterative scaling and computing the feature expectations (denominator) through the forward-backward procedure
-	 \begin{displaymath}
+	 \item Training is a convex optimization problem
+	 \begin{itemize}
+	 \scriptsize
+	 \item Generalized iterative scaling, computing the feature expectations (denominator) through forward-backward
+	 \end{itemize}
+	 {\scriptsize \begin{displaymath}
      \lambda_i^{k+1} = 
       \lambda_i^k + 
       \frac{1}{Z(O)} \log\left(
       \frac{ \sum_{t=1}^T f_k(I_t, I_{t-1}, O_t)  }
            { \sum_I' P(I'|O,\lambda^{k}) \sum_{t=1}^T f_k(I'_t, I'_{t-1}, O_t) }  
 	   \right)
-	 \end{displaymath}
+	 \end{displaymath}}
      \end{itemize}
 \end{frame}
 
