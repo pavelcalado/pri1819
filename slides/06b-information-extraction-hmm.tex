@@ -787,11 +787,21 @@ S(O,I|\lambda) = \sum_{t=1}^{T} W(t,O_t)
    \end{enumerate}
    \end{enumerate}
    \end{block}
- 
  \end{frame}
+ 
+\begin{frame}
+\frametitle{Guarantees with Perceptron Learning}
+Simple additive update seems intuitive, but do we have any guarantees? Collins (2002) has some proofs showing that:
+\begin{itemize}
+\item If the data is separable with some margin, then the algorithm will converge on weights which give zero error on the training data
+\item If the training data is not separable, but “close” to being separable, then the algorithm will make a small number of mistakes (on the training data)
+\item If the algorithm makes a small number of errors on the training data, it is likely to generalise well to unseen data
+\end{itemize}
+Reference: {\it Michael Collins, Discriminative Training Methods for Hidden Markov Models: Theory and Experiments with Perceptron Algorithms, 2002}
+\end{frame}
 
  \begin{frame}
-     \frametitle{Linear-Chain Conditional Random Fields (hint)}
+     \frametitle{Linear-Chain Conditional Random Fields (1)}
      \centering
      \includegraphics[width=.9\linewidth]{crf}
      \begin{displaymath}
@@ -799,7 +809,24 @@ S(O,I|\lambda) = \sum_{t=1}^{T} W(t,O_t)
      \end{displaymath}
      \begin{itemize}
      \item Inference with the Viterbi algorithm
-     \item Infering the parameters by maximum likelihood learning, e.g., through gradient descent algorithms
+     \item Infering the parameters by maximum likelihood learning, e.g., through generalized iterative scaling or through gradient descent algorithms
+     \end{itemize}
+\end{frame}
+
+ \begin{frame}
+     \frametitle{Linear-Chain Conditional Random Fields (2)}
+     \begin{itemize}
+     \item Inference leverages the Viterbi algorithm to find the following argmax efficiently
+	 \begin{eqnarray*}
+         \arg \max_I P(I|O) & = &  \arg \max_I \exp\left\{\sum_{t=1}^T \sum_{k=1}^K\lambda_kf_k(I_t, I_{t-1}, O_t)\right\} \frac{1}{Z(O)} \\
+		                    & = & \arg \max_I \left\{\sum_{t=1}^T \sum_{k=1}^K\lambda_kf_k(I_t, I_{t-1}, O_t)\right\} - \log \left( \frac{1}{Z(O)} \right) \\
+							& = & \arg \max_I \left\{\sum_{t=1}^T \sum_{k=1}^K\lambda_kf_k(I_t, I_{t-1}, O_t)\right\} 
+     \end{eqnarray*}
+     \item Computing the normalisation term $Z(O)$ can be made efficiently with the forward procedure
+	 \item Training is a convex optimization problem, e.g. solved through generalized iterative scaling and computing the feature expectations (denominator) through the forward-backward procedure
+	 \begin{displaymath}
+     \lambda_i^{[k+1]} = \lambda_i^{[k]} + \frac{1}{Z(O)} \log\left \frac{ \sum_{t=1}^T f_k(I_t, I_{t-1}, O_t)  }{ \sum_I' P(I|O,\lambda^{[k]})  \sum_{t=1}^T f_k(I'_t, I'_{t-1}, O_t) }  \right)
+	 \end{displaymath}
      \end{itemize}
 \end{frame}
 
