@@ -608,14 +608,14 @@
     \begin{itemize}
     \item Let
         \begin{displaymath}
-            \xi_t(i) = P(i_t = i, i_{t+1} = j|O,\lambda)
+            \xi_t(i,j) = P(i_t = i, i_{t+1} = j|O,\lambda)
         \end{displaymath}
         i.e. the probability of being in state $i$ at time $t$ and making a
         transition to state $j$ at time $t + 1$, given the observation sequence
         $O$ and the model $\lambda$
     \item Applying Bayes rule:
         \begin{multline*}
-            \xi_t(i) = \\
+            \xi_t(i,j) = \\
             \frac{P(i_t = i, i_{t+1} = j,O|\lambda)}{P(O|\lambda)} = \\
             \frac{\alpha_t(i)a_{ij}b_j(O_{t+1})\beta_{t+1}(j)}{P(O|\lambda)}
         \end{multline*}
