@@ -37,3 +37,4 @@ manifesto_apikey.txt
 .spyproject
 pri_project_data.zip
 *.gz
+*.synctex

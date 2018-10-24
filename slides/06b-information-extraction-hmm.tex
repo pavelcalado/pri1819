@@ -749,16 +749,18 @@ S(O,I|\lambda) = \sum_{t=1}^{T} W(t,O_t)
 
 \begin{frame} \frametitle{Restructuring HMMs With Features (2)}
 \begin{itemize}
-\item In the previous example, we saw how to express a model equivalent to an HMM through scoring functions $W(t,Ot)$ that leverage state transitions between adjacent positions in the sequence (i.e., from $t-1$ to $t$), and symbol emissions for position $t$ of the input sequence.
+\item In the previous example, we saw how to express a model equivalent to an HMM through scoring functions $W(t,O_t)$ that leverage state transitions between adjacent positions in the sequence (i.e., from $t-1$ to $t$), and symbol emissions for position $t$ of the input sequence.
 
 \item Scoring functions can also be written as a linear combination of $K$ different features, again describing state transitions between adjacent positions in the sequence, and symbol emissions for position $t$ of the input sequence.
 
 \item In information extraction applications, we want to find the state sequence I that satisfies:
 {\scriptsize
 \begin{displaymath}
-\hat{I} = \arg \max_I S(O,I|\lambda) = \arg \max_I \sum_{t=1}^T \sum_{k=1}^K\lambda_kf_k(I_t, I_{t-1}, O_t)
+\hat{I} = \arg \max_I S(O,I|\lambda) = \arg \max_I \sum_{t=1}^T \sum_{k=1}^Kw_kf_k(I_t, I_{t-1}, O_t)
 \end{displaymath} }
 \end{itemize}
+
+% https://taehwanptl.github.io/lectures/lecture_05_04.pdf
 
 \end{frame}
 
@@ -813,7 +815,10 @@ Reference: {\it Michael Collins, Discriminative Training Methods for Hidden Mark
      \end{itemize}
 \end{frame}
 
- \begin{frame}
+% http://homepages.inf.ed.ac.uk/csutton/publications/crftut-fnt.pdf
+% http://dirichlet.net/pdf/wallach02efficient.pdf
+
+\begin{frame}
      \frametitle{Linear-Chain Conditional Random Fields (2)}
      \begin{itemize}
      \item Inference leverages the Viterbi algorithm to find the following argmax efficiently
