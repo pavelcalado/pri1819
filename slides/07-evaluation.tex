@@ -278,7 +278,13 @@ An IR experiment, as devised by Cyril Cleverdon (1950s), must include:
   \frametitle{$F$-measure }
   \begin{block}{Harmonic mean of precision and recall:}
       \begin{displaymath}
-        F_1 = \frac{2 \times Re \times Pr}{Re + Pr}
+        F_\beta = \frac{(1 + \beta^2) \times Pr \times Re}{(\beta^2 \times Pr) + Re}
+    \end{displaymath}
+  \end{block}
+
+  \begin{block}{Ususally we adopt $F_1$:}
+      \begin{displaymath}
+        F_1 = \frac{2 \times Pr \times Re}{Pr + Re}
     \end{displaymath}
   \end{block}
 \end{frame}
@@ -340,10 +346,12 @@ An IR experiment, as devised by Cyril Cleverdon (1950s), must include:
   \end{block}
 \end{frame}
 
-\begin{frame}
-    \frametitle{Ranking Comparison}
+\section{Ranking Comparison}
 
-    \begin{block}{Spearman Coefficient}
+\begin{frame}
+    \frametitle{Spearman Coefficient}
+
+    \begin{block}{}
         Computes the difference between the positions of a same document in two
         rankings
         \begin{displaymath}
@@ -356,11 +364,10 @@ An IR experiment, as devised by Cyril Cleverdon (1950s), must include:
 
 \end{frame}
 
-
 \begin{frame}
-    \frametitle{Ranking Comparison (cont.)}
+    \frametitle{Kendall's Tau}
 
-    \begin{block}{Kendall's Tau}
+    \begin{block}{}
         Let $(x_1, y_1), (x_2, y_2), \cdots, (x_N, y_N)$, where each $x_i$ is
         the rank of document $i$ in ranking $X$, and $y_i$ is the rank of
         document $i$ in ranking $Y$.
@@ -542,34 +549,6 @@ The data can be collected at a low cost without overhead for the use
 
 % ------------------------------------------------------------
 
-% \begin{frame} \frametitle{Multiple-class Scenario}
-  
-%  \begin{itemize}
-%  \item One-vs.-rest
-%    \begin{itemize}
-%    \item Create a two-class problem for every class
-%      \begin{itemize}
-%      \item E.g. ``sports'' and ``not-sports'', ``science'' and
-%        ``not-science'', etc.
-%      \end{itemize}
-%    \item We have a classifier for each case
-%    \end{itemize}
-%  \item Accuracy is measured by \emph{recall} and \emph{precision}
-%    \begin{itemize}
-%    \item Let $C_d$ be the correct classes for document $d$ and $C'_d$ be the
-%      set of classes estimated by the classifier
-%      \begin{displaymath}
-%        precision = \frac{C'_d \cap C_d}{C'_d}
-%      \end{displaymath}
-%      \begin{displaymath}
-%        recall = \frac{C'_d \cap C_d}{C_d}
-%      \end{displaymath}
-%    \end{itemize}
-%  \end{itemize}
-% \end{frame}
-
-% % ------------------------------------------------------------
-
 \begin{frame} \frametitle{Micro-Averaged Precision}
   
  In a problem with $n$ classes, let $C_i$ be the number of documents in class
@@ -633,6 +612,74 @@ The data can be collected at a low cost without overhead for the use
 
 % ------------------------------------------------------------
 
+\begin{frame} \frametitle{Multi-Label Scenario }
+  
+  \begin{itemize}
+  \item Quality can be measured by per-instance \emph{recall} and \emph{precision}
+    \begin{itemize}
+    \item Let $C_d$ be the correct classes for document $d$ and $C'_d$ be the
+      set of classes estimated by the classifier
+      \begin{displaymath}
+        precision = \frac{C'_d \cap C_d}{C'_d}
+      \end{displaymath}
+      \begin{displaymath}
+        recall = \frac{C'_d \cap C_d}{C_d}
+      \end{displaymath}
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+% ------------------------------------------------------------
+
+\begin{frame}
+    \frametitle{Train-Test Split}
+    \begin{itemize}
+    \item When evaluatig a classifier, you cannot rely on the data used for
+        training
+        \begin{itemize}
+        \item You estimate is likely to be overly optimistic
+        \item Your model will tend to \emph{overfit}
+        \end{itemize}
+    \item Data must be spit into a test and training sets
+        \begin{itemize}
+        \item Common train/test splits: 80\%/20\% or 70\%/30\%
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Cross-Validation}
+    \begin{itemize}
+    \item Splitting the dataset and testing once may lead to a biased
+        evaluation
+    \item One way to avoid this is to use \emph{cross-validation}
+        \begin{itemize}
+        \item Leave-p-out
+        \item Leave-one-out
+        \item \emph{k-fold}
+        \item ...
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{K-Fold Cross-Validation}
+    \begin{enumerate}
+    \item Split the data into $k$ partitions
+    \item For each fold $i \in [1,k]$
+        \begin{enumerate}
+        \item Train your model using all partitions $P_j,\; j \neq i$
+        \item Evaluate your model in partition $P_i$
+        \end{enumerate}
+    \item Average your evaluation metrics overall all folds
+    \end{enumerate}
+    \begin{center}
+        \includegraphics[width=0.8 \textwidth]{K-fold_cross_validation_EN}
+    \end{center}
+    \tiny\raggedleft(source of image: wikipedia)
+\end{frame}
+
+% https://en.wikipedia.org/wiki/Cross-validation_(statistics)
 
 \finalframe{Questions?}
 
