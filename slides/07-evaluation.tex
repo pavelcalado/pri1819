@@ -344,7 +344,7 @@ An IR experiment, as devised by Cyril Cleverdon (1950s), must include:
 \begin{block}{ERR - Expected Reciprocal Rank}
         \begin{eqnarray*}
             \operatorname{ERR} & = & \sum_{i=1}^N \frac{1}{N} \times {\operatorname{P}}(\text{user stops at position} i) \\
-                               & = & \sum_{i=1}^N \frac{1}{N} \times \Pi_{i=1}^{N-1}(1 - R_i} R_N
+                               & = & \sum_{i=1}^N \frac{1}{N} \times \Pi_{i=1}^{N-1}(1 - R_i) R_N
         \end{eqnarray*}
         where $R_i = 1$ if document at rank $i$ is relevant and $R_i = 0$
   \end{block}
