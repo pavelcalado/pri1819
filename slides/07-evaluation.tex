@@ -330,7 +330,6 @@ An IR experiment, as devised by Cyril Cleverdon (1950s), must include:
 
 \begin{frame}
   \frametitle{MRR}
-  
   \begin{block}{MRR - Mean Reciprocal Rank}
         \begin{displaymath}
             \operatorname{MRR} = \frac{1}{N}\sum_{i=1}^N\frac{1}{\operatorname{rank}_i}
@@ -348,15 +347,14 @@ An IR experiment, as devised by Cyril Cleverdon (1950s), must include:
                                & = & \sum_{i=1}^N \frac{1}{N} \times \Pi_{i=1}^{N-1}(1 - R_i) R_N
         \end{eqnarray*}
         where $R_i = 1$ if document at rank $i$ is relevant and $R_i = 0$, or instead the result of mapping from relevance grades to probability of relevance.
-        \begin{displaymath}
-        \operatorname{R}(g) = \frac{2^g - 1}{2^g_\max}
-        \end{displaymath}
+        %\begin{displaymath}
+        %\operatorname{R}(g) = \frac{2^g - 1}{2^g_\max}
+        %\end{displaymath}
   \end{block}
 \end{frame}
 
 \begin{frame}
     \frametitle{Ranking Comparison}
-
     \begin{block}{Spearman Coefficient}
         Computes the difference between the positions of a same document in two
         rankings
