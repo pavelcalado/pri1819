@@ -10,10 +10,10 @@ import pandas as pd
 
 #%%
 
-FILE = 'en_docs.csv'
-OUT_FILE = 'en_docs_clean.csv'
-#FILE = 'pt_docs.csv'
-#OUT_FILE = 'pt_docs_clean.csv'
+#FILE = 'en_docs.csv'
+#OUT_FILE = 'en_docs_clean.csv'
+FILE = 'pt_docs.csv'
+OUT_FILE = 'pt_docs_clean.csv'
 DATASET = 'MPDataset_MPDS2018a.csv'
 
 #%%
@@ -38,6 +38,8 @@ docs['party'] = docs['party'].map(ids_map)
 party_counts = docs['party'].value_counts()
 party_counts = party_counts[party_counts > 100]
 docs = docs[docs['party'].isin(party_counts.index)]
+
+docs = docs[docs['text'].notnull()]
 
 #%%
 
