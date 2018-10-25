@@ -346,19 +346,38 @@ An IR experiment, as devised by Cyril Cleverdon (1950s), must include:
   \end{block}
 \end{frame}
 
+\begin{frame}
+    \frametitle{User Models}
+    \begin{itemize}
+    \item \emph{Position models}: assume independence among documents in
+        different positions and model the examination probability as a function
+        of the position
+    \item \emph{Cascade Models}: consider the dependency among URLs on a search
+        results page --- at each position, the user has a certain probability
+        of being satisfied depending on the relevance of the previous documents
+    \end{itemize}
+    Previous measures assumed a position model; following we show \textit{ERR}, which
+    assumes a cascade model.
+\end{frame}
+
 \begin{frame} \frametitle{ERR}
 \begin{block}{ERR - Expected Reciprocal Rank}
-        Assumes a cascade model for user browsing.
         \begin{eqnarray*}
-            \operatorname{ERR} & = & \sum_{i=1}^N \frac{1}{N} \times {\operatorname{P}}(\text{user stops at position~} i) \\
-                               & = & \sum_{i=1}^N \frac{1}{N} \times \Pi_{i=1}^{N-1}(1 - R_i) R_N
+            \operatorname{ERR} & = & \sum_{i=1}^N \frac{1}{i} {\operatorname{P}}(\text{user stops at position~} i) \\
+                               & = & \sum_{i=1}^N \frac{1}{i} \Pi_{j=1}^{i-1}(1 - R_j) R_i
         \end{eqnarray*}
-        where $R_i = 1$ if document at rank $i$ is relevant and $R_i = 0$, or instead the result of mapping from relevance grades to probability of relevance.
+        where $R_i = 1$ if document at rank $i$ is relevant and $R_i = 0$
+        otherwise.
+
+        $R_i$ can also be the result of mapping from relevance grades to
+        probability of relevance $R_i := \mathcal{R}(g_i)$, where:
         \begin{displaymath}
-        {\operatorname{R}}(g) = \frac{2^g - 1}{2^{g_{\max}}}
+        \mathcal{R}(g) = \frac{2^g - 1}{2^{g_{\max}}}, \; g \in \{0, \cdots, g_{\max}\}
         \end{displaymath}
   \end{block}
 \end{frame}
+
+% http://olivier.chapelle.cc/pub/err.pdf
 
 \section{Ranking Comparison}
 
@@ -519,7 +538,7 @@ An accurate user model, which closely reflects users’ interactions with the re
 ~\\
 \emph{Example:} Cascade model used in ERR metric, corresponding to
 \begin{displaymath}
-\Pi_{i=1}^{N-1}(1 - R_i) R_N,
+\Pi_{j=1}^{i-1}(1 - R_j) R_i
 \end{displaymath}
 where the values $R_i$ (i.e., document satisfies the user with probability $R_i$) can be estimated by maximum likelihood on the click logs.
 \end{block}
@@ -618,23 +637,8 @@ where the values $R_i$ (i.e., document satisfies the user with probability $R_i$
  \begin{itemize}
  \item Macro-averaged precision/recall measures performance per class, giving
    all classes equal importance
+\item The \emph{$F_1$ measure} is also commonly used
  \end{itemize}
-\end{frame}
-
-% ------------------------------------------------------------
-
-\begin{frame} \frametitle{$F_1$ measure}
-  
-    The \emph{$F_1$ measure} is also commonly used
-    \begin{displaymath}
-        F_1 = \frac{2 \times P_i \times R_i}{P_i + R_i}
-    \end{displaymath}
-
-    \begin{itemize}
-    \item Harmonic mean between precision and recall
-    \item Discourages classifiers that trade one for the other
-    \end{itemize}
-
 \end{frame}
 
 % ------------------------------------------------------------
@@ -667,7 +671,7 @@ where the values $R_i$ (i.e., document satisfies the user with probability $R_i$
         \item You estimate is likely to be overly optimistic
         \item Your model will tend to \emph{overfit}
         \end{itemize}
-    \item Data must be spit into a test and training sets
+    \item Data must be split into a test and training sets
         \begin{itemize}
         \item Common train/test splits: 80\%/20\% or 70\%/30\%
         \end{itemize}
@@ -707,6 +711,164 @@ where the values $R_i$ (i.e., document satisfies the user with probability $R_i$
 \end{frame}
 
 % https://en.wikipedia.org/wiki/Cross-validation_(statistics)
+
+\section{Evaluation of Clustering}
+
+\begin{frame}
+    \frametitle{What to evaluate}
+    \begin{itemize}
+    \item Goal of clustering: attain \emph{high intra-cluster similarity}
+        (documents within a cluster are similar) and \emph{low inter-cluster
+          similarity} (documents from different clusters are dissimilar
+    \item These are \emph{internal criteria}
+    \item Alternatively, we can evaluate the results of the application
+        of interest
+        \begin{itemize}
+        \item E.g. for search result clustering, evaluate search results
+        \end{itemize}
+    \item Or we can use \emph{external criteria}, comparing the clusters to a
+        gold standard
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{External Criteria}
+    \begin{itemize}
+    \item Clusters are evaluated using a gold standard (as in classification
+        problems)
+        \begin{itemize}
+        \item Each document will be assigned a class
+    \end{itemize}
+    \item Unlike classification problems, we don't know to which class each
+        cluster corresponds
+        \begin{itemize}
+        \item Thus we cannot directly computed false positives, false
+            negatives, etc.
+        \end{itemize}
+    \item There are many proposals to address this issue
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Purity}
+    \begin{block}{}
+        For a set $\Omega = \{w_1,w_2,\cdots,w_K\}$ of clusters and a set
+        $\mathcal{C} = \{c_1,c_2,\cdots,c_K\}$ of classes, \emph{purity} is
+        defined as:
+        \begin{displaymath}
+            \operatorname{purity}(\Omega, \mathcal{C}) = \frac{1}{N} \sum_k\max_j|w_k \cap c_j|
+        \end{displaymath}
+        where $N$ is the number of documents, $w_k$ is the set of documents in
+        cluster $w_k$, and $c_k$ is the set of documents in class $c_k$.
+    \end{block}
+    Each cluster is assigned to the class most frequent in the cluster and
+    accuracy is measured.
+\end{frame}
+
+% https://nlp.stanford.edu/IR-book/html/htmledition/evaluation-of-clustering-1.html
+
+\begin{frame}
+    \frametitle{Normalized Mutual Information}
+    \begin{itemize}
+    \item Purity does not show the tradeoff between quality and the number f
+        clusters
+        \begin{itemize}
+        \item E.g., if each document gets a cluster, purity = 1
+        \end{itemize}
+    \item \emph{NMI} takes this tradeoff into account
+        \begin{itemize}
+        \item Measures the increase in the amount of information when we are
+            know what the clusters are,
+        \item But normalizes it by the entropy of the clusters
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Normalized Mutual Information (cont.)}
+
+    \begin{block}{}
+        \begin{displaymath}
+        \operatorname{NMI}(\Omega,\mathcal{C}) =
+            \frac{I(\Omega,\mathcal{C})}{\big(H(\Omega)+H(\mathcal{C})\big)/2}
+        \end{displaymath}
+    \end{block}
+    \footnotesize
+    where
+    \begin{block}{}
+        \begin{multline*}
+            I(\Omega,\mathcal{C}) = \sum_k\sum_jP(w_k \cap c_j)\log\frac{P(w_k \cap c_j)}{P(w_k)P(c_j)} \\
+            = \sum_k\sum_j \frac{|w_k \cap c_j|}{N} \log\frac{N||w_k \cap c_j|}{|w_k||c_j|}
+        \end{multline*}
+    \end{block}
+    is the mutual information between clusters and classes and
+    \begin{block}{}
+        \begin{displaymath}
+            H(\Omega) = -\sum_k P(w_k)\log{P(w_k)} = -\sum_k\frac{|w_k|}{N}\log\frac{|w_k|}{N}
+        \end{displaymath}
+    \end{block}
+    is the entropy (equally for $H(\mathcal{C})$)
+\end{frame}
+
+\begin{frame}
+    \frametitle{Rand Index}
+    \begin{itemize}
+    \item The \emph{Rand index} views clustering as a series of decisions for
+        each of the $N(N-1)/2$ pairs of documents
+    \item Decisions can be:
+        \begin{itemize}
+        \item \textbf{True Positive}: the documents are similar and in the same cluster
+        \item \textbf{True Negative}: the documents are \textit{not} similar and in different clusters
+        \item \textbf{False Positive}: the documents are \textit{not} similar but in the same cluster
+        \item \textbf{False Negative}: the documents are similar but in different clusters
+        \end{itemize}
+    \item We can considere documentas as \emph{similar if they are in the same class}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Rand Index (cont.)}
+    The Rand index simply measures the percentage of correct decisions
+    (i.e. the accuracy):
+    \begin{block}{}
+        \begin{displaymath}
+            RI = \frac{TP+TN}{TP+FP+TN+FN}
+        \end{displaymath}
+    \end{block}
+\end{frame}
+
+\begin{frame}
+    \frametitle{The $F_\beta$ Measure (Again)}
+    \begin{itemize}
+    \item The Rand index gives equal weight to false positives and false negatives
+    \item Separating similar documents is sometimes worse than putting pairs of dissimilar documents in the same cluster. 
+    \item We can use the F measure to penalize false negatives more strongly
+        than false positives, giving more weight to recall
+        \begin{itemize}
+        \item selecting a value $\beta > 1$
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{The $F_\beta$ Measure (cont.)}
+    \begin{block}{}
+        \begin{displaymath}
+            P = \frac{TP}{TP+FP} \qquad R = \frac{TP}{TP+FN}
+        \end{displaymath}
+    \end{block}
+    \begin{block}{}
+        \begin{displaymath}
+            F_\beta = \frac{(1 + \beta^2)\cdot P \cdot R}{(\beta^2 \cdot P) + R}            
+        \end{displaymath}
+    \end{block}
+    or, using the decision framework:
+    \begin{block}{}
+        \begin{displaymath}
+            F_\beta = \frac{(1 + \beta^2) \cdot TP}{(1 + \beta^2) \cdot TP + \beta^2 \cdot FN + FP}
+        \end{displaymath}
+    \end{block}
+\end{frame}
 
 \finalframe{Questions?}
 
