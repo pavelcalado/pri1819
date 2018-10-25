@@ -341,7 +341,7 @@ An IR experiment, as devised by Cyril Cleverdon (1950s), must include:
 
 \begin{frame} \frametitle{ERR}
 \begin{block}{ERR - Expected Reciprocal Rank}
-        Makes use of the cascade model as a user browsing model.
+        Assumes a cascade model for user browsing.
         \begin{eqnarray*}
             \operatorname{ERR} & = & \sum_{i=1}^N \frac{1}{N} \times {\operatorname{P}}(\text{user stops at position~} i) \\
                                & = & \sum_{i=1}^N \frac{1}{N} \times \Pi_{i=1}^{N-1}(1 - R_i) R_N
