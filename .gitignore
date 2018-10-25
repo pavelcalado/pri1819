@@ -38,3 +38,5 @@ manifesto_apikey.txt
 pri_project_data.zip
 *.gz
 *.synctex
+projecto/*.txt
+projecto/euspeech
