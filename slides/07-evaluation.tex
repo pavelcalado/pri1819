@@ -346,6 +346,20 @@ An IR experiment, as devised by Cyril Cleverdon (1950s), must include:
   \end{block}
 \end{frame}
 
+\begin{frame} \frametitle{ERR}
+\begin{block}{ERR - Expected Reciprocal Rank}
+        Assumes a cascade model for user browsing.
+        \begin{eqnarray*}
+            \operatorname{ERR} & = & \sum_{i=1}^N \frac{1}{N} \times {\operatorname{P}}(\text{user stops at position~} i) \\
+                               & = & \sum_{i=1}^N \frac{1}{N} \times \Pi_{i=1}^{N-1}(1 - R_i) R_N
+        \end{eqnarray*}
+        where $R_i = 1$ if document at rank $i$ is relevant and $R_i = 0$, or instead the result of mapping from relevance grades to probability of relevance.
+        \begin{displaymath}
+        {\operatorname{R}}(g) = \frac{2^g - 1}{2^{g_{\max}}}
+        \end{displaymath}
+  \end{block}
+\end{frame}
+
 \section{Ranking Comparison}
 
 \begin{frame}
@@ -495,6 +509,19 @@ The data can be obtained by observing how frequently the users click on a given 
 %%This is particularly attractive because 
 \begin{block}{Attractive, because...}
 The data can be collected at a low cost without overhead for the use
+\end{block}
+\end{frame}
+
+\begin{frame} \frametitle{Evaluation using Clickthrough Data (2)}
+\begin{block}{Click models}
+An accurate user model, which closely reflects users’ interactions with the retrieval system, is essential for developing a good relevance metric from clickthrough data.
+
+~\\
+\emph{Example:} Cascade model used in ERR metric, corresponding to
+\begin{displaymath}
+\Pi_{i=1}^{N-1}(1 - R_i) R_N,
+\end{displaymath}
+where the values $R_i$ (i.e., document satisfies the user with probability $R_i$) can be estimated by maximum likelihood on the click logs.
 \end{block}
 \end{frame}
 
