@@ -490,7 +490,7 @@ A/B testing provides a form of human experimentation, even if the setting is not
 
 
 
-\begin{frame} \frametitle{Evaluation using Clickthrough Data}
+\begin{frame} \frametitle{Evaluation using Clickthrough Data (1)}
 \begin{block}{A promising alternative...}
 The data can be obtained by observing how frequently the users click on a given document, when it is shown in the answer set for a given query
 \end{block}
@@ -499,11 +499,14 @@ The data can be obtained by observing how frequently the users click on a given 
 \begin{block}{Attractive, because...}
 The data can be collected at a low cost without overhead for the use
 \end{block}
+\end{frame}
 
+\begin{frame} \frametitle{Evaluation using Clickthrough Data (2)}
 \begin{block}{Click models}
 An accurate user model, which closely reflects users’ interactions with the retrieval system, is essential for developing a good relevance metric from clickthrough data.
 
-Example: Cascade model used in ERR metric, corresponding to
+~\\
+\emph{Example:} Cascade model used in ERR metric, corresponding to
 \begin{displaymath}
 \Pi_{i=1}^{N-1}(1 - R_i) R_N,
 \end{displaymath}
