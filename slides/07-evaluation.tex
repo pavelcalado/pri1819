@@ -527,7 +527,7 @@ The data can be obtained by observing how frequently the users click on a given 
 
 %%This is particularly attractive because 
 \begin{block}{Attractive, because...}
-The data can be collected at a low cost without overhead for the use
+The data can be collected at a low cost without overhead for the users
 \end{block}
 \end{frame}
 
@@ -798,7 +798,7 @@ where the values $R_i$ (i.e., document satisfies the user with probability $R_i$
     \begin{block}{}
         \begin{multline*}
             I(\Omega,\mathcal{C}) = \sum_k\sum_jP(w_k \cap c_j)\log\frac{P(w_k \cap c_j)}{P(w_k)P(c_j)} \\
-            = \sum_k\sum_j \frac{|w_k \cap c_j|}{N} \log\frac{N||w_k \cap c_j|}{|w_k||c_j|}
+            = \sum_k\sum_j \frac{|w_k \cap c_j|}{N} \log\frac{N \times |w_k \cap c_j|}{|w_k| \times |c_j|}
         \end{multline*}
     \end{block}
     is the mutual information between clusters and classes and
