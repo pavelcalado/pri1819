@@ -482,16 +482,16 @@ Many features are included in a web similarity formula
 \end{itemize}
       \begin{block}{}
       \begin{displaymath}
-        p_{i+1}[v] = \frac{d}{N} + (1-d)\sum_{(u,v) \in E}\frac{p_i[u] \times w(u,v)}{ \sum_{(u,v') w(u,v') }
+        p_{i+1}[v] = \frac{d}{N} + (1-d)\sum_{(u,v) \in E}\frac{ p_i[u] \times w(u,v) }{\sum_{(u,v') \in E} w(u,v')}
       \end{displaymath}
       \end{block}
 \end{itemize}
 \begin{itemize}
 \item Personalized PageRank:
 \end{itemize}
-%      \begin{displaymath}
-%        p_{i+1}[v] = \frac{d \times w(v)}{\sum_v' w(v)} + (1-d)\sum_{(u,v) \in E}\frac{p_i[u]}{N_u}
-%      \end{displaymath}
+      \begin{displaymath}
+        p_{i+1}[v] = \frac{d \times w(v)}{\sum_v' w(v)} + (1-d)\sum_{(u,v) \in E}\frac{p_i[u]}{N_u}
+      \end{displaymath}
 \begin{itemize}
 \item Topic-sensitive PageRank, etc.
 \end{itemize}
