@@ -12,7 +12,7 @@ R = {d1,d3,d5,d7,d9,d11,d13,d15,d17,d19}
 
 a) Precision@5 (precision at the 5th retrieved document) = 3/5
 
-b) R-Precision (precision at the Rth document, where R is the number of relevant documents) = 10-Precision = Precision@19 = 10/19 = 0.53
+b) R-Precision (precision at the Rth document, where R is the number of relevant documents) = Precision@10 = 5/10 = 0.5
 
 c)
 
