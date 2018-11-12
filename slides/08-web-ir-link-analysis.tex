@@ -424,11 +424,11 @@ Many features are included in a web similarity formula
       \begin{itemize}
       \item There can be many periodic nodes in the Web graph
       \end{itemize}
-  % \item Rank-sinks
-  %   \begin{itemize}
-  %   \item Pages without out-links
-  %   \item Directed cyclic paths
-  %   \end{itemize}
+  \item Rank-sinks
+    \begin{itemize}
+    \item Pages without out-links
+    \item Directed cyclic paths
+    \end{itemize}
   \end{itemize}
 
 \end{frame}
@@ -442,7 +442,7 @@ Many features are included in a web similarity formula
   \item Two way choice at each node:
     \begin{itemize}
     \item With a certain probability $d$ ($0.1 < d < 0.2)$, the surfer jumps to
-      a random page on the Web
+     a random page on the Web
     \item With probability $1-d$ the surfer decides to choose, uniformly at
       random, an out-neighbor
     \end{itemize}
@@ -454,6 +454,27 @@ Many features are included in a web similarity formula
   \end{itemize}
 
 \end{frame}
+
+\begin{frame}
+    \frametitle{Dangling Links}
+    \begin{itemize}
+    \item \emph{Dangling Links} are links to pages with no outgoing links
+    \item These pages receive PageRank but do not share it with other pages
+        \begin{itemize}
+        \item In a sense, they are \textit{wasting} their PageRank
+        \end{itemize}
+    \item Ways to deal with it:
+        \begin{itemize}
+        \item Remove the links from the computation and add them in final
+            iteration (original proposal)
+        \item Consider a virtual link from the linked page to all other pages
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+% original: http://ilpubs.stanford.edu:8090/422/1/1999-66.pdf
+% also: https://pr.efactory.de/e-outbound-links.shtml
+% https://pdfs.semanticscholar.org/6ad1/ca4a8cf78f7a689cf20ff615304ee4c58fdf.pdf
 
 % ------------------------------------------------------------
 
@@ -645,12 +666,12 @@ Attempt to affect the content-based ranking features
 \begin{block}{Techniques}
 \begin{itemize}
 \item repeat some important terms
- \begin{quote}the picture \emph{mining} quality of the camera
-   \emph{mining} is amazing\end{quote}
+ \begin{quote}the picture \emph{quality} of the camera
+   is of amazing \emph{quality}\end{quote}
 
 \item dumping of many unrelated terms 
-\begin{quote}Tom Cruise\end{quote} 
-
+\begin{quote}\end{quote} 
+Ed Sheeran Dua Lipa Sam Smith Eminem Pink Camila Cabello Paloma Faith
 \end{itemize}
 \end{block}
 
