@@ -27,19 +27,34 @@ The goal of this exercise is to create a method for scoring the documents that c
 
 \section{}
 
-Using the Whoosh search engine with the document collection used in previous labs (files \texttt{pri\_cfc.txt} and \texttt{}), implement a script that performs
-searches and returns the results ordered by a \emph{linear combination} of the three textual similarities presented above.
+Using the Whoosh search engine with the document collection used in previous labs (files \texttt{pri\_cfc.txt} and \texttt{pri\_queries.txt}), implement a script that performs searches and returns the results ordered by a \emph{linear combination} of the three textual similarities presented above.
 
 The rank combination formula should be:
 \begin{displaymath}
-    \operatorname{score}(d,q) = \alpha_1\operatorname{bm25}(d,q) + \alpha_2\operatorname{cos}(d,q) + \alpha_3\operatorname{freq}(d,q)
+    \operatorname{score}(q,d) = \alpha_1\operatorname{bm25}(q,d) + \alpha_2\operatorname{cos}(q,d) + \alpha_3\operatorname{freq}(q,d)
 \end{displaymath}
 where $d$ is the document, $q$ is the query, $\operatorname{bm25}$ is the score obtained using the BM25 ranking function, $\operatorname{cos}$ is the score obtained using the TF\_IDF ranking function, and $\operatorname{free}$ is the score obtained using the Frequency ranking function.
 
-Adjust the weights $\alpha_1$, $\alpha_2$, and $\alpha_3$ by hand and try to find an improvement in $F_1$ over the results achieved with each individual ranking
-function used in isolation.
+Adjust the weights $\alpha_1$, $\alpha_2$, and $\alpha_3$ by hand and try to find an improvement in average $F_1$ over the results achieved with each individual ranking function used in isolation.
+
 
 \section{}
+
+The goal now is to try a more sophisticated approach for combining the ranking functions used in the previous exercise. To this effect we will use a \emph{Learning to Rank} (L2R) approach.
+
+Our approach consists in training a Logistic Regression classifier on the set of queries avalailable in \texttt{pri\_queries.txt}. More specifically, you should:
+\begin{enumerate}
+\item Create a dataset for training and testing your L2R approach.
+    \begin{itemize}
+    \item This dataset should contain, for each \textit{(query $q$, document $d$)} pair, a set of classification instances with the format:
+        \begin{displaymath}
+            \operatorname{bm25}(q,d), \operatorname{cos}(q,d), \operatorname{freq}(q,d), r
+        \end{displaymath}
+        where $r = 1$ if document $d$ is relevant for query $q$ and $r=0$ otherwise.
+    \end{itemize}
+
+\end{enumerate}
+
 
 
 \section{Pen and Paper Exercise}
