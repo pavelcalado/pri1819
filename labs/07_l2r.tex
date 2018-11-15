@@ -8,24 +8,39 @@
 
 \maketitle{Lab 07: Learning to Rank}
 
-\section{}
-
-The Whoosh search engine provides three different ranking functions: \emph{BM25}, \emph{TF_IDF} (i.e. cosine similarity) and \emph{Frequency}\footnote{\url{https://whoosh.readthedocs.io/en/latest/api/scoring.html}}. 
+The Whoosh search engine provides three different ranking functions: \emph{BM25}, \emph{TF\_IDF} (i.e. cosine similarity) and \emph{Frequency}\footnote{\url{https://whoosh.readthedocs.io/en/latest/api/scoring.html}}. 
 
 The following example code shows how to perform a query using Whoosh with the
-TF_IDF scoring function and obtain the textual similarity score:
+TF\_IDF scoring function and obtain the textual similarity score:
 \begin{verbatim}
 from whoosh.index import open_dir
 from whoosh.qparser import *
 ix = open_dir("indexdir")
 with ix.searcher(weighting=scoring.TF_IDF()) as searcher:
-    query = QueryParser("content", ix.schema, group=OrGroup).parse(u"first document")
+    query = QueryParser("content", ix.schema, group=OrGroup).parse(u"a query")
     results = searcher.search(query, limit=100)
     for i,r in enumerate(results):
         print r, results.score(i)
 \end{verbatim}
 
 The goal of this exercise is to create a method for scoring the documents that combines the results from these three functions.
+
+\section{}
+
+Using the Whoosh search engine with the document collection used in previous labs (files \texttt{pri\_cfc.txt} and \texttt{}), implement a script that performs
+searches and returns the results ordered by a \emph{linear combination} of the three textual similarities presented above.
+
+The rank combination formula should be:
+\begin{displaymath}
+    \operatorname{score}(d,q) = \alpha_1\operatorname{bm25}(d,q) + \alpha_2\operatorname{cos}(d,q) + \alpha_3\operatorname{freq}(d,q)
+\end{displaymath}
+where $d$ is the document, $q$ is the query, $\operatorname{bm25}$ is the score obtained using the BM25 ranking function, $\operatorname{cos}$ is the score obtained using the TF\_IDF ranking function, and $\operatorname{free}$ is the score obtained using the Frequency ranking function.
+
+Adjust the weights $\alpha_1$, $\alpha_2$, and $\alpha_3$ by hand and try to find an improvement in $F_1$ over the results achieved with each individual ranking
+function used in isolation.
+
+\section{}
+
 
 \section{Pen and Paper Exercise}
 
