@@ -1,0 +1,40 @@
+\documentclass[12pt]{article}
+
+\usepackage{prilab}
+\usepackage{url}
+
+
+\begin{document}
+
+\maketitle{Lab 07: Learning to Rank}
+
+\section{}
+
+The Whoosh search engine provides three different ranking functions: \emph{BM25}, \emph{TF_IDF} (i.e. cosine similarity) and \emph{Frequency}\footnote{\url{https://whoosh.readthedocs.io/en/latest/api/scoring.html}}. 
+
+The following example code shows how to perform a query using Whoosh with the
+TF_IDF scoring function and obtain the textual similarity score:
+\begin{verbatim}
+from whoosh.index import open_dir
+from whoosh.qparser import *
+ix = open_dir("indexdir")
+with ix.searcher(weighting=scoring.TF_IDF()) as searcher:
+    query = QueryParser("content", ix.schema, group=OrGroup).parse(u"first document")
+    results = searcher.search(query, limit=100)
+    for i,r in enumerate(results):
+        print r, results.score(i)
+\end{verbatim}
+
+The goal of this exercise is to create a method for scoring the documents that combines the results from these three functions.
+
+\section{Pen and Paper Exercise}
+
+TBD
+
+\end{document}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: t
+%%% End: 
+
