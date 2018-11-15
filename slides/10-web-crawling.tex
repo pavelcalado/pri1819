@@ -201,7 +201,7 @@ while length(frontier) > 0 & total_collected < max
 
 \item Don't want to fetch same page twice!
 \begin{itemize}
-\item Keep lookup table (hash) of visited pages
+\item Keep lookup table (hash or Bloomfilter) of visited pages
 \item What if not visited but in frontier already?
 \end{itemize}
 
