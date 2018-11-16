@@ -633,11 +633,6 @@
 
 \begin{frame}
     \frametitle{The Ranking Perceptron Algorithm}
-    \begin{minipage}{1.0\linewidth}
-        \footnotesize Koby Crammer and Yoram Singer, ``Pranking with ranking,''
-        In Proceedings of the 14th International Conference on Neural
-        Information Processing Systems (NIPS'01), 2001.
-    \end{minipage}\\[\baselineskip]
     Adaptation of the \textit{Perceptron algorithm}:
     \vfill
     \centering
@@ -688,6 +683,38 @@
 \end{frame}
 
 % http://jmlr.csail.mit.edu/papers/volume4/freund03a/freund03a.pdf
+
+\begin{frame}
+    \frametitle{The RankBoost Algorithm}
+
+    \begin{itemize}
+    \item \emph{Initial distribution}: $D_1 = 1/\#pairs$
+    \item \emph{Weak learners}:
+        $
+            f_t(x) =
+            \begin{cases}
+                1 & \text{if $h_i > \theta$} \\
+                0 & \text{if $h_i \leq \theta$}
+            \end{cases}
+$
+        \begin{itemize}
+        \item $h_i$ is the value of a single feature
+        \item $\theta$ if found by maximizing\\
+            $r = \sum_{h_(x)>\theta}f_t(x)\pi(x) + \sum_{h_(x)\leq\theta}f_t(x)\pi(x)$\\ % the algorithm (fig3) is in the paper
+            where $\pi(x) = \sum_{x'}(D(x',x)-D(x,x'))$
+        \end{itemize}
+    \item \emph{Updating $D_t$} for a pair $(x_u,x_v)$ (where $y_{v,u}=1$):
+        \begin{itemize}
+        \item if $f_t$ yields the correct ranking, $D_t(x_u,x_v)$ is decreased,
+            otherwise it is increased
+        \end{itemize}
+    \item \emph{Finding $\alpha_t$}: minimize $Z_t$ as a function of $\alpha_t$
+        \begin{itemize}
+        \item Can be done by binary search
+        \item Other methods can be applied (see paper)
+        \end{itemize}
+    \end{itemize}
+\end{frame}
 
 \begin{frame}
     \frametitle{Improvement of Pairwise Approach}
@@ -769,6 +796,25 @@
     \begin{center}
         \includegraphics[scale=.3]{gprank}
     \end{center}
+\end{frame}
+
+% https://people.cs.nctu.edu.tw/~jenyuan/publist/2007YLKY.LR4IR.Slides.pdf
+
+\begin{frame}
+    \frametitle{RankGP Algorithm}
+    A standard Genetic Programming approach
+    \begin{itemize}
+    \item \emph{Individual}: ranking function
+    \item \emph{Evolution mechanism}:
+        \begin{itemize}
+        \item Crossover, Mutation, Reproduction
+        \item Tournament selection
+        \end{itemize}
+    \item \emph{Fitness}:
+        \begin{itemize}
+        \item Mean Average Precision
+        \end{itemize}
+    \end{itemize}
 \end{frame}
 
 % \begin{frame}
