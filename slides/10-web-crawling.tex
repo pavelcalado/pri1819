@@ -429,7 +429,7 @@ Must map URL to ${filename, page\_id}$
 
 Any RDBMS -- large overhead
 
-Light-weight, embedded key-value stores, such as Berkeley DB
+Light-weight, embedded key-value stores, such as \href{https://redis.io/}{Redis}
 
 \end{block}
 
@@ -456,8 +456,8 @@ Overlap the above delays by fetching many pages concurrently
 
 \begin{frame} \frametitle{Architecture of a Concurrent Crawler}
 
-
-      \includegraphics[width=6cm]{concurrent-crawler-arch}
+    \centering
+    \includegraphics[width=6cm]{concurrent-crawler-arch}
 
 \end{frame}
 
@@ -531,7 +531,8 @@ Polling socket to monitor completion of network transfers
 
 \begin{frame} \frametitle{High-level Architecture of a \\ Scalable Universal Crawler}
 
-      \includegraphics[width=6cm]{scalable-crawler-arch}
+    \centering
+    \includegraphics[width=6cm]{scalable-crawler-arch}
 
 \end{frame}
 
@@ -698,7 +699,7 @@ Best-first search based on $similarity(topic, parent)$
 \begin{block}{Adaptative crawlers}
 \begin{itemize}
   \item Reinforcement learning
-  \item Evolutionary algorithms/artificial life
+  \item Evolutionary algorithms
 \end{itemize}
 \end{block}
 
@@ -714,9 +715,9 @@ Best-first search based on $similarity(topic, parent)$
 \item [Best-N-First: ] Priority queue sorted by preference, explore top N at a time %\\
 %Variants: DOM context, hub scores
 \item [PageRank:] Priority queue sorted by PageRank
-\item [SharkSearch:] Priority queue sorted by combination of
+\item [\href{http://www.cs.cmu.edu/~dpelleg/bin/360.html}{SharkSearch}:] Priority queue sorted by combination of
   similarity, anchor text, similarity of parent, etc. %% (powerful cousin of FishSearch)
-\item[InfoSpiders:] Adaptive distributed algorithm using an evolving population of learning agents
+\item[\href{http://carl.cs.indiana.edu/fil/CAS/PPT/Menczer/}{InfoSpiders}:] Adaptive distributed algorithm using an evolving population of learning agents
 \end{description}
 \end{frame}
 
@@ -768,29 +769,17 @@ Recall \approx  \frac{| p: crawled(p) \wedge I(p) > threshold |}{ | p: I(p) > th
 \begin{frame} \frametitle{Focused Crawlers: Basic Idea}
 
 
-\begin{columns}
-\begin{column}{0.7\textwidth}
-
-Train Na\"ive-Bayes classifier based on example pages in desired set of
+Train Na\"ive Bayes classifier based on example pages in desired set of
 topics, $c*$. For each class $c \in c*$ we compute a Score
 for $p$ 
-\begin{equation*}
-Pr(c*|p) = \sum_{c \in c*} Pr(c|p)
-\end{equation*}
-
+\begin{displaymath}
+    P(c*|p) = \sum_{c \in c*} P(c|p)
+\end{displaymath}
 Decision is based on defined threshold.
-\end{column}
-\begin{column}{0.3\textwidth}
 
 \begin{center}
-     \includegraphics[width=\textwidth]{ODP}
-
-The ODP topic hierarchy
+    \includegraphics[width=.4\textwidth]{ODP}
 \end{center}
-
-\end{column}
-
-\end{columns}
 
 \end{frame}
 
@@ -865,7 +854,7 @@ The ODP topic hierarchy
 
 % \item Can accelerate with the use of a critic (Chakrabarti et al. 2002)
 
-\item Can use alternative classifier algorithms to naïve-Bayes.
+\item Can use alternative classifier algorithms to Naïve Bayes.
 \begin{itemize} 
   \item SVM and neural nets have reportedly performed better (Pant \&
     Srinivasan 2005)
@@ -1498,7 +1487,7 @@ server per unit time, say less than 1/second
 \begin{block}{Honor the Robot Exclusion Protocol}
 \begin{itemize}
 
-\item A server can specify which parts of its document tree any crawler is or is not allowed to crawl by a file named \url{robots.txt} placed in the HTTP root directory, e.g. \url{http://www.ist.utl.pt/robots.txt}, \url{http://www.google.com/robots.txt}
+\item A server can specify which parts of its document tree any crawler is or is not allowed to crawl by a file named \url{robots.txt} placed in the HTTP root directory, e.g. \url{https://tecnico.ulisboa.pt/robots.txt}, \url{http://www.google.com/robots.txt}
 
 \item Crawler should always check, parse, and obey this file before sending any requests to a server
 
@@ -1528,40 +1517,40 @@ server per unit time, say less than 1/second
 \end{itemize}
 \end{frame}
 
-\begin{frame}[fragile] \frametitle{Apple.com}
+% \begin{frame}[fragile] \frametitle{Apple.com}
 
-\begin{block}{\url{http://www.apple.com/robots.txt}}
-\end{block}
+% \begin{block}{\url{http://www.apple.com/robots.txt}}
+% \end{block}
 
-\begin{verbatim}
-# robots.txt for http://www.apple.com/
-User-agent: *
-Disallow: 
-\end{verbatim}
+% \begin{verbatim}
+% # robots.txt for http://www.apple.com/
+% User-agent: *
+% Disallow: 
+% \end{verbatim}
 
-everyone welcome to crawl anything they want!
+% everyone welcome to crawl anything they want!
 
-\end{frame}
+% \end{frame}
 
-\begin{frame}[fragile] \frametitle{IST.UTL.PT}
+% \begin{frame}[fragile] \frametitle{IST.UTL.PT}
 
-\begin{block}{\url{http://www.ist.utl.pt/robots.txt}}
-\end{block}
+% \begin{block}{\url{http://www.ist.utl.pt/robots.txt}}
+% \end{block}
 
-\begin{verbatim}
+% \begin{verbatim}
 
-User-agent: *
-Disallow: /img/
-Disallow: /css/
-Disallow: /inc/
-Disallow: /lib/
-Disallow: /newscache/
-Disallow: /researchersCache/
-\end{verbatim}
+% User-agent: *
+% Disallow: /img/
+% Disallow: /css/
+% Disallow: /inc/
+% Disallow: /lib/
+% Disallow: /newscache/
+% Disallow: /researchersCache/
+% \end{verbatim}
 
-everyone welcome to crawl anything except specified directories.
+% everyone welcome to crawl anything except specified directories.
 
-\end{frame}
+% \end{frame}
 
 
 % \begin{frame}[fragile] \frametitle{ACM.org}
@@ -1648,7 +1637,7 @@ Search engines do not look kindly on this type of ``spamdexing'' and remove from
 
 \vfill
 
-Case of bmw.de made the news: \url{http://en.wikipedia.org/wiki/Spamdexing}
+Case of bmw.de made the news: \url{https://www.nytimes.com/2011/02/13/business/13search.html}
 \end{frame}
 
 \begin{frame} \frametitle{Gray Areas for Crawler Ethics }
@@ -1685,7 +1674,7 @@ If you write a browser extension that performs some useful service, should you c
 \begin{frame} \frametitle{Need Crawling Code?}
 
 \begin{itemize}
-\item Just google ``python crawler''
+\item Just search ``python crawler''
 \item Large-scale open source crawlers:
 \begin{description}
 \item [Nutch:] \url{http://nutch.apache.org/}
