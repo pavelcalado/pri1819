@@ -36,8 +36,7 @@ The rank combination formula should be:
 \end{displaymath}
 where $d$ is the document, $q$ is the query, $\operatorname{bm25}$ is the score obtained using the BM25 ranking function, $\operatorname{cos}$ is the score obtained using the TF\_IDF ranking function, and $\operatorname{freq}$ is the score obtained using the Frequency ranking function.
 
-Experiment with different values for weights $\alpha_1$, $\alpha_2$, and $\alpha_3$ and try to find an improvement in average $F_1$ over the results achieved with each individual ranking function used in isolation.
-
+Experiment with different values for weights $\alpha_1$, $\alpha_2$, and $\alpha_3$ and try to find an improvement in Mean Average Precision (MAP) over the results achieved with each individual ranking function used in isolation.
 
 \section{}
 
@@ -59,7 +58,7 @@ Our approach consists in training a Logistic Regression classifier\footnote{\url
     \begin{itemize}
     \item The three ranking scores will be your classification features and $r$ will be the target class.
     \end{itemize}
-\item Execute the queries on the testing set, using the Logistic Regression classifier as your ranking function, and measure Precision, Recall, and $F_1$:
+\item Execute the queries on the testing set, using the Logistic Regression classifier as your ranking function. Measure Precision, Recall, and $F_1$ scores for the classifier, and measure the Mean Average Precision (MAP) for the produced ranking.
     \begin{itemize}
     \item To do this, first perform regular searches, using a each ranking function in isolation;
     \item The score of each ranking function will be the classification features and the classifier will return 1 if the document is relevant or 0 if otherwise;
@@ -69,16 +68,16 @@ Our approach consists in training a Logistic Regression classifier\footnote{\url
 
 \section{Pen and Paper Exercise}
 
-Consider the problem of ranking search results with a learning-based method, leveraging the perceptron ranking algorithm. Consider also a training dataset in which there are two user queries, each with three candidate documents that should be presented to the user. Each document-query pair is represented as a feature vector $x$, together with a relevance judgement $y$ in a 3-point scale (i.e., $y \in {0,1,2,3}$):
+Consider the problem of ranking search results with a learning-based method, leveraging the perceptron ranking algorithm introduced in the classes. Consider also a training dataset in which there are two user queries, each with three candidate documents that should be presented to the user. Each document-query pair is represented as a feature vector $x$, together with a relevance judgement $y$ in a 3-point scale (i.e., $y \in {0,1,2,3}$):
 
 \begin{itemize}
-\item Query 1 and document 1 : x=<0.50,0.00,0.25,0.75> , y=1
-\item Query 1 and document 2 : x=<0.25,0.00,0.00,0.25> , y=0
-\item Query 1 and document 4 : x=<0.75,0.25,0.25,1.00> , y=3
+\item Query 1 and document 1 : $x=$<$0.50, 0.00, 0.25, 0.75$>$ , y=1$
+\item Query 1 and document 2 : $x=$<$0.25, 0.00, 0.00, 0.25$>$ , y=0$
+\item Query 1 and document 4 : $x=$<$0.75, 0.25, 0.25, 1.00$>$ , y=3$
 
-\item Query 2 and document 1 : x=<0.50,0.00,0.25,1.00> , y=2
-\item Query 2 and document 3 : x=<0.25,0.00,0.00,0.50> , y=0
-\item Query 2 and document 4 : x=<0.25,0.00,0.25,0.50> , y=1
+\item Query 2 and document 1 : $x=$<$0.50, 0.00, 0.25, 1.00$>$ , y=2$
+\item Query 2 and document 3 : $x=$<$0.25, 0.00, 0.00, 0.50$>$ , y=0$
+\item Query 2 and document 4 : $x=$<$0.25, 0.00, 0.25, 0.50$>$ , y=1$
 \end{itemize}
 
 \begin{enumerate}
@@ -87,8 +86,8 @@ Consider the problem of ranking search results with a learning-based method, lev
 \item Consider a new user query, for which there are two candidate documents. Each of the document-query pairs is represented by a feature vector $x$ as follows:
 
 \begin{itemize}
-\item Query 3 and document 1 : x=<0.50,0.00,0.50,0.75>
-\item Query 3 and document 1 : x=<0.50,0.25,0.50,0.75>
+\item Query 3 and document 1 : $x=$<$0.50, 0.00, 0.25, 0.25$>
+\item Query 3 and document 2 : $x=$<$0.50, 0.25, 0.50, 0.75$>
 \end{itemize}
 
 Using the trained perceptron from the previous exercise, estimate which of the documents should be ranked higher.
