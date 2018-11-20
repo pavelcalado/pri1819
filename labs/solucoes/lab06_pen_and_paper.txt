@@ -1,0 +1,53 @@
+4 Pen and Paper Exercise
+
+a) Adicionar 1 link a partir de D (que não tem outlinks) para todos os nós, incluindo para ele próprio. Desta forma, teríamos:
+
+N=4, d=0.1
+
+E[A,B] = 1, E[B,A] = 0, E[C,A] = 0,  E[D,A] = 0, E[D,D] = 1
+E[A,C] = 0, E[B,C] = 1, E[C,B] = 0,  E[D,B] = 0
+E[A,D] = 1, E[B,D] = 1, E[C,D] = 1,  E[D,C] = 0
+
+N_A = 2, N_B = 2, N_C = 1, N_D = 4
+p_0_A = 0.25, p_0_B = 0.25, p_0_C = 0.25, p_0_D = 0.25
+
+Pr(A) = 0.1/4 + 0.9(0.25/4) = 0.08125
+Pr(B) = 0.1/4 + 0.9(0.25/2 + 0.25/4) = 0.19375
+Pr(C) = 0.1/4 + 0.9(0.25/2 + 0.25/4) = 0.19375
+Pr(D) = 0.1/4 + 0.9(0.25/2 + 0.25/2 + 0.25/1 + 0.25/4) = 0.53125
+
+
+b) 
+
+-> Authority update: sum of the hub scores of each node that points to it.
+-> Hub update: sum of the authority scores of each note that it points to.
+
+Algorithm:
+
+1. Start with wach node having a hub score and authority score = 1.
+2. Run the authority update rule.
+   Run the hub update rule.
+3. Normalize the values by dividing each score by the square root of the sum of the squares.
+
+A_0[A] = 1, A_0[B] = 1, A_0[C] = 1, A_0[D] = 1
+H_0[A] = 1, H_0[B] = 1, H_0[C] = 1, H_0[D] = 1
+
+1st iteraction:
+
+Authority update: A_1[A] = 0, A_1[B] = 1, A_1[C] = 1, A_1[D] = 3
+Hub update: H_1[A] = 2, H_1[B] = 2, H_1[C] = 1, H_1[D] = 0
+
+Normalizing (Euclidean norm):
+
+A_1[A] = 0, A_1[B] = 1/3.316 = 0.301, A_1[C] = 1/3.316 = 0.301, A_1[D] = 3/3.316 = 0.904
+H_1[A] = 2/3 = 0.667, H_1[B] = 2/3 = 0.667, H_1[C] = 1/3 = 0.333, H_1[D] = 0
+
+2nd iteraction:
+
+Authority update: A_2[A] = 0, A_2[B] = 0.667, A_2[C] = 0.667, A_2[D] = 0.667+0.667+0.333 = 1.667
+Hub update: H_2[A] = 0.301+0.904 = 1.205, H_2[B] = 0.301+0.904 = 1.205, H_2[C] = 0.904, H_2[D] = 0.870
+
+Normalizing (Euclidean norm):
+
+A_2[A] = 0, A_2[B] = 0.667/1.915 = 0.348, A_2[C] = 0.667/1.915 = 0.348, A_2[D] = 1.667/1.915 = 0.870
+Hub update: H_2[A] = 1.205/1.923 = 0.625, H_2[B] = 1.205/1.923 = 0.625, H_2[C] = 0.904/1.923 = 0.469, H_2[D] = 0
