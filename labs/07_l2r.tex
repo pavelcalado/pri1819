@@ -71,13 +71,13 @@ Our approach consists in training a Logistic Regression classifier\footnote{\url
 Consider the problem of ranking search results with a learning-based method, leveraging the perceptron ranking algorithm introduced in the classes. Consider also a training dataset in which there are two user queries, each with three candidate documents that should be presented to the user. Each document-query pair is represented as a feature vector $x$, together with a relevance judgement $y$ in a 3-point scale (i.e., $y \in {0,1,2,3}$):
 
 \begin{itemize}
-\item Query 1 and document 1 : $x=$<$0.50, 0.00, 0.25, 0.75$>$ , y=1$
-\item Query 1 and document 2 : $x=$<$0.25, 0.00, 0.00, 0.25$>$ , y=0$
-\item Query 1 and document 4 : $x=$<$0.75, 0.25, 0.25, 1.00$>$ , y=3$
+\item Query 1 and document 1 : $x=<0.50, 0.00, 0.25, 0.75> , y=1$
+\item Query 1 and document 2 : $x=<0.25, 0.00, 0.00, 0.25> , y=0$
+\item Query 1 and document 4 : $x=<0.75, 0.25, 0.25, 1.00> , y=3$
 
-\item Query 2 and document 1 : $x=$<$0.50, 0.00, 0.25, 1.00$>$ , y=2$
-\item Query 2 and document 3 : $x=$<$0.25, 0.00, 0.00, 0.50$>$ , y=0$
-\item Query 2 and document 4 : $x=$<$0.25, 0.00, 0.25, 0.50$>$ , y=1$
+\item Query 2 and document 1 : $x=<0.50, 0.00, 0.25, 1.00> , y=2$
+\item Query 2 and document 3 : $x=<0.25, 0.00, 0.00, 0.50> , y=0$
+\item Query 2 and document 4 : $x=<0.25, 0.00, 0.25, 0.50> , y=1$
 \end{itemize}
 
 \begin{enumerate}
@@ -86,8 +86,8 @@ Consider the problem of ranking search results with a learning-based method, lev
 \item Consider a new user query, for which there are two candidate documents. Each of the document-query pairs is represented by a feature vector $x$ as follows:
 
 \begin{itemize}
-\item Query 3 and document 1 : $x=$<$0.50, 0.00, 0.25, 0.25$>
-\item Query 3 and document 2 : $x=$<$0.50, 0.25, 0.50, 0.75$>
+\item Query 3 and document 1 : $x=<0.50, 0.00, 0.25, 0.25>$
+\item Query 3 and document 2 : $x=<0.50, 0.25, 0.50, 0.75>$
 \end{itemize}
 
 Using the trained perceptron from the previous exercise, estimate which of the documents should be ranked higher.
