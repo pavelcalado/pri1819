@@ -68,20 +68,20 @@ Our approach consists in training a Logistic Regression classifier\footnote{\url
 
 \section{Pen and Paper Exercise}
 
-Consider the problem of ranking search results with a learning-based method, leveraging the perceptron ranking algorithm introduced in the classes. Consider also a training dataset in which there are two user queries, each with three candidate documents that should be presented to the user. Each document-query pair is represented as a feature vector $x$, together with a relevance judgement $y$ in a 3-point scale (i.e., $y \in {0,1,2,3}$):
+Consider the problem of ranking search results with a learning-based method, leveraging the perceptron ranking algorithm introduced in the classes. Consider also a training dataset in which there are two user queries, each with three candidate documents that should be presented to the user. Each document-query pair is represented as a feature vector $x$, together with a relevance judgement $y$ in a 3-point scale (i.e., $y \in {1,2,3,4}$):
 
 \begin{itemize}
-\item Query 1 and document 1 : $x=<0.50, 0.00, 0.25, 0.75> , y=1$
-\item Query 1 and document 2 : $x=<0.25, 0.00, 0.00, 0.25> , y=0$
-\item Query 1 and document 3 : $x=<0.75, 0.25, 0.25, 1.00> , y=3$
+\item Query 1 and document 1 : $x=<0.50, 0.00, 0.25, 0.75> , y=2$
+\item Query 1 and document 2 : $x=<0.25, 0.00, 0.00, 0.25> , y=1$
+\item Query 1 and document 3 : $x=<0.75, 0.25, 0.25, 1.00> , y=4$
 
-\item Query 2 and document 1 : $x=<0.50, 0.00, 0.25, 1.00> , y=2$
-\item Query 2 and document 2 : $x=<0.25, 0.00, 0.00, 0.50> , y=0$
-\item Query 2 and document 3 : $x=<0.25, 0.00, 0.25, 0.50> , y=1$
+\item Query 2 and document 1 : $x=<0.50, 0.00, 0.25, 1.00> , y=3$
+\item Query 2 and document 2 : $x=<0.25, 0.00, 0.00, 0.50> , y=1$
+\item Query 2 and document 3 : $x=<0.25, 0.00, 0.25, 0.50> , y=2$
 \end{itemize}
 
 \begin{enumerate}
-\item Simulate the execution of the training procedure for the perceptron ranking algorithm, considering one epoch over the training data. Consider an initial all-zeroes weight vector, and consider also an initial value of zero for each of the 3 thresholds associated to the possible values for the relevance estimates.
+\item Simulate the execution of the training procedure for the perceptron ranking algorithm, considering one epoch over the training data. Consider an initial all-zeroes weight vector, and consider also an initial value of one for each of the 3 thresholds associated to the possible values for the relevance estimates.
 
 \item Consider a new user query, for which there are two candidate documents. Each of the document-query pairs is represented by a feature vector $x$ as follows:
 
