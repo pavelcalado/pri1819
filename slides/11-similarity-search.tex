@@ -80,7 +80,7 @@ The Jaccard Distance between sets is 1 minus their Jaccard similarity:
 $d(C_1, C_2) = 1 - \frac{|C_1 \cap C_2|}{|C_1 \cup C_2|}$
 
 
-\includeimage{jaccard}
+\includegraphics[width=10cm]{jaccard}
 
 \end{frame}
 
@@ -123,7 +123,7 @@ Problems:
   
 \begin{frame} \frametitle{The Big Picture}
 
-\includeimage{overall}
+\includegraphics[width=10cm]{overall}
 
 \end{frame}
 
@@ -225,7 +225,7 @@ For N = 10 million, it takes more than a year...
   
 \begin{frame} \frametitle{The Big Picture}
 
-\includeimage{overall}
+\includegraphics[width=10cm]{overall}
 
 \end{frame}
 
@@ -258,7 +258,7 @@ Column similarity is the Jaccard similarity of the sets of their rows with 1
 
 Typical matrix is sparse
 
-\includefigure{matrix}
+\includegraphics[width=10cm]{matrix}
 
 \end{frame}
 
@@ -274,7 +274,7 @@ Each document is a column:
 We might not really represent the data by a boolean matrix
   Sparse matrices are usually better represented by the list of places where there is a non-zero value
   
-\includefigure{matrix}
+\includegraphics[width=10cm]{matrix}
 
 \end{frame}
 
@@ -343,7 +343,7 @@ Use several (e.g., 100) independent hash functions (i.e., permutations) to creat
   
 \begin{frame} \frametitle{Min-Hashing (3)}
 
-\includefigure{minhash}
+\includegraphics[width=10cm]{minhash}
 
 \end{frame}
 
@@ -378,7 +378,7 @@ Note: Because of the minhash property, the similarity of columns is the same as 
   
 \begin{frame} \frametitle{Example}
 
-\includefigure{minhash}
+\includegraphics[width=10cm]{minhash}
 
 \end{frame}
 
@@ -403,7 +403,7 @@ We achieved the goal of \emph{compressing} long bit vectors into short signature
   
 \begin{frame} \frametitle{The Big Picture}
 
-\includeimage{overall}
+\includegraphics[width=10cm]{overall}
 
 \end{frame}
 
@@ -458,7 +458,7 @@ Tune b and r to catch most similar pairs, but few non-similar pairs
   
 \begin{frame} \frametitle{Partition M into Bands (2)}
 
-\includefigure{bands}
+\includegraphics[width=10cm]{bands}
 
 \end{frame}
 
@@ -466,7 +466,7 @@ Tune b and r to catch most similar pairs, but few non-similar pairs
   
 \begin{frame} \frametitle{Hashing Bands}
 
-\includefigure{hashing-bands}
+\includegraphics[width=10cm]{hashing-bands}
 
 \end{frame}
 
@@ -535,7 +535,7 @@ Example: if we had only 15 bands of 5 rows, the number of false positives would 
   
 \begin{frame} \frametitle{Analysis of LSH - What We Want}
 
-\includefigure{what-we-want}
+\includegraphics[width=10cm]{what-we-want}
 
 \end{frame}
 
@@ -543,7 +543,7 @@ Example: if we had only 15 bands of 5 rows, the number of false positives would 
   
 \begin{frame} \frametitle{Analysis of LSH - What One Band With One Row Gives}
 
-\includefigure{what-1-band-gives}
+\includegraphics[width=10cm]{what-1-band-gives}
 
 \end{frame}
 
@@ -564,7 +564,7 @@ Pick any band (r rows)
   
 \begin{frame} \frametitle{Analysis of LSH - What b Bands With r Rows Gives}
 
-\includefigure{what-1-band-gives}
+\includegraphics[width=10cm]{what-1-band-gives}
 
 \end{frame}
 
@@ -572,7 +572,7 @@ Pick any band (r rows)
   
 \begin{frame} \frametitle{False Positives vs. False Negatives}
 
-\includefigure{tradeoff}
+\includegraphics[width=10cm]{tradeoff}
 
 \end{frame}
 
@@ -590,7 +590,7 @@ Optional: In another pass through data, check that the remaining candidate pairs
   
 \begin{frame} \frametitle{The Big Picture}
 
-\includeimage{overall}
+\includegraphics[width=10cm]{overall}
 
 \end{frame}
 
