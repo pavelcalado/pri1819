@@ -340,6 +340,8 @@ Many similarity problems can be formalized as finding subsets hat have significa
   
 \begin{frame} \frametitle{From Sets to Boolean Matrices}
 
+ \begin{columns}[T]
+    \begin{column}{0.7\textwidth}
 \begin{itemize}
 \item Rows = elements of the universal set
 \item Columns = sets
@@ -347,15 +349,19 @@ Many similarity problems can be formalized as finding subsets hat have significa
 \item Column similarity is the Jaccard similarity of the sets of their rows with 1
 \item Typical matrix is sparse
 \end{itemize}
-
-\includegraphics[width=5cm]{matrix}
-
+  \end{column}
+  \begin{column}{0.25\textwidth}
+   \includegraphics[width=5cm]{matrix}
+  \end{column}
+ \end{columns}
 \end{frame}
 
 %%%%%
   
 \begin{frame} \frametitle{Jaccard of Columns}
 
+ \begin{columns}[T]
+    \begin{column}{0.7\textwidth}
 \begin{itemize}
 \item Each document is a column:
 
@@ -373,8 +379,11 @@ Many similarity problems can be formalized as finding subsets hat have significa
   \item Sparse matrices are usually better represented by the list of places where there is a non-zero value
   \end{itemize}
 \end{itemize}
-
-\includegraphics[width=5cm]{matrix}
+  \end{column}
+  \begin{column}{0.25\textwidth}
+   \includegraphics[width=5cm]{matrix}
+  \end{column}
+ \end{columns}
 
 \end{frame}
 
