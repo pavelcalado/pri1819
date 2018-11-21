@@ -39,7 +39,7 @@
   \end{itemize}
 \item Online Advertising, Behavioral Analysis
   \begin{itemize}
-  \item Customer actions (e.g., websites visited, searches)
+  \item Customer actions (e.g., websites visited, searches, ...)
   \end{itemize}
 \end{itemize}
 \end{block}
@@ -141,9 +141,9 @@ Given a large number ($N$ in the millions or billions) of text documents, find p
 \begin{block}{Problems:}
   \scriptsize
   \begin{itemize}
-  \item Many small pieces of one doc can appear out of order in another
-  \item Too many docs to compare all pairs
-  \item Docs are so large or so many that they cannot fit in main memory
+  \item Many small pieces of one document can appear out of order in another
+  \item Too many documents to compare all pairs
+  \item Documents are so large or so many that they cannot fit in memory
   \end{itemize}
 \end{block}
 \end{frame}
@@ -238,7 +238,7 @@ Shingling: Convert documents, emails, etc., to sets
 
 \item Represent a doc by the set of hash values of its $k$-shingles
 
-\item \emph{Idea:} Two documents could (rarely) appear to have shingles in common, when in fact only the hash-values were shared
+\item \emph{Idea:} Two docs could (rarely) appear to have shingles in common, when in fact only the hash-values were shared
 \end{itemize}
 
 \begin{block}{Example: $k=2$; $D_1=abcab$}
@@ -292,11 +292,11 @@ $Sim(C_1, C_2) = \frac{|C_1 \cap C_2|}{|C_1 \cup C_2|}$
 \begin{frame} \frametitle{Motivation for Minhash/LSH}
 
 \begin{itemize}
-\item Suppose we need to find near-duplicate documents among $N=1$ million documents
+\item Suppose we need to find near-duplicate documents among a large collection with $N=1$ million documents
 
 ~\\
 
-\item Naively, we'd have to compute pairwaise Jaccard similarites for every pair of docs
+\item Naively, we'd have to compute pairwaise Jaccard similarites for every pair of documents
 \begin{itemize}
   \item i.e, $\frac{N \times (N-1)}{2} \approx 5 \times 10^{11}$ comparisons
 
@@ -404,6 +404,7 @@ Many similarity problems can be formalized as finding subsets hat have significa
 \begin{frame} \frametitle{Finding Similar Columns}
 \begin{block}{So far:}
 \begin{itemize}
+\scriptsize
 \item Documents represented as sets of shingles
 \item Represent sets as boolean vectors in a matrix
 \end{itemize}
@@ -436,7 +437,7 @@ Many similarity problems can be formalized as finding subsets hat have significa
 \begin{block}{Key idea:} 
 \emph{Hash} each column $C$ to a small signature $h(C)$, such that:
 \begin{enumerate}
-  \item $h(C)$ is small enough that the signature fits in RAM
+  \item $h(C)$ is small enough that the signature(s) fit(s) in RAM
   \item $sim(C_1, C_2)$ is the same as the similarity of signatures $h(C_1)$ and $h(C_2)$
 \end{enumerate}
 \end{block}
@@ -449,7 +450,7 @@ Find a hash function $h()$ such that:
 \end{itemize}
 \end{block}
 
-Hash docs into buckets, and expect that most pairs of near duplicate documents hash into the same bucket
+Hash documents into buckets, and expect that most pairs of near duplicate documents hash into the same bucket
 \end{frame}
 
 %%%%%
@@ -478,18 +479,16 @@ Clearly, the hash function depends on the similarity metric:
 
 \begin{itemize}
 \item Imagine the rows of the boolean matrix permuted under random permutation $\pi$
-
-~\\
-
-\item Define a hash function $h_\pi(C)$ = the number of the first (in the permuted order $\pi$) row in which column $C$ has value 1:
-  
+\item Define a hash function $h_\pi(C)$ = the number of the first (in the permuted order $\pi$) row in which column $C$ has value 1:  
   \begin{center}
   $h_\pi (C) = \min_\pi(C)$
   \end{center}
-
-~\\
-
 \item Use several (e.g., 100) independent hash functions (i.e., permutations) to create a signature of a column
+\item Implementation trick 
+ \begin{itemize}
+ \item Ordering under hash function gives a random row permutation
+ \item For each column $C$ and hash-function $\pi$ keep a {\it slot} for the min-hash value
+ \end{itemize}
 \end{itemize}
 \end{frame}
 
@@ -724,13 +723,12 @@ $M(i, x) = M(i, y)$ for at least fraction $s$ values of $i$
   
 \begin{frame} \frametitle{LSH Involves a Tradeoff}
 \begin{block}{}
-Pick:
+Pick parameters to balance false positives/negatives:
 \begin{itemize}
-  \item the number of minhashes (rows of $M$)
-  \item the number of bands $b$, and
-  \item the number of rows $r$ per band
+  \item number of minhashes (rows of $M$)
+  \item number of bands $b$, and
+  \item number of rows $r$ per band
 \end{itemize}
-to balance false positives/negatives
 \end{block}
 
 \emph{Example:} if we had only 15 bands of 5 rows, the number of false positives would go down, but the number of false negatives would go up
@@ -769,7 +767,7 @@ Pick any band ($r$ rows)
 %%%%%
   
 \begin{frame} \frametitle{Analysis of LSH - $b$ bands With $r$ rows/band (2)}
-\includegraphics[width=10cm]{what-1-band-gives}
+\includegraphics[width=10cm]{what-b-bands-gives}
 \end{frame}
 
 %%%%%
