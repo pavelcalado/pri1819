@@ -96,13 +96,13 @@ The Jaccard Similarity of two sets is the size of their intersection / the size 
 
 \begin{block}{}
 $Sim(C_1, C_2) = \frac{|C_1 \cap C_2|}{|C_1 \cup C_2|}$
-}
+\end{block} 
 
 The Jaccard Distance between sets is 1 minus their Jaccard similarity:
 
 \begin{block}{}
 $d(C_1, C_2) = 1 - \frac{|C_1 \cap C_2|}{|C_1 \cup C_2|}$
-}
+\end{block} 
 
 \includegraphics[width=10cm]{jaccard}
 \end{frame}
@@ -231,15 +231,13 @@ Careful: You must pick k large enough, or most documents will have most shingles
 %%%%%
   
 \begin{frame} \frametitle{Motivation for Minhash/LSH}
+Suppose we need to find near-duplicate documents among $N=1$ million documents
 
-Suppose we need to find near-duplicate documents among N=1 million documents
+Naively, we'd have to compute pairwaise Jaccard similarites for every pair of docs
+%  i.e, $N(N-1)/2 ≈ 5 \times 1011$ comparisons
+%  At 105 secs/day and 106 comparisons/sec, it would take 5 days
 
-Naïvely, we’d have to compute pairwaise Jaccard similarites for every pair of docs
-  i.e, N(N-1)/2 ≈ 5*1011 comparisons
-  At 105 secs/day and 106 comparisons/sec, it would take 5 days
-
-For N = 10 million, it takes more than a year...
-
+For $N = 10$ million, it takes more than a year...
 \end{frame}
 
 \section{Minhashing}
@@ -304,7 +302,6 @@ We might not really represent the data by a boolean matrix
 %%%%%
   
 \begin{frame} \frametitle{Finding Similar Columns}
-
 So far:
   Documents represented as sets of shingles
   Represent sets as boolean vectors in a matrix
@@ -312,29 +309,27 @@ So far:
 Next Goal: Find similar columns
  1) Signatures of columns: small summaries of columns
  2) Examine pairs of signatures to find similar columns 
-       Essential that similarities of signatures & columns are related
+       Essential that similarities of signatures and columns are related
  3) Optional: check that columns with similar signatures are really similar
 
 Warnings:
   Comparing all pairs may take too much time: job for LSH
   These methods can produce false negatives, and even false positives (if the optional check is not made)
-  
-\end{frame}
+  \end{frame}
 
 %%%%%
   
 \begin{frame} \frametitle{Signatures of Columns}
 
-Key idea: \emph{hash} each column C to a small signature h(C), such that:
-  (1) h(C) is small enough that the signature fits in RAM
-  (2) sim(C1, C2) is the same as the similarity of signatures h(C1) and h(C2)
+Key idea: \emph{hash} each column $C$ to a small signature $h(C)$, such that:
+  (1) $h(C)$ is small enough that the signature fits in RAM
+  (2) $sim(C_1, C_2)$ is the same as the similarity of signatures $h(C_1)$ and $h(C_2)$
 
 Goal: Find a hash function h() such that:
-  if sim(C1,C2) is high, then with high prob. $h(C1) \eq h(C2)$
-  if sim(C1,C2) is low, then with high prob. $h(C1) \neq h(C2)$
+  if $sim(C_1,C_2)$ is high, then with high prob. $h(C_1) = h(C_2)$
+  if $sim(C_1,C_2)$ is low, then with high prob. $h(C_1) \neq h(C_2)$
 
 Hash docs into buckets, and expect that most pairs of near duplicate docs hash into the same bucket
-
 \end{frame}
 
 %%%%%
@@ -342,7 +337,7 @@ Hash docs into buckets, and expect that most pairs of near duplicate docs hash i
 \begin{frame} \frametitle{Min-Hashing (1)}
 
 Goal: Find a hash function h() such that:
-  if sim(C1,C2) is high, then with high prob. $h(C1) \eq h(C2)$
+  if sim(C1,C2) is high, then with high prob. $h(C1) = h(C2)$
   if sim(C1,C2) is low, then with high prob. $h(C1) \neq h(C2)$
 
 Clearly, the hash function depends on the similarity metric:
@@ -374,23 +369,22 @@ Use several (e.g., 100) independent hash functions (i.e., permutations) to creat
   
 \begin{frame} \frametitle{Surprising Property}
 
-Under a random permutation $\pi$, $Pr[hπ(C1) = hπ(C2)] = sim(C1, C2)$
+Under a random permutation $\pi$, $Pr[h_\pi(C_1) = h_\pi(C_2)] = sim(C_1, C_2)$
 
-Let X be a set of shingles, X ⊆ [2^{64}], x∈X
-Then: Pr[π(y) = min(π(X))] = 1/|X|
-  It is equally likely that any y∈X is mapped to the min element
-Let x be s.t. π(x) = min(π(C1∪C2))
-Then either π(x) = min(π(C1)) if x ∈ C1 , or π(x) = min(π(C2)) if x ∈ C2
-So the probability that both are true is the probability x ∈ C1 ∩ C2
-Pr[min(π(C1))=min(π(C2))]=|C1∩C2|/|C1∪C2|= sim(C1, C2)
-
+%Let X be a set of shingles, X ⊆ [2^{64}], x∈X
+%Then: Pr[π(y) = min(π(X))] = 1/|X|
+%  It is equally likely that any y∈X is mapped to the min element
+%Let x be s.t. \pi(x) = min(\pi(C1∪C2))
+%Then either \pi(x) = min(\pi(C1)) if x \in C1 , or \pi(x) = \min(\pi(C2)) if x \in C2
+%So the probability that both are true is the probability x \in C1 \cap C2
+%Pr[min(\pi(C1))=min(\pi(C2))]=|C1 \cap C2|/|C1 \cup C2|= sim(C1, C2)
 \end{frame}
 
 %%%%%
   
 \begin{frame} \frametitle{Similarity for Signatures}
 
-We know Pr[hπ(C1) = hπ(C2)] = sim(C1, C2)
+We know $Pr[h_\pi(C_1) = h_\pi(C_2)] = sim(C_1, C_2)$
 Now generalize to multiple hash functions
 The similarity of two signatures is the fraction of the hash functions in which they agree
 Note: Because of the minhash property, the similarity of columns is the same as the expected similarity of their signatures
@@ -410,9 +404,9 @@ Note: Because of the minhash property, the similarity of columns is the same as 
 \begin{frame} \frametitle{Minhash Signatures}
 
 Pick 100 random permutations of the rows
-Think of sig(C) as a column vector
-Let sig(C)[i] = according to the i-th permutation, the index of the first row that has a 1 in column C
-   sig(C)[i] = min (πi(C))
+Think of $sig(C)$ as a column vector
+Let $sig(C)[i]$ = according to the $i$-th permutation, the index of the first row that has a 1 in column C
+   $sig(C)[i] = min (\pi_i(C))$
 Note: The sketch (signature) of document C is small -- \~100 bytes!
 We achieved the goal of \emph{compressing} long bit vectors into short signatures
 
@@ -469,11 +463,11 @@ Candidate pairs are those that hash to the same bucket
   
 \begin{frame} \frametitle{Partition M into Bands (1)}
 
-Divide matrix M into b bands of r rows
-For each band, hash its portion of each column to a hash table with k buckets
-Make k as large as possible
-Candidate column pairs are those that hash to the same bucket for ≥ 1 band
-Tune b and r to catch most similar pairs, but few non-similar pairs
+Divide matrix $M$ into b bands of $r$ rows
+For each band, hash its portion of each column to a hash table with $k$ buckets
+Make $k$ as large as possible
+Candidate column pairs are those that hash to the same bucket for 1 band or more
+Tune $b$ and $r$ to catch most similar pairs, but few non-similar pairs
 
 \end{frame}
 
@@ -574,13 +568,12 @@ Example: if we had only 15 bands of 5 rows, the number of false positives would 
   
 \begin{frame} \frametitle{Analysis of LSH - b bands with b rows/band}
 
-Columns C1 and C2 have similarity s
+Columns $C_1$ and $C_2$ have similarity $s$
 Pick any band (r rows)
   Prob. that all rows in band equal = $s^r$
   Prob. that some row in band unequal = $1 - s^r$
-  Prob. that no band identical = $(1 - s^r)^b
-  Prob. that at least 1 band identical = $1 - (1 - s^r)^b$
-  
+  Prob. that no band identical = $(1 - s^r)^b$
+  Prob. that at least 1 band identical = $1 - (1 - s^r)^b$  
 \end{frame}
 
 %%%%%
