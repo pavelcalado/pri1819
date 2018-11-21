@@ -126,6 +126,7 @@ Given a large number ($N$ in the millions or billions) of text documents, find p
 \end{block}
 
 \begin{block}{Applications:}
+  \small
   \begin{itemize}
   \item Mirror websites, or approximate mirrors
     \begin{itemize}
@@ -138,6 +139,7 @@ Given a large number ($N$ in the millions or billions) of text documents, find p
   \end{itemize}
 \end{block}
 \begin{block}{Problems:}
+  \small
   \begin{itemize}
   \item Many small pieces of one doc can appear out of order in another
   \item Too many docs to compare all pairs
@@ -153,10 +155,15 @@ Given a large number ($N$ in the millions or billions) of text documents, find p
 \begin{enumerate}
 \item \emph{Shingling:} Convert documents, emails, etc., to sets;
 
+~\\
+
 \item \emph{Minhashing:} Convert large sets to short signatures, while preserving similarity;
    \begin{itemize}
-   Depends on the distance metric;
+   \item Depends on the distance metric;
    \end{itemize}
+
+~\\
+
 \item \emph{Locality-sensitive hashing:} Focus on pairs of signatures likely to be from similar documents.
 \end{enumerate}
 
@@ -166,7 +173,7 @@ Given a large number ($N$ in the millions or billions) of text documents, find p
   
 \begin{frame} \frametitle{The Big Picture}
 
-\includegraphics[width=12cm]{overall}
+\includegraphics[width=10cm]{overall}
 
 \end{frame}
 
@@ -178,9 +185,11 @@ Given a large number ($N$ in the millions or billions) of text documents, find p
   
 \begin{frame} \frametitle{Documents as High Dimensional Data}
 
-\begin{itemize}
-\item \emph{Step 1:} Shingling: Convert documents, emails, etc., to sets
+\begin{block}{Step 1:}
+Shingling: Convert documents, emails, etc., to sets
+\end{block}
 
+\begin{itemize}
 \item Simple approaches...
    \begin{itemize}
    \item Document = set of words appearing in document
@@ -204,7 +213,7 @@ Given a large number ($N$ in the millions or billions) of text documents, find p
 \item A $k$-shingle (or $k$-gram) for a document is a sequence of $k$ tokens that appears in the document
   \begin{itemize}
   \item Tokens can be characters, words or something else, depending on application
-  \item Assume tokens = characters for examples
+  \item Assume tokens = characters for next examples
   \end{itemize}
 \end{itemize}
 
@@ -215,7 +224,7 @@ Given a large number ($N$ in the millions or billions) of text documents, find p
   Option: Shingles as a bag (i.e., multi-set), counting $ab$ twice
 \end{block}
 \begin{itemize}
-\item Represent a doc by the set of hash values of its k-shingles
+\item Represent a doc by the set of hash values of its $k$-shingles
 \end{itemize}
 
 \end{frame}
@@ -225,9 +234,9 @@ Given a large number ($N$ in the millions or billions) of text documents, find p
 \begin{frame} \frametitle{Compressing Shingles}
 
 \begin{itemize}
-\item To compress long shingles, we can hash them to (say) 4 bytes
+\item To compress long shingles, we can hash them (e.g. 4 bytes)
 
-\item Represent a doc by the set of hash values of its k-shingles
+\item Represent a doc by the set of hash values of its $k$-shingles
 
 \item \emph{Idea:} Two documents could (rarely) appear to have shingles in common, when in fact only the hash-values were shared
 \end{itemize}
@@ -236,25 +245,29 @@ Given a large number ($N$ in the millions or billions) of text documents, find p
   Set of 2-shingles: $S(D_1)=\{ab, bc, ca\}$
   
   ~\\
-  Hash the singles: $h(D_1)=\{1, 5, 7\}$
+  Hash the shingles: $h(D_1)=\{1, 5, 7\}$
 \end{block}
 \end{frame}
 
 %%%%%
-%%%%%
-%%%%%
   
 \begin{frame} \frametitle{Similarity Metric for Shingles}
 
+\begin{itemize}
+\item Document $D_1$ = set of $k$-shingles $C_1=S(D_1)$
+\item Equivalently, each document is a 0/1 vector in the space of $k$-shingles
+   \begin{itemize}
+   \item Each unique shingle is a dimension
+   \item Vectors are very sparse
+   \end{itemize}
+\item A natural similarity measure is the Jaccard similarity:
+\end{itemize}
 
-Document D1 = set of k-shingles C1=S(D1)
-Equivalently, each document is a 0/1 vector in the space of k-shingles
-   Each unique shingle is a dimension
-    Vectors are very sparse
-A natural similarity measure is the Jaccard similarity:
-
+\begin{block}{}
+\begin{center}
 $Sim(C_1, C_2) = \frac{|C_1 \cap C_2|}{|C_1 \cup C_2|}$
-
+\end{center}
+\end{block}
 \end{frame}
 
 %%%%%
@@ -287,7 +300,7 @@ For $N = 10$ million, it takes more than a year...
   
 \begin{frame} \frametitle{The Big Picture}
 
-\includegraphics[width=12cm]{overall}
+\includegraphics[width=10cm]{overall}
 
 \end{frame}
 
@@ -461,7 +474,7 @@ We achieved the goal of \emph{compressing} long bit vectors into short signature
   
 \begin{frame} \frametitle{The Big Picture}
 
-\includegraphics[width=12cm]{overall}
+\includegraphics[width=10cm]{overall}
 
 \end{frame}
 
@@ -647,7 +660,7 @@ Optional: In another pass through data, check that the remaining candidate pairs
   
 \begin{frame} \frametitle{The Big Picture}
 
-\includegraphics[width=12cm]{overall}
+\includegraphics[width=10cm]{overall}
 
 \end{frame}
 
