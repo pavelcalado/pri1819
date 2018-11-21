@@ -53,7 +53,7 @@
           & Non-dist. & One system & Various systems \\\hline\hline
           Internal & standard & parallel & parallel \\\hline
           Local area & & cluster-based & local federated \\\hline
-          Broadband & & distributed & fedarated \\\hline
+          Broadband & & distributed & federated \\\hline
         \end{tabular}
     \end{center}
 \end{frame}
@@ -138,13 +138,15 @@
     \item Uses the same inverted index as in the original algorithm
     \item Each dictionary entry includes P pointers into the corresponding
         inverted list
-    \item The j-th pointer indexes the block of documents the sub-collection of
+    \item The j-th pointer indexes the block of documents of the sub-collection of
         the j-th processor
     \end{itemize}
 
     \centering
     \includegraphics[width=.7\textwidth]{logicalpartitioning}
 \end{frame}
+
+% https://www.cs.helsinki.fi/u/hahonen/irm07/lectures/irm07_12.pdf
 
 \begin{frame}
     \frametitle{Physical Document Partitioning}
