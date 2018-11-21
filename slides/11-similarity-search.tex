@@ -382,8 +382,8 @@ Many similarity problems can be formalized as finding subsets hat have significa
   \scriptsize
   \item Size of intersection = 2; 
   \item size of union = 5, 
-  \item Jaccard similarity (not distance) = 2/5
-  \item $d(C_1,C_2) = 1 – ($Jaccard similarity) = 3/5
+  \item Jaccard similarity = 2/5
+  \item $d(C_1,C_2) = 1 - ($Jaccard similarity) = 3/5
   \end{itemize}
   \end{block}}  
 
@@ -422,6 +422,7 @@ Many similarity problems can be formalized as finding subsets hat have significa
 
 \begin{block}{Warnings:}
 \begin{itemize}
+  \scriptsize
   \item Comparing all pairs may take too much time: \emph{job for LSH}
   \item These methods can produce false negatives, and even false positives (if the optional check is not made)
 \end{itemize}
@@ -448,7 +449,7 @@ Find a hash function $h()$ such that:
 \end{itemize}
 \end{block}
 
-Hash docs into buckets, and expect that most pairs of near duplicate docs hash into the same bucket
+Hash docs into buckets, and expect that most pairs of near duplicate documents hash into the same bucket
 \end{frame}
 
 %%%%%
@@ -512,8 +513,10 @@ Under a random permutation $\pi$, $Pr[h_\pi(C_1) = h_\pi(C_2)] = sim(C_1, C_2)$
 \item It is equally likely that any $y \in X$ is mapped to the min element
 \end{itemize}
 \item Let $x$ be s.t. $\pi(x) = \min(\pi(C_1 \cup C_2))$
+\begin{itemize}
 \item Then either $\pi(x) = \min(\pi(C_1))$ if $x \in C_1$ , or $\pi(x) = \min(\pi(C_2))$ if $x \in C2$
-\item So the probability that both are true is the probability $x \in C1 \cap C2$
+\item So the probability that both are true is the probability $x \in C_1 \cap C_2$
+\end{itemize}
 \item $Pr[\min(\pi(C_1))=\min(\pi(C_2))]=\frac{|C1 \cap C2|}{|C1 \cup C2|}= sim(C_1,C_2)$
 \end{itemize}
 \end{block}{}
@@ -550,13 +553,19 @@ Under a random permutation $\pi$, $Pr[h_\pi(C_1) = h_\pi(C_2)] = sim(C_1, C_2)$
   
 \begin{frame} \frametitle{Minhash Signatures}
 
-Pick 100 random permutations of the rows
-Think of $sig(C)$ as a column vector
-Let $sig(C)[i]$ = according to the $i$-th permutation, the index of the first row that has a 1 in column C
-   $sig(C)[i] = min (\pi_i(C))$
-Note: The sketch (signature) of document C is small -- \~100 bytes!
-We achieved the goal of \emph{compressing} long bit vectors into short signatures
+\begin{itemize}
+\item Pick 100 random permutations of the rows
+\item Think of $sig(C)$ as a column vector
+\item Let $sig(C)[i]$ = according to the $i$-th permutation, the index of the first row that has a 1 in column C
 
+\begin{center}   
+$sig(C)[i] = \min (\pi_i(C))$
+\end{center}
+
+\item \emph{Note:} The sketch (signature) of document $C$ is small -- \~100 bytes!
+
+\item We achieved the goal of \emph{compressing} long bit vectors into short signatures
+\end{itemize}
 \end{frame}
 
 %%%%%
