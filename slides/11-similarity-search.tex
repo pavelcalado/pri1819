@@ -679,9 +679,9 @@ $M(i, x) = M(i, y)$ for at least fraction $s$ values of $i$
 \begin{block}{Assume the following case:}
 \begin{itemize}
 \item Suppose 100,000 columns of M (100k docs)
-\item  Signatures of 100 integers (rows)
-\item  Therefore, signatures take 40Mb
-\item  Choose 20 bands of 5 integers/band
+\item Signatures of 100 integers (rows)
+\item Therefore, signatures take 40Mb
+\item Choose 20 bands of 5 integers/band
 \end{itemize}
 \end{block}
 \emph{Goal:} Find pairs of documents that are at least s = 80\% similar
@@ -700,6 +700,7 @@ $M(i, x) = M(i, y)$ for at least fraction $s$ values of $i$
   \item i.e., about 1/3000th of the 80\%-similar column pairs are false negatives
   \item We would find 99.965\% pairs of truly similar documents
   \end{itemize}
+\end{itemize}
 \end{block}
 \end{frame}
 
@@ -716,14 +717,13 @@ $M(i, x) = M(i, y)$ for at least fraction $s$ values of $i$
   \tem In other words, approximately $4.74$\% pairs of docs with similarity 30\% end up becoming candidate pairs -- false positives
   \end{itemize}
 \end{itemize}
+\end{block}
 \end{frame}
 
 %%%%%
   
 \begin{frame} \frametitle{LSH Involves a Tradeoff}
-
 \begin{block}{}
-\begin{itemize}
 Pick:
 \begin{itemize}
   \item the number of minhashes (rows of $M$)
@@ -734,18 +734,17 @@ to balance false positives/negatives
 \end{block}
 
 \emph{Example:} if we had only 15 bands of 5 rows, the number of false positives would go down, but the number of false negatives would go up
-
 \end{frame}
 
 %%%%%
   
-\begin{frame} \frametitle{Analysis of LSH - What We Want}
+\begin{frame} \frametitle{Analysis of LSH - What we want}
 \includegraphics[width=10cm]{what-we-want}
 \end{frame}
 
 %%%%%
   
-\begin{frame} \frametitle{Analysis of LSH - One Band With One Row}
+\begin{frame} \frametitle{Analysis of LSH - One band with one row}
 \includegraphics[width=10cm]{what-1-band-gives}
 \end{frame}
 
@@ -769,7 +768,7 @@ Pick any band ($r$ rows)
 
 %%%%%
   
-\begin{frame} \frametitle{Analysis of LSH - $b Bands With $r$ rows/band (2)}
+\begin{frame} \frametitle{Analysis of LSH - $b bands With $r$ rows/band (2)}
 \includegraphics[width=10cm]{what-1-band-gives}
 \end{frame}
 
@@ -782,13 +781,16 @@ Pick any band ($r$ rows)
 %%%%%
   
 \begin{frame} \frametitle{LSH Summary}
-
 \begin{itemize}
 \item Tune to get almost all pairs with similar signatures, but eliminate most pairs that do not have similar signatures
+
+~\\
 \item Check in main memory that candidate pairs really do have similar signatures
+
+~\\
+
 \item {\it Optional:} In another pass through data, check that the remaining candidate pairs really represent similar documents
 \end{itemize}
-
 \end{frame}
 
 %%%%%
