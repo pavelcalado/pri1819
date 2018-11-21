@@ -296,8 +296,8 @@ $Sim(C_1, C_2) = \frac{|C_1 \cap C_2|}{|C_1 \cup C_2|}$
 
 \item Naively, we'd have to compute pairwaise Jaccard similarites for every pair of docs
 \begin{itemize}
-  \item i.e, $\frac{N \ times (N-1)}{2} ≈ 5 \times 10^{11}$ comparisons
-  \item At 10^5 secs/day and 10^6 comparisons/sec, it would take 5 days
+  \item i.e, $\frac{N \times (N-1)}{2} \approx 5 \times 10^{11}$ comparisons
+  \item At $10^5$ secs/day and $10^6$ comparisons/sec, it would take 5 days
 \end{itemize}
 
 \item For $N = 10$ million, it takes more than a year...
