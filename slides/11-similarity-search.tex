@@ -121,30 +121,44 @@ $d(C_1, C_2) = 1 - \frac{|C_1 \cap C_2|}{|C_1 \cup C_2|}$
   
 \begin{frame} \frametitle{Finding Similar Documents}
 
-Goal: Given a large number (N in the millions or billions) of text documents, find pairs that are \emph{near duplicates}
+\begin{block}{Goal:}
+Given a large number ($N$ in the millions or billions) of text documents, find pairs that are \emph{near duplicates}
+\end{block}
 
-Applications:
-  Mirror websites, or approximate mirrors
-    Don’t want to show both in a search
-  Similar news articles at many news sites
-    Cluster articles by “same story”
-Problems:
-  Many small pieces of one doc can appear out of order in another
-  Too many docs to compare all pairs
-  Docs are so large or so many that they cannot fit in main memory
-
+\begin{block}{Applications:}
+  \begin{itemize}
+  \item Mirror websites, or approximate mirrors
+    \begin{itemize}
+    \item Don’t want to show both in a search
+    \end{itemize}
+  \item Similar news articles at many news sites
+    \begin{itemize}
+    \item Cluster articles by \emph{same story}
+    \end{itemize}
+  \end{itemize}
+\end{block}
+\begin{block}{Problems:}
+  \begin{itemize}
+  \item Many small pieces of one doc can appear out of order in another
+  \item Too many docs to compare all pairs
+  \item Docs are so large or so many that they cannot fit in main memory
+  \end{itemize}
+\end{block}
 \end{frame}
 
 %%%%%
   
 \begin{frame} \frametitle{Three Essencial Steps}
 
-1. Shingling: Convert documents, emails, etc., to sets;
+\begin{enumerate}
+\item \emph{Shingling:} Convert documents, emails, etc., to sets;
 
-2. Minhashing: Convert large sets to short signatures, while preserving similarity;
-   Depends on the distance metric
-
-3. Locality-sensitive hashing: Focus on pairs of signatures likely to be from similar documents;
+\item \emph{Minhashing:} Convert large sets to short signatures, while preserving similarity;
+   \begin{itemize}
+   Depends on the distance metric;
+   \end{itemize}
+\item \emph{Locality-sensitive hashing:} Focus on pairs of signatures likely to be from similar documents.
+\end{enumerate}
 
 \end{frame}
 
@@ -164,15 +178,21 @@ Problems:
   
 \begin{frame} \frametitle{Documents as High Dimensional Data}
 
-Step 1: Shingling: Convert documents, emails, etc., to sets
+\begin{itemize}
+\item \emph{Step 1:} Shingling: Convert documents, emails, etc., to sets
 
-Simple approaches...
-   Document = set of words appearing in doc
-   Document = set of “important” words
-...don’t work well for this application.
+\item Simple approaches...
+   \begin{itemize}
+   Document = set of words appearing in document
+   Document = set of {\it important} words
+   \end{itemize}
+\item ...don’t work well for this application!
+   \begin{itemize}
    Need to account for ordering of words
+   \end{itemize}
 
-A different way: \emph{Shingles}
+\item A different way: \emph{Shingles}
+\end{itemize}
 
 \end{frame}
 
@@ -180,14 +200,23 @@ A different way: \emph{Shingles}
   
 \begin{frame} \frametitle{Shingles}
 
-A k-shingle (or k-gram) for a document is a sequence of k tokens that appears in the doc
-  Tokens can be characters, words or something else, depending on application
-  Assume tokens = characters for examples
-Example: k=2; D1= abcab
-  Set of 2-shingles: S(D1)={ab, bc, ca}
-  Option: Shingles as a bag (i.e., multi-set), count ab twice
+\begin{itemize}
+\item A $k$-shingle (or $k$-gram) for a document is a sequence of $k$ tokens that appears in the document
+  \begin{itemize}
+  \item Tokens can be characters, words or something else, depending on application
+  \item Assume tokens = characters for examples
+  \end{itemize}
+\end{itemize}
 
-Represent a doc by the set of hash values of its k-shingles
+\begin{block}{Example: $k=2$; $D_1=abcab$}
+  Set of 2-shingles: $S(D_1)=\{ab, bc, ca\}$
+  
+  ~\\
+  Option: Shingles as a bag (i.e., multi-set), counting $ab$ twice
+\end{block}
+\begin{itemize}
+\item Represent a doc by the set of hash values of its k-shingles
+\end{itemize}
 
 \end{frame}
 
@@ -195,18 +224,24 @@ Represent a doc by the set of hash values of its k-shingles
   
 \begin{frame} \frametitle{Compressing Shingles}
 
-To compress long shingles, we can hash them to (say) 4 bytes
+\begin{itemize}
+\item To compress long shingles, we can hash them to (say) 4 bytes
 
-Represent a doc by the set of hash values of its k-shingles
+\item Represent a doc by the set of hash values of its k-shingles
 
-Idea: Two documents could (rarely) appear to have shingles in common, when in fact only the hash-values were shared
+\item \emph{Idea:} Two documents could (rarely) appear to have shingles in common, when in fact only the hash-values were shared
+\end{itemize}
 
-Example: k=2; D1= abcab
-  Set of 2-shingles: S(D1)={ab, bc, ca} 
-  Hash the singles: h(D1)={1, 5, 7}
-
+\begin{block}{Example: $k=2$; $D_1=abcab$}
+  Set of 2-shingles: $S(D_1)=\{ab, bc, ca\}$
+  
+  ~\\
+  Hash the singles: $h(D_1)=\{1, 5, 7\}$
+\end{block}
 \end{frame}
 
+%%%%%
+%%%%%
 %%%%%
   
 \begin{frame} \frametitle{Similarity Metric for Shingles}
