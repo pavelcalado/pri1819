@@ -351,7 +351,13 @@ Many similarity problems can be formalized as finding subsets hat have significa
 \item Rows = elements of the universal set
 \item Columns = sets
 \item 1 in row $e$ and column $s$ if and only if $e$ is a member of $s$
+
+~\\
+
 \item Column similarity is the Jaccard similarity of the sets of their rows with 1
+
+~\\
+
 \item Typical matrix is sparse
 \end{itemize}
   \end{column}
@@ -366,9 +372,8 @@ Many similarity problems can be formalized as finding subsets hat have significa
 \begin{frame} \frametitle{Jaccard of Columns}
 
  \begin{columns}[T]
-    \begin{column}{0.5\textwidth}
-\begin{itemize}
-\item Each document is a column:
+  \begin{column}{0.5\textwidth}
+  Each document is a column:
 
   {\scriptsize
   \begin{block}{Example: $C1 = 1100011; C2 = 0110010$}
@@ -382,11 +387,10 @@ Many similarity problems can be formalized as finding subsets hat have significa
   \end{itemize}
   \end{block}}  
 
-\item We might not really represent the data by a Boolean matrix
+  We might not really represent the data by a Boolean matrix
   \begin{itemize}
-  \item Sparse matrices are usually better represented by the list of places where there is a non-zero value
+  \item Sparse matrices can be represented by the list of places with non-zero values
   \end{itemize}
-\end{itemize}
   \end{column}
   \begin{column}{0.5\textwidth}
    \includegraphics[width=5cm]{matrix}
