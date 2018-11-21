@@ -294,10 +294,15 @@ $Sim(C_1, C_2) = \frac{|C_1 \cap C_2|}{|C_1 \cup C_2|}$
 \begin{itemize}
 \item Suppose we need to find near-duplicate documents among $N=1$ million documents
 
+~\\
+
 \item Naively, we'd have to compute pairwaise Jaccard similarites for every pair of docs
 \begin{itemize}
   \item i.e, $\frac{N \times (N-1)}{2} \approx 5 \times 10^{11}$ comparisons
-  \item At $10^5$ secs/day and $10^6$ comparisons/sec, it would take 5 days
+
+  ~\\
+  
+  \item At $10^5$ secs/day and $10^6$ comparisons/sec, it would take 5 days to compute all pairwaise Jaccard similarites
 \end{itemize}
 
 \item For $N = 10$ million, it takes more than a year...
@@ -331,7 +336,7 @@ Many similarity problems can be formalized as finding subsets hat have significa
   \item Size of intersection = 3; 
   \item Size of union = 4
   \item Jaccard similarity (not distance) = 3/4
-  \item $d(C_1,C_2) = 1 –$ (Jaccard similarity) = 1/4
+  \item $d(C_1,C_2) = 1 - ($Jaccard similarity) = 1/4
   \end{itemize}
 \end{block}  
 \end{frame}
@@ -341,7 +346,7 @@ Many similarity problems can be formalized as finding subsets hat have significa
 \begin{frame} \frametitle{From Sets to Boolean Matrices}
 
  \begin{columns}[T]
-    \begin{column}{0.7\textwidth}
+    \begin{column}{0.5\textwidth}
 \begin{itemize}
 \item Rows = elements of the universal set
 \item Columns = sets
@@ -361,20 +366,23 @@ Many similarity problems can be formalized as finding subsets hat have significa
 \begin{frame} \frametitle{Jaccard of Columns}
 
  \begin{columns}[T]
-    \begin{column}{0.7\textwidth}
+    \begin{column}{0.5\textwidth}
 \begin{itemize}
 \item Each document is a column:
 
+  {\scriptsize
   \begin{block}{Example: $C1 = 1100011; C2 = 0110010$}
+  \scriptsize
   \begin{itemize}
+  \scriptsize
   \item Size of intersection = 2; 
   \item size of union = 5, 
   \item Jaccard similarity (not distance) = 2/5
   \item $d(C_1,C_2) = 1 –$ (Jaccard similarity) = 3/5
   \end{itemize}
-  \end{block}  
+  \end{block}}  
 
-\item We might not really represent the data by a boolean matrix
+\item We might not really represent the data by a Boolean matrix
   \begin{itemize}
   \item Sparse matrices are usually better represented by the list of places where there is a non-zero value
   \end{itemize}
