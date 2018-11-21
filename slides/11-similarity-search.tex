@@ -10,7 +10,7 @@
 \newcommand{\att}{\ensuremath{\leftarrow}}
 \newcommand{\ang}[1]{\ensuremath{\langle #1 \rangle}}
 
-\subtitle{Similarity Search}
+\subtitle{Efficient Similarity Search}
 
 \begin{document}
 
@@ -23,7 +23,7 @@
 \end{frame}
 
 \begin{frame} \frametitle{High Dimensional Data}
-Many real-world problems
+\begin{block}{Many real-world problems}
 \begin{itemize}
 \item Web Search and Text Mining
   \begin{itemize}
@@ -42,54 +42,69 @@ Many real-world problems
   \item Customer actions e.g., websites visited, searches
   \end{itemize}
 \end{itemize}
+\end{block}
 \end{frame}
 
 %%%%%
   
 \begin{frame} \frametitle{A Common Metaphor}
 
-Many problems can be expressed as finding \emph{similar} sets:
-Find near-neighbors in high-dimensional space
-Examples:
-  Pages with similar words
-    For duplicate detection, classification by topic
-  Customers who purchased similar products
-    NetFlix users with similar tastes in movies
-	Products with similar customer sets
-  Images with similar features
-  Users who visited the similar websites
+Many problems can be expressed as finding \emph{similar} sets.
 
+Find near-neighbors in high-dimensional space.
+
+\begin{block}{Examples:}
+  \begin{itemize}
+  \item Pages with similar words
+    \begin{itemize}
+    \item For duplicate detection, classification by topic
+    \end{itemize}
+  \item Customers who purchased similar products
+    \begin{itemize}
+    \item NetFlix users with similar tastes in movies
+    \end{itemize}
+  \item Products with similar customer sets
+  \item Images with similar features
+  \item Users who visited the similar websites
+  \end{itemize}
+\end{block}
 \end{frame}
 
 %%%%%
   
 \begin{frame} \frametitle{Distance Measures}
 
-We formally define \emph{near neighbors} as points that are a “small distance” apart
-For each use case, we need to define what distance means
+We formally define \emph{near neighbors} as points that are a \emph{small distance} apart.
 
-Two major classes of distance measures:
-  A Euclidean distance is based on the locations of points in such a space
-  A Non-Euclidean distance is based on properties of points, but not their location in a space
-     Cosine similarity, \emph{Jaccard similarity coefficient}
-  
+For each use case, we need to define what distance means.
+
+\begin{block}{Two major classes of distance measures:}
+  \begin{itemize}
+  \item A Euclidean distance is based on the locations of points in such a space
+  \item A Non-Euclidean distance is based on properties of points, but not their location in a space
+    \begin{itemize}
+    \item Cosine similarity, \emph{Jaccard similarity coefficient}, ...
+    \end{itemize}
+  \end{itemize}
+\end{block}  
 \end{frame}
 
 %%%%%
   
 \begin{frame} \frametitle{Jaccard Similarity}
-
 The Jaccard Similarity of two sets is the size of their intersection / the size of their union:
 
+\begin{block}{}
 $Sim(C_1, C_2) = \frac{|C_1 \cap C_2|}{|C_1 \cup C_2|}$
+}
 
 The Jaccard Distance between sets is 1 minus their Jaccard similarity:
 
+\begin{block}{}
 $d(C_1, C_2) = 1 - \frac{|C_1 \cap C_2|}{|C_1 \cup C_2|}$
-
+}
 
 \includegraphics[width=10cm]{jaccard}
-
 \end{frame}
 
 %%%%%
