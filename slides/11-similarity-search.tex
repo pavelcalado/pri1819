@@ -383,7 +383,7 @@ Many similarity problems can be formalized as finding subsets hat have significa
   \item Size of intersection = 2; 
   \item size of union = 5, 
   \item Jaccard similarity (not distance) = 2/5
-  \item $d(C_1,C_2) = 1 –$ (Jaccard similarity) = 3/5
+  \item $d(C_1,C_2) = 1 – ($Jaccard similarity) = 3/5
   \end{itemize}
   \end{block}}  
 
@@ -402,32 +402,51 @@ Many similarity problems can be formalized as finding subsets hat have significa
 %%%%%
   
 \begin{frame} \frametitle{Finding Similar Columns}
-So far:
-  Documents represented as sets of shingles
-  Represent sets as boolean vectors in a matrix
+\begin{block}{So far:}
+\begin{itemize}
+\item Documents represented as sets of shingles
+\item Represent sets as boolean vectors in a matrix
+\end{itemize}
+\end{block}
 
-Next Goal: Find similar columns
- 1) Signatures of columns: small summaries of columns
- 2) Examine pairs of signatures to find similar columns 
-       Essential that similarities of signatures and columns are related
- 3) Optional: check that columns with similar signatures are really similar
+\begin{block}{Next Goal: Find similar columns}
+ \begin{enumerate}
+ \item Signatures of columns: small summaries of columns
+ \item Examine pairs of signatures to find similar columns 
+       \begin{itemize}
+       \item Essential that similarities of signatures and columns are related
+       \end{itemize}
+ \item \emph{Optional:} check that columns with similar signatures are really similar
+ \end{enumerate}
+\end{block}
 
-Warnings:
-  Comparing all pairs may take too much time: job for LSH
-  These methods can produce false negatives, and even false positives (if the optional check is not made)
-  \end{frame}
+\begin{block}{Warnings:}
+\begin{itemize}
+  \item Comparing all pairs may take too much time: \emph{job for LSH}
+  \item These methods can produce false negatives, and even false positives (if the optional check is not made)
+\end{itemize}
+\end{block}
+\end{frame}
 
 %%%%%
   
 \begin{frame} \frametitle{Signatures of Columns}
 
-Key idea: \emph{hash} each column $C$ to a small signature $h(C)$, such that:
-  (1) $h(C)$ is small enough that the signature fits in RAM
-  (2) $sim(C_1, C_2)$ is the same as the similarity of signatures $h(C_1)$ and $h(C_2)$
+\begin{block}{Key idea:} 
+\emph{Hash} each column $C$ to a small signature $h(C)$, such that:
+\begin{enumerate}
+  \item $h(C)$ is small enough that the signature fits in RAM
+  \item $sim(C_1, C_2)$ is the same as the similarity of signatures $h(C_1)$ and $h(C_2)$
+\end{enumerate}
+\end{block}
 
-Goal: Find a hash function h() such that:
-  if $sim(C_1,C_2)$ is high, then with high prob. $h(C_1) = h(C_2)$
-  if $sim(C_1,C_2)$ is low, then with high prob. $h(C_1) \neq h(C_2)$
+\begin{block}{Goal:} 
+Find a hash function $h()$ such that:
+\begin{itemize}
+\item if $sim(C_1,C_2)$ is high, then with high prob. $h(C_1) = h(C_2)$
+\item if $sim(C_1,C_2)$ is low, then with high prob. $h(C_1) \neq h(C_2)$
+\end{itemize}
+\end{block}
 
 Hash docs into buckets, and expect that most pairs of near duplicate docs hash into the same bucket
 \end{frame}
@@ -436,33 +455,47 @@ Hash docs into buckets, and expect that most pairs of near duplicate docs hash i
   
 \begin{frame} \frametitle{Min-Hashing (1)}
 
-Goal: Find a hash function h() such that:
-  if sim(C1,C2) is high, then with high prob. $h(C1) = h(C2)$
-  if sim(C1,C2) is low, then with high prob. $h(C1) \neq h(C2)$
+\begin{block}{Goal:} 
+Find a hash function $h()$ such that:
+\begin{itemize}
+\item if $sim(C_1,C_2)$ is high, then with high prob. $h(C_1) = h(C_2)$
+\item if $sim(C_1,C_2)$ is low, then with high prob. $h(C_1) \neq h(C_2)$
+\end{itemize}
+\end{block}
 
 Clearly, the hash function depends on the similarity metric:
-  Not all similarity metrics have a suitable hash function
-  There is a suitable hash function for Jaccard similarity: Min-hashing
-  
+
+\begin{itemize}
+  \item Not all similarity metrics have a suitable hash function
+  \item There is a suitable hash function for Jaccard similarity: \emph{Min-hashing}
+\end{itemize}  
 \end{frame}
 
 %%%%%
   
 \begin{frame} \frametitle{Min-Hashing (2)}
 
-Imagine the rows of the boolean matrix permuted under random permutation $\pi$
-Define a hash function $h_\pi(C)$ = the number of the first (in the permuted order $\pi$) row in which column C has value 1:
-  $h_\pi (C) = \min_\pi(C)$
-Use several (e.g., 100) independent hash functions (i.e., permutations) to create a signature of a column
+\begin{itemize}
+\item Imagine the rows of the boolean matrix permuted under random permutation $\pi$
 
+~\\
+
+\item Define a hash function $h_\pi(C)$ = the number of the first (in the permuted order $\pi$) row in which column $C$ has value 1:
+  
+  \begin{center}
+  $h_\pi (C) = \min_\pi(C)$
+  \end{center}
+
+~\\
+
+\item Use several (e.g., 100) independent hash functions (i.e., permutations) to create a signature of a column
+\end{itemize}
 \end{frame}
 
 %%%%%
   
 \begin{frame} \frametitle{Min-Hashing (3)}
-
 \includegraphics[width=10cm]{minhash}
-
 \end{frame}
 
 %%%%%
@@ -471,32 +504,46 @@ Use several (e.g., 100) independent hash functions (i.e., permutations) to creat
 
 Under a random permutation $\pi$, $Pr[h_\pi(C_1) = h_\pi(C_2)] = sim(C_1, C_2)$
 
-%Let X be a set of shingles, X ⊆ [2^{64}], x∈X
-%Then: Pr[π(y) = min(π(X))] = 1/|X|
-%  It is equally likely that any y∈X is mapped to the min element
-%Let x be s.t. \pi(x) = min(\pi(C1∪C2))
-%Then either \pi(x) = min(\pi(C1)) if x \in C1 , or \pi(x) = \min(\pi(C2)) if x \in C2
-%So the probability that both are true is the probability x \in C1 \cap C2
-%Pr[min(\pi(C1))=min(\pi(C2))]=|C1 \cap C2|/|C1 \cup C2|= sim(C1, C2)
+\begin{block}{Sketch of proof:}
+\begin{itemize}
+\item Let $X$ be a set of shingles, and let $x \in X$
+\item Then: $Pr[\pi(y) = \min(\pi(X))] = \frac{1}{|X|}$
+\begin{itemize}
+\item It is equally likely that any $y \in X$ is mapped to the min element
+\end{itemize}
+\item Let $x$ be s.t. $\pi(x) = \min(\pi(C_1 \cup C_2))$
+\item Then either $\pi(x) = \min(\pi(C_1))$ if $x \in C_1$ , or $\pi(x) = \min(\pi(C_2)) if $x \in C2$
+\item So the probability that both are true is the probability $x \in C1 \cap C2$
+\item $Pr[\min(\pi(C_1))=\min(\pi(C_2))]=\frac{|C1 \cap C2|}{|C1 \cup C2|}= sim(C1, C2)
+\end{itemize}
+\end{block}{}
 \end{frame}
 
 %%%%%
   
 \begin{frame} \frametitle{Similarity for Signatures}
 
-We know $Pr[h_\pi(C_1) = h_\pi(C_2)] = sim(C_1, C_2)$
-Now generalize to multiple hash functions
-The similarity of two signatures is the fraction of the hash functions in which they agree
-Note: Because of the minhash property, the similarity of columns is the same as the expected similarity of their signatures
+\begin{itemize}
+\item We know $Pr[h_\pi(C_1) = h_\pi(C_2)] = sim(C_1, C_2)$
 
+~\\
+
+\item Now generalize to multiple hash functions
+
+~\\
+
+\item The similarity of two signatures is the fraction of the hash functions in which they agree
+
+~\\
+
+\item \emph{Note:} Because of the minhash property, the similarity of columns is the same as the expected similarity of their signatures
+\end{itemize}
 \end{frame}
 
 %%%%%
   
 \begin{frame} \frametitle{Example}
-
 \includegraphics[width=10cm]{example}
-
 \end{frame}
 
 %%%%%
