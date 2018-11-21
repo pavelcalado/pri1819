@@ -129,11 +129,11 @@ Given a large number ($N$ in the millions or billions) of text documents, find p
   \scriptsize
   \begin{itemize}
   \item Mirror websites, or approximate mirrors
-    \begin{itemize}
+    \begin{itemize}\scriptsize
     \item Don’t want to show both in a search
     \end{itemize}
   \item Similar news articles at many news sites
-    \begin{itemize}
+    \begin{itemize}\scriptsize
     \item Cluster articles by \emph{same story}
     \end{itemize}
   \end{itemize}
@@ -234,7 +234,7 @@ Shingling: Convert documents, emails, etc., to sets
 \begin{frame} \frametitle{Compressing Shingles}
 
 \begin{itemize}
-\item To compress long shingles, we can hash them (e.g. 4 bytes)
+\item To compress long shingles, we can hash them into a convenient/efficient representation (e.g. 4 bytes)
 
 \item Represent a doc by the set of hash values of its $k$-shingles
 
@@ -355,7 +355,7 @@ Many similarity problems can be formalized as finding subsets hat have significa
 \item Typical matrix is sparse
 \end{itemize}
   \end{column}
-  \begin{column}{0.25\textwidth}
+  \begin{column}{0.5\textwidth}
    \includegraphics[width=5cm]{matrix}
   \end{column}
  \end{columns}
@@ -388,7 +388,7 @@ Many similarity problems can be formalized as finding subsets hat have significa
   \end{itemize}
 \end{itemize}
   \end{column}
-  \begin{column}{0.25\textwidth}
+  \begin{column}{0.5\textwidth}
    \includegraphics[width=5cm]{matrix}
   \end{column}
  \end{columns}
