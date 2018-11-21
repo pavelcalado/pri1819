@@ -126,7 +126,7 @@ Given a large number ($N$ in the millions or billions) of text documents, find p
 \end{block}
 
 \begin{block}{Applications:}
-  \small
+  \scriptsize
   \begin{itemize}
   \item Mirror websites, or approximate mirrors
     \begin{itemize}
@@ -139,7 +139,7 @@ Given a large number ($N$ in the millions or billions) of text documents, find p
   \end{itemize}
 \end{block}
 \begin{block}{Problems:}
-  \small
+  \scriptsize
   \begin{itemize}
   \item Many small pieces of one doc can appear out of order in another
   \item Too many docs to compare all pairs
@@ -274,24 +274,34 @@ $Sim(C_1, C_2) = \frac{|C_1 \cap C_2|}{|C_1 \cup C_2|}$
   
 \begin{frame} \frametitle{Working Assumption}
 
-Documents that have lots of shingles in common have similar text, even if the text appears in different order
+\begin{itemize}
+\item Documents that have lots of shingles in common have similar text, even if the text appears in different order
 
-Careful: You must pick k large enough, or most documents will have most shingles
-   k = 5 is OK for short documents
-   k = 10 is better for long documents
+~\\
 
+\item \emph{Careful:} You must pick $k$ large enough, or most documents will have most shingles
+   \begin{itemize}
+   \item $k = 5$ is OK for short documents
+   \item $k = 10$ is better for long documents
+   \end{itemize}
+\end{itemize}
 \end{frame}
 
 %%%%%
   
 \begin{frame} \frametitle{Motivation for Minhash/LSH}
-Suppose we need to find near-duplicate documents among $N=1$ million documents
 
-Naively, we'd have to compute pairwaise Jaccard similarites for every pair of docs
-%  i.e, $N(N-1)/2 ≈ 5 \times 1011$ comparisons
-%  At 105 secs/day and 106 comparisons/sec, it would take 5 days
+\begin{itemize}
+\item Suppose we need to find near-duplicate documents among $N=1$ million documents
 
-For $N = 10$ million, it takes more than a year...
+\item Naively, we'd have to compute pairwaise Jaccard similarites for every pair of docs
+\begin{itemize}
+  \item i.e, $\frac{N \ times (N-1)}{2} ≈ 5 \times 10^{11}$ comparisons
+  \item At 10^5 secs/day and 10^6 comparisons/sec, it would take 5 days
+\end{itemize}
+
+\item For $N = 10$ million, it takes more than a year...
+\end{itemize}
 \end{frame}
 
 \section{Minhashing}
@@ -299,41 +309,46 @@ For $N = 10$ million, it takes more than a year...
 %%%%%
   
 \begin{frame} \frametitle{The Big Picture}
-
 \includegraphics[width=10cm]{overall}
-
 \end{frame}
 
 %%%%%
   
 \begin{frame} \frametitle{Encoding Sets as Bit Vectors}
 
+\begin{block}{}
 Many similarity problems can be formalized as finding subsets hat have significant intersection
-  Encode sets using 0/1 (bit, boolean) vectors
-  One dimension per element in the universal set
-  Interpret set intersection as bitwise AND, and set union as bitwise OR
 
-Example: C1 = 10111; C2 = 10011
-  Size of intersection = 3; size of union = 4, Jaccard similarity (not distance) = 3/4
-  d(C1,C2) = 1 – (Jaccard similarity) = 1/4
-  
+\begin{itemize}
+\item Encode sets using 0/1 (bit, Boolean) vectors
+\item One dimension per element in the universal set
+\item Interpret set intersection as bitwise AND, and set union as bitwise OR
+\end{itemize}
+\end{block}
+
+\begin{block}{Example: $C_1 = 10111$; $C_2 = 10011$}
+  \begin{itemize}
+  \item Size of intersection = 3; 
+  \item Size of union = 4
+  \item Jaccard similarity (not distance) = 3/4
+  \item $d(C_1,C_2) = 1 –$ (Jaccard similarity) = 1/4
+  \end{itemize}
+\end{block}  
 \end{frame}
 
 %%%%%
   
 \begin{frame} \frametitle{From Sets to Boolean Matrices}
 
-Rows = elements of the universal set
+\begin{itemize}
+\item Rows = elements of the universal set
+\item Columns = sets
+\item 1 in row $e$ and column $s$ if and only if $e$ is a member of $s$
+\item Column similarity is the Jaccard similarity of the sets of their rows with 1
+\item Typical matrix is sparse
+\end{itemize}
 
-Columns = sets
-
-1 in row e and column s if and only if e is a member of s
-
-Column similarity is the Jaccard similarity of the sets of their rows with 1
-
-Typical matrix is sparse
-
-\includegraphics[width=10cm]{matrix}
+\includegraphics[width=5cm]{matrix}
 
 \end{frame}
 
@@ -341,15 +356,25 @@ Typical matrix is sparse
   
 \begin{frame} \frametitle{Jaccard of Columns}
 
-Each document is a column:
-  Example: C1 = 1100011; C2 = 0110010
-  Size of intersection = 2; size of union = 5, Jaccard similarity (not distance) = 2/5
-  d(C1,C2) = 1 – (Jaccard similarity) = 3/5
+\begin{itemize}
+\item Each document is a column:
 
-We might not really represent the data by a boolean matrix
-  Sparse matrices are usually better represented by the list of places where there is a non-zero value
-  
-\includegraphics[width=10cm]{matrix}
+  \begin{block}{Example: $C1 = 1100011; C2 = 0110010$}
+  \begin{itemize}
+  \item Size of intersection = 2; 
+  \item size of union = 5, 
+  \item Jaccard similarity (not distance) = 2/5
+  \item $d(C_1,C_2) = 1 –$ (Jaccard similarity) = 3/5
+  \end{itemize}
+  \end{block}  
+
+\item We might not really represent the data by a boolean matrix
+  \begin{itemize}
+  \item Sparse matrices are usually better represented by the list of places where there is a non-zero value
+  \end{itemize}
+\end{itemize}
+
+\includegraphics[width=5cm]{matrix}
 
 \end{frame}
 
