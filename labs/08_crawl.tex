@@ -132,7 +132,7 @@ Construct minhash signatures for the following sets:
 
 Compute the signatures for the three sets, and compare the resulting estimate of the Jaccard similarity of each pair with the true Jaccard similarity.
 
-\item The function $p = 1 − (1 − s^r)^b$ gives the probability $p$ that two min-hash signatues that come from sets with Jaccard similarity $s$ will hash to the same bucket at least once, if we use an LSH scheme with $b$ bands of $r$ rows each. For a given similarity threshold $s$, we want to choose $b$ and $r$ so that $p = 1/2$ at $s$. Suppose signatures have length 24, which means we can pick any integers $b$ and $r$ whose product is $24$ (i.e., the choices for $r$ are 1, 2, 3, 4, 6, 8, 12, or 24, and $b$ must then be $24/r$). If $s = 1/2$, determine the value of $p$ for each choice of $b$ and $r$, and state which value would you choose for $r$ to maximize result quality.
+\item The function $p = 1 - (1 - s^r)^b$ gives the probability $p$ that two min-hash signatues that come from sets with Jaccard similarity $s$ will hash to the same bucket at least once, if we use an LSH scheme with $b$ bands of $r$ rows each. For a given similarity threshold $s$, we want to choose $b$ and $r$ so that $p = 1/2$ at $s$. Suppose signatures have length 24, which means we can pick any integers $b$ and $r$ whose product is $24$ (i.e., the choices for $r$ are 1, 2, 3, 4, 6, 8, 12, or 24, and $b$ must then be $24/r$). If $s = 1/2$, determine the value of $p$ for each choice of $b$ and $r$, and state which value would you choose for $r$ to maximize result quality.
 \end{enumerate}
 
 \end{document}
