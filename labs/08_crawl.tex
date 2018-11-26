@@ -95,6 +95,46 @@ each URL, there should be a text snippet for the page.
 See the Whoosh documentation on how to present text snippets, at
 \url{http://whoosh.readthedocs.io/en/latest/highlight.html}.
 
+\section{Pen and Paper Exercises}
+
+\begin{enumerate}
+\item Compute the Jaccard similarity of each pair of the following sets: 
+
+\begin{itemize}
+\item $\{1, 2, 3, 4, 5\}$
+\item $\{1, 6, 7\}$
+\item $\{2, 4, 6, 8\}$
+\end{itemize}
+
+\item Suppose that you want to use the min-hash scheme for representing sets of items, in which there are ten different items that can be used within the sets (i.e., the universal item set is $\{ 1, 2, \ldots , 10\}$). Suppose also that the min-hash signatures for the sets are constructed using the following list of permutations for the universal set:
+
+\begin{itemize}
+\item $(1,2,3,4,5,6,7,8,9,10)$ 
+\item $(10,8,6,4,2,9,7,5,3,1)$ 
+\item $(4,7,2,9,1,5,3,10,6,8)$
+\end{itemize}
+
+Construct minhash signatures for the following sets: 
+
+\begin{itemize}
+\item $\{3,6,9\}$
+\item $\{2,4,6,8\}$
+\item $\{2,3,4\}$
+\end{itemize}
+
+\item Suppose that instead of using particular permutations to construct the min-hash signatures for the three sets of the previous problem, we use an efficient single-pass implementation leveraging hash functions to construct the signatures. The three hash functions we use are as follows:
+
+\begin{itemize}
+\item $f(x)=x \mathrm{mod} 10 $
+\item $g(x)=(2x+1) \mathrm{mod} 10$
+\item $h(x)=(3x+2) \mathrm{mod} 10$
+\end{itemize}
+
+Compute the signatures for the three sets, and compare the resulting estimate of the Jaccard similarity of each pair with the true Jaccard similarity.
+
+\item The function $p = 1 − (1 − s^r)^b$ gives the probability $p$ that two min-hash signatues that come from sets with Jaccard similarity $s$ will hash to the same bucket at least once, if we use an LSH scheme with $b$ bands of $r$ rows each. For a given similarity threshold $s$, we want to choose $b$ and $r$ so that $p = 1/2$ at $s$. Suppose signatures have length 24, which means we can pick any integers $b$ and $r$ whose product is $24$ (i.e., the choices for $r$ are 1, 2, 3, 4, 6, 8, 12, or 24, and $b$ must then be $24/r$). If $s = 1/2$, determine the value of $p$ for each choice of $b$ and $r$, and state which value would you choose for $r$ to maximize result quality.
+\end{enumerate}
+
 \end{document}
 
 %%% Local Variables: 
