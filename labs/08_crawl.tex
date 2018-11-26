@@ -6,7 +6,7 @@
 
 \begin{document}
 
-\maketitle{Lab 08: Crawling the Web}
+\maketitle{Lab 08: Crawling the Web + Similarity Search}
 
 The goal of this exercise is to implement a simple Web crawler.
 
@@ -122,12 +122,12 @@ Construct minhash signatures for the following sets:
 \item $\{2,3,4\}$
 \end{itemize}
 
-\item Suppose that instead of using particular permutations to construct the min-hash signatures for the three sets of the previous problem, we use an efficient single-pass implementation leveraging hash functions to construct the signatures. The three hash functions we use are as follows:
+\item Suppose that instead of using particular permutations to construct the min-hash signatures for the three sets of the previous problem, we use an efficient single-pass implementation leveraging hash functions to construct the signatures. The three hash functions to be used are as follows:
 
 \begin{itemize}
-\item $f(x)=x \mathrm{mod} 10 $
-\item $g(x)=(2x+1) \mathrm{mod} 10$
-\item $h(x)=(3x+2) \mathrm{mod} 10$
+\item $f(x)=x ~\mathrm{mod}~ 10 $
+\item $g(x)=(2x+1) ~\mathrm{mod}~ 10$
+\item $h(x)=(3x+2) ~\mathrm{mod}~ 10$
 \end{itemize}
 
 Compute the signatures for the three sets, and compare the resulting estimate of the Jaccard similarity of each pair with the true Jaccard similarity.
