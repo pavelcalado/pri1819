@@ -106,6 +106,11 @@ See the Whoosh documentation on how to present text snippets, at
 \item $\{2, 4, 6, 8\}$
 \end{itemize}
 
+% SOLUTION
+% J({1,2,3,4,5},{1,6,7}) = 1/7
+% J({1,2,3,4,5},{2,4,6,8}) = 2/7
+% J({1,6,7},{2,4,6,8}) = 1/6
+
 \item Suppose that you want to use the min-hash scheme for representing sets of items, in which there are ten different items that can be used within the sets (i.e., the universal item set is $\{ 1, 2, \ldots , 10\}$). Suppose also that the min-hash signatures for the sets are constructed using the following list of permutations for the universal set:
 
 \begin{itemize}
@@ -122,6 +127,11 @@ Construct minhash signatures for the following sets:
 \item $\{2,3,4\}$
 \end{itemize}
 
+%SOLUTION: Each of the 3 values in the signatures is the first value in the permutation that appears in the subset. Hence the three signatures are:
+%(a) (3,6,9) 
+%(b) (2,8,4) 
+%(c) (2,4,4)
+
 \item Suppose that instead of using particular permutations to construct the min-hash signatures for the three sets of the previous problem, we use an efficient single-pass implementation leveraging hash functions to construct the signatures. The three hash functions to be used are as follows:
 
 \begin{itemize}
@@ -132,7 +142,34 @@ Construct minhash signatures for the following sets:
 
 Compute the signatures for the three sets, and compare the resulting estimate of the Jaccard similarity of each pair with the true Jaccard similarity.
 
+%SOLUTION: Instead of finding the first value in the permutation that appears in the subset, we compute the minhash as the smallest value of the hash function in the whole subset. This yields the following three signatures:
+%
+%(a) (3,3,0) 
+%(b) (2,3,0) 
+%(c) (2,5,1)
+%
+%To estimate the Jaccard similarity from a minhash vector (derived either from permutations or hash functions), we find the number of matching minhash values in corresponding positions in the two subsets’ minhash vectors. Estimating the Jaccard similarity using both permutation minhash vectors and hash function minhash vectors gives:
+%
+%Set 1                Set 2            Actual J    Hash est. J   Perm. est. J
+%(a) {3,6,9}          (b) {2,4,6,8}    1/6         2/3           0/3
+%(a) {3,6,9}          (c) {2,3,4}      1/5         0/3           0/3
+%(b) {2,4,6,8}        (c) {2,3,4}      2/5         1/3           2/3
+%
+%We can see that these minhash vectors, whether computed from universal set permutations or a list of hash functions, are quite poor estimators of the Jaccard similarity. This is understandable given how short the minhash vectors actually are. We should get more permutations of the universal set or more hash functions to make the minhash vectors longer.
+
 \item The function $p = 1 - (1 - s^r)^b$ gives the probability $p$ that two min-hash signatues that come from sets with Jaccard similarity $s$ will hash to the same bucket at least once, if we use an LSH scheme with $b$ bands of $r$ rows each. For a given similarity threshold $s$, we want to choose $b$ and $r$ so that $p = 1/2$ at $s$. Suppose signatures have length 24, which means we can pick any integers $b$ and $r$ whose product is $24$ (i.e., the choices for $r$ are 1, 2, 3, 4, 6, 8, 12, or 24, and $b$ must then be $24/r$). If $s = 1/2$, determine the value of $p$ for each choice of $b$ and $r$, and state which value would you choose for $r$ to maximize result quality.
+
+%SOLUTION:
+% r = 1,b = 24: p = 1−(1−(1/2)1)24 = 1−(1/2)24 ≈ .99999994 
+% r = 2,b = 12: p = 1−(1−(1/2)2)12 = 1−(3/4)12 ≈ 0.968
+% r = 3,b = 8: p = 1−(1−(1/2)3)8 = 1−(7/8)8 ≈ .657
+% r = 4,b = 6: p = 1−(1−(1/2)4)6 = 1−(15/16)6 ≈ .321
+% r = 6,b = 4: p = 1−(1−(1/2)6)4 = 1−(63/64)4 ≈ .0611
+% r = 8,b = 3: p = 1−(1−(1/2)8)3 = 1−(255/256)3 ≈ .0117
+% r = 12,b = 2: p = 1−(1−(1/2)12)2 = 1−(2047/2048)2 ≈ 4.882·10^−4
+% r = 24,b = 1: p = 1−(1−(1/2)24)1 = 1−(16777215/16777216)1 ≈ 5.960 · 10^−8
+%It’s clear that, in this case, you should choose to minimize the number of rows (positions within a signature), by letting r = 1.
+
 \end{enumerate}
 
 \end{document}
