@@ -561,7 +561,7 @@ Under a random permutation $\pi$, $Pr[h_\pi(C_1) = h_\pi(C_2)] = sim(C_1, C_2)$
 $sig(C)[i] = \min (\pi_i(C))$
 \end{center}
 
-\item \emph{Note:} The sketch (signature) of document $C$ is small -- \~100 bytes!
+\item \emph{Note:} The sketch (signature) of document $C$ is small -- $\sim 100$ bytes!
 
 \item We achieved the goal of \emph{compressing} long bit vectors into short signatures
 \end{itemize}
@@ -709,7 +709,7 @@ $M(i, x) = M(i, y)$ for at least fraction $s$ values of $i$
 
 \begin{block}{Assume: $C_1, C_2$ are 30\% similar}
 \begin{itemize}
-\item Since s=80\% we want $C_1, C_2$ to hash to at NO common buckets (all bands should be different)
+\item Since s=30\% we want $C_1, C_2$ to hash to NO common buckets (all bands should be different)
 \item Probability $C_1, C_2$ identical in one particular band: $(0.3)^5 = 0.00243$
 \item Probability $C_1, C_2$ identical in at least 1 of 20 bands: $1 - (1 - 0.00243)^{20} = 0.0474$
   \begin{itemize}
